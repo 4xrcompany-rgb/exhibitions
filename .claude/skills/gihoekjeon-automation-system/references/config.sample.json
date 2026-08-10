@@ -1,0 +1,84 @@
+{
+  "_설명": "이 파일을 config.json 으로 복사해 자기 환경에 맞게 채웁니다. 도구 연결·재료·데이터는 각 사용자가 준비합니다.",
+
+  "work": {
+    "folder": "<작업 폴더 절대경로>",
+    "material_dir": "_소재",
+    "sheet_name": "기획전_구성표.xlsx",
+    "page_name": "기획전.html"
+  },
+
+  "promo": {
+    "title": "<기획전명>",
+    "title_en": "<영문 표기>",
+    "start": "YYYY-MM-DD",
+    "end": "YYYY-MM-DD",
+    "max_discount": 70,
+    "editor": "<담당자 이니셜>"
+  },
+
+  "style": {
+    "main_color": "#E1121C",
+    "point_color": "#7FE3F0",
+    "coupon_color": "#C6F558",
+    "section_alt_bg": "#F6FAEB",
+    "ink": "#111111",
+    "yellow": "#FFD400",
+    "font_family": "Pretendard",
+    "content_width": 1180,
+    "grid_cols": 5,
+    "default_show": 10
+  },
+
+  "mall": {
+    "_설명": "자기 쇼핑몰 솔루션에 맞게 수정. 아래는 흔한 PHP 몰 형태의 예시 패턴입니다.",
+    "base": "https://<몰 도메인>",
+    "cdn_goods": "https://<CDN 도메인>/files/goods/",
+    "cdn_brand": "https://<CDN 도메인>/files/brand/",
+    "product_view_url": "https://<몰 도메인>/shop/view.php?index_no={code}",
+    "brand_page_url": "https://<몰 도메인>/shop/brand_goods.php?brand={id}",
+    "brand_list_url": "https://<몰 도메인>/shop/brand_main.php",
+
+    "selectors": {
+      "_설명": "정규식. 몰 HTML 구조에 맞게 한 번만 맞추면 이후 재사용됩니다.",
+      "brand_logo": "class=\"logo_box\"><img src=\"([^\"]+)\"",
+      "brand_banner": "brand_introduction\"[^>]*background:url\\(([^)]+)\\)",
+      "brand_title": "class=\"title\">([^<]*)<",
+      "brand_title_en": "class=\"title_eng\">([^<]*)<",
+      "brand_link_in_list": "<a[^>]*brand_goods\\.php\\?brand=(\\d+)[^>]*>(.*?)</a>"
+    },
+
+    "user_agent": "Mozilla/5.0"
+  },
+
+  "banner": {
+    "output_dir": "_소재/10_배너",
+    "example_image": "예시.jpg",
+    "sizes": [
+      { "name": "01_PC배너_1870x462",   "w": 1870, "h": 462, "count": 1, "role": "pc",     "note": "기준 원본" },
+      { "name": "02_모바일배너_750x750", "w": 750,  "h": 750, "count": 1, "role": "mobile", "note": "타이틀 세로 스택" },
+      { "name": "03_썸네일_750x610",    "w": 750,  "h": 610, "count": 1, "role": "thumb",  "note": "텍스트 최소화" },
+      { "name": "04_카톡앱푸시_600x800", "w": 600,  "h": 800, "count": 1, "role": "kakao",  "note": "하단 검정 박스" },
+      { "name": "05_앱푸시_800x464",     "w": 800,  "h": 464, "count": 3, "role": "app",    "note": "가운데 고정·간결" }
+    ],
+    "copy": {
+      "top1": "<상단 카피 1행>",
+      "top2": "<상단 카피 2행>",
+      "label": "<중앙 라벨 문구>",
+      "title_a": "<타이틀 앞덩어리>",
+      "title_b": "<타이틀 뒷덩어리>",
+      "date": "<MM.DD (요일) - MM.DD (요일)>",
+      "bar_left": "<검정박스 왼쪽>",
+      "bar_right": "<검정박스 오른쪽>",
+      "app_sub": "<앱푸시 보조 문구>"
+    },
+    "object_png": "_소재/01_KV/<오브젝트 파일명>.png"
+  },
+
+  "figma": {
+    "_설명": "피그마에 규격 프레임을 만들 때만 사용. View seat 이면 건너뜁니다.",
+    "enabled": false,
+    "plan_key": "team::<숫자>",
+    "file_name": "<기획전명>_소재규격"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "_설명": "4XR 공통값을 미리 채워둔 템플릿입니다. 새 기획전을 시작할 때 이 파일을 그 기획전 폴더에 config.json 으로 복사하고, <> 부분만 채웁니다.",
+
+  "work": {
+    "folder": "<이 기획전 폴더 절대경로>",
+    "material_dir": "_소재",
+    "sheet_name": "기획전_구성표.xlsx",
+    "page_name": "기획전.html"
+  },
+
+  "promo": {
+    "title": "<기획전명>",
+    "start": "YYYY-MM-DD",
+    "end": "YYYY-MM-DD",
+    "max_discount": 70,
+    "editor": "<담당자 이니셜>"
+  },
+
+  "style": {
+    "main_color": "#E1121C",
+    "point_color": "#7FE3F0",
+    "coupon_color": "#C6F558",
+    "section_alt_bg": "#F6FAEB",
+    "ink": "#111111",
+    "yellow": "#FFD400",
+    "font_family": "SB Aggro",
+    "content_width": 1180,
+    "grid_cols": 5,
+    "default_show": 10
+  },
+
+  "mall": {
+    "base": "https://www.4xr.co.kr",
+    "mobile_base": "https://m.4xr.co.kr",
+    "cdn_goods": "https://cdn-tgreen.bizhost.kr/files/goods/",
+    "cdn_brand": "https://cdn-tgreen.bizhost.kr/files/brand/",
+    "product_view_url": "https://www.4xr.co.kr/shop/view.php?index_no={code}",
+    "brand_page_url": "https://www.4xr.co.kr/shop/brand_goods.php?brand={id}",
+    "brand_list_url": "https://www.4xr.co.kr/shop/brand_main.php",
+    "board_url": "https://www.4xr.co.kr/bbs/read.php?index_no={no}&boardid=issue",
+
+    "selectors": {
+      "brand_logo": "class=\"logo_box\"><img src=\"([^\"]+)\"",
+      "brand_banner": "brand_introduction\"[^>]*background:url\\(([^)]+)\\)",
+      "brand_title": "class=\"title\">([^<]*)<",
+      "brand_title_en": "class=\"title_eng\">([^<]*)<",
+      "brand_link_in_list": "<a[^>]*brand_goods\\.php\\?brand=(\\d+)[^>]*>(.*?)</a>"
+    },
+
+    "user_agent": "Mozilla/5.0"
+  },
+
+  "site_block": {
+    "_설명": "기획전 HTML 맨 위 고정 블록. 경로의 날짜 부분만 그 기획전에 맞게 바꿉니다. 상세는 스킬 §5-A / references/site-block.md",
+    "font_css": "https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/<YYYY>/<MM>/<DD>/KEY/font/font.css",
+    "cate_image_base": "https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/<YYYY>/<MM>/<DD>/KEY/cate/",
+    "cate_pc_pattern": "img_cate_pc{n:02d}.jpg",
+    "cate_mobile_pattern": "img_cate_m{n:02d}.jpg",
+    "tab_count": 4,
+    "tab_bg": "#1A0A0A",
+    "tab_active_color": "#FFE500"
+  },
+
+  "banner": {
+    "output_dir": "배너",
+    "example_image": "_소재/10_배너/예시.jpg",
+    "sizes": [
+      { "name": "01_PC배너_1870x462",    "w": 1870, "h": 462, "count": 1, "role": "pc",     "note": "기준 원본" },
+      { "name": "02_모바일배너_750x750",  "w": 750,  "h": 750, "count": 1, "role": "mobile", "note": "타이틀 세로 스택" },
+      { "name": "03_썸네일_750x610",     "w": 750,  "h": 610, "count": 1, "role": "thumb",  "note": "텍스트 최소화" },
+      { "name": "04_카톡앱푸시_600x800",  "w": 600,  "h": 800, "count": 1, "role": "kakao",  "note": "하단 검정 박스" },
+      { "name": "05_4XR앱푸시_800x464",   "w": 800,  "h": 464, "count": 3, "role": "app",    "note": "가운데 고정·간결 / A·B·C 문구 다르게" }
+    ],
+    "copy": {
+      "title_a": "<타이틀 앞덩어리>",
+      "title_b": "<타이틀 뒷덩어리>",
+      "date": "<MM.DD - MM.DD>",
+      "line1": "<우측 카피 1행>",
+      "line2": "<우측 카피 2행>"
+    }
+  },
+
+  "figma": {
+    "enabled": true,
+    "plan_key": "team::1656122493241662372",
+    "file_name": "<기획전명>_배너"
+  }
+}
