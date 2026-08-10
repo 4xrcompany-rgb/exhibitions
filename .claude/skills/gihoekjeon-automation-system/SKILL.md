@@ -399,6 +399,37 @@ KV        로드 직후 타이포 → 오브젝트 → 뱃지 → 하단 카피 
 
 고정 블록 전문·체크리스트 → `references/site-block.md`
 
+### 5-A-2. 「기획전 디자인 끝」 → 비즈호스트 납품본 변환 (필수) ★★★
+
+미리보기용 독립 HTML(로컬 렌더용)과, **게시판에 붙이는 납품본은 형태가 다르다.**
+사용자가 **「기획전 디자인 끝」** 하면, 게시판 붙여넣기용으로 아래를 **반드시** 만든다.
+
+**① 조각(fragment)으로 만든다** — `<!doctype>·<html>·<head>·<body>` 를 **넣지 않는다.**
+게시판이 이미 페이지 틀을 갖고 있다. `<link>(폰트)` + `<style>` + 내용 `<div>` + `<script>` 만 남긴다.
+**기존 기획전 html을 그 자리에서 변환한다(overwrite). 별도 납품본·백업 복사본을 만들지 않는다.**
+전역 리셋(`*{margin:0;padding:0}`)·`body{}`·`img{}` 는 게시판을 망가뜨리니 **`#래퍼id` 로 스코프**한다(단, `*{}` 를 id로 스코프하면 특이도 때문에 클래스 여백이 깨지므로 box-sizing만 스코프하고 여백 리셋은 heading 등 필요한 것만). 개발용 주석/note 배너는 지운다.
+
+**② 게시판 기본요소를 숨긴다 (= "쓸데없는 문구" 제거)** — 이게 빠지면 게시판 제목·날짜·문구·관련링크·해시태그가 그대로 노출된다(사고 사례: read.php?index_no=21821). `<style>` 맨 위에 §site-block 의 숨김 블록을 넣는다:
+```css
+#contents .page_info,
+.magazine_view .cont .title,
+.magazine_view .cont .txt_01, .magazine_view .cont .txt_02, .magazine_view .cont .txt_03,
+.magazine_view .cont .txt_info,
+.magazine_view .line_01,
+.magazine_view .relate_link, .magazine_view .hashtag_box{ display:none; }
+.magazine_view{ width:auto; } .magazine_view .cont{ margin-bottom:0 !important; }
+@media(max-width:768px){ .page_cont.padding_01{ padding:0; margin-bottom:0 !important; }
+  .page_view_top > *{ display:none; } #wrap{ overflow:initial; } }
+```
+**PC·모바일 둘 다** 적용한다(모바일은 `.page_view_top`·`.page_cont` 계열이 따로다).
+정답 형태 예시 = 사용자가 준 `0721_여름_반팔/index.html`, 올바른 게시글 = read.php?index_no=21789.
+
+**③ 몰 내부 자원 사용** — 게시판이 이미 로드한 jQuery·Swiper 를 쓸 수 있다(우리 JS가 바닐라면 그대로 자급자족해도 됨). 폰트는 `<link>` 로 얹는다. 상품은 코드만 넣고 JS가 런타임 fetch(§1-④, [[gihoekjeon-product-display-method]]).
+
+**④ IDE 없는 작업자용 「복사」 파일을 만든다** — 작업자 PC엔 VS코드가 없다. 크롬으로 HTML을 열면 코드가 아니라 화면이 뜬다. 그래서 **`<기획전명>_비즈호스트_붙여넣기.html`** 를 만든다: 「코드 복사」 버튼 + 미리보기 textarea + 3단계 안내. 작업자는 크롬으로 열고 버튼 눌러 복사 → 비즈호스트 게시판 **소스(HTML) 모드**에 붙여넣기.
+- ★ 코드에 `</script>`·`&quot;` 가 들어있어 **textarea/​script에 raw로 넣으면 깨진다. 반드시 base64로 임베드**하고 클릭 시 `atob`→`decodeURIComponent(escape())` 로 디코드해 복사한다(생성 스크립트로 만든다). clipboard API 실패 시 `execCommand('copy')` 폴백.
+- 이 파일은 「복사 도구」이지 기획전의 백업본이 아니다(①의 백업 금지와 무관).
+
 ---
 
 ## 6. 배너 제작
