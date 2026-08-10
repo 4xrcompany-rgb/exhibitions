@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4XR 기획전 자동화 — 관리자 설명서</title>
+<style>
+  :root{
+    --bg:#f6f5f1; --surface:#ffffff; --ink:#1d1c1a; --muted:#6f6b64;
+    --accent:#5b53c9; --accent-soft:#eae8f9;
+    --me:#3457d5; --me-soft:#e7ecfb;
+    --claude:#2b9159; --claude-soft:#e6f4ec;
+    --cmd-bg:#1d1c1a; --cmd-fg:#f6f5f1;
+    --line:#e6e3dc; --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(30,28,24,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#15151a; --surface:#1e1e25; --ink:#ece9e3; --muted:#a7a29a;
+      --accent:#a89fff; --accent-soft:#221f3d;
+      --me:#7f9bff; --me-soft:#1a2140;
+      --claude:#54c78a; --claude-soft:#12321f;
+      --cmd-bg:#0e0e12; --cmd-fg:#ece9e3;
+      --line:#2c2c34; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f5f1; --surface:#ffffff; --ink:#1d1c1a; --muted:#6f6b64;
+    --accent:#5b53c9; --accent-soft:#eae8f9; --me:#3457d5; --me-soft:#e7ecfb;
+    --claude:#2b9159; --claude-soft:#e6f4ec; --cmd-bg:#1d1c1a; --cmd-fg:#f6f5f1;
+    --line:#e6e3dc; --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(30,28,24,.06);
+  }
+  :root[data-theme="dark"]{
+    --bg:#15151a; --surface:#1e1e25; --ink:#ece9e3; --muted:#a7a29a;
+    --accent:#a89fff; --accent-soft:#221f3d; --me:#7f9bff; --me-soft:#1a2140;
+    --claude:#54c78a; --claude-soft:#12321f; --cmd-bg:#0e0e12; --cmd-fg:#ece9e3;
+    --line:#2c2c34; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,-apple-system,sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased;padding:0 20px}
+  .wrap{max-width:840px;margin:0 auto;padding:56px 0 96px}
+  code,.cmd,.mono{font-family:"SFMono-Regular",Consolas,"D2Coding","Menlo",monospace}
+
+  .head{margin-bottom:40px}
+  .eyebrow{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--accent);background:var(--accent-soft);
+    padding:6px 12px;border-radius:999px}
+  h1{font-size:clamp(30px,5vw,42px);font-weight:800;letter-spacing:-.02em;line-height:1.12;
+    margin:18px 0 12px;text-wrap:balance}
+  .lede{font-size:17px;color:var(--muted);max-width:62ch}
+  .lede b{color:var(--ink);font-weight:700}
+
+  section{margin-top:48px}
+  h2{font-size:22px;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:11px;margin-bottom:6px}
+  h2 .num{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:var(--ink);color:var(--bg);
+    font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sub{color:var(--muted);font-size:15px;margin:2px 0 20px 41px}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+
+  .checks{display:grid;gap:12px}
+  .check{display:grid;grid-template-columns:26px 1fr;gap:14px;padding:16px 18px}
+  .check .tick{width:24px;height:24px;border-radius:7px;border:2px solid var(--accent);
+    display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:800;font-size:13px;margin-top:1px}
+  .check .t{font-weight:700;font-size:15.5px}
+  .check .d{color:var(--muted);font-size:14px;margin-top:3px}
+  .check .d .mono{background:var(--cmd-bg);color:var(--cmd-fg);padding:2px 7px;border-radius:6px;font-size:12.5px;white-space:nowrap}
+
+  .tip{display:flex;gap:14px;padding:18px 20px;border-left:4px solid var(--accent);
+    background:var(--accent-soft);border-radius:0 12px 12px 0}
+  .tip .ico{flex:0 0 auto;font-size:20px;line-height:1.3}
+  .tip b{color:var(--ink)}
+  .tip p{font-size:15px;color:var(--ink)}
+  .tip p+p{margin-top:6px}
+
+  .steps{display:flex;flex-direction:column;gap:14px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:0;overflow:hidden}
+  .step .rail{display:flex;flex-direction:column;align-items:center;padding-top:18px;gap:8px;
+    border-right:1px solid var(--line)}
+  .step .rail .n{width:28px;height:28px;border-radius:8px;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;color:#fff;background:var(--accent)}
+  .step .body{padding:16px 20px}
+  .step .body .h{font-size:16px;font-weight:700;margin-bottom:4px}
+  .step .body .p{font-size:14.5px;color:var(--muted)}
+  .step .body .p b{color:var(--ink)}
+
+  .notelist{margin-top:11px;display:flex;flex-direction:column;gap:7px}
+  .notelist li{list-style:none;font-size:14px;color:var(--muted);padding-left:16px;position:relative;line-height:1.6}
+  .notelist li::before{content:"–";position:absolute;left:2px;color:var(--accent);font-weight:800}
+  .notelist li b{color:var(--ink);font-weight:700}
+  .notelist .mono{background:var(--accent-soft);color:var(--accent);padding:1px 7px;border-radius:5px;font-size:12.5px;white-space:nowrap}
+
+  .cmd{display:inline-flex;align-items:center;gap:7px;background:var(--cmd-bg);color:var(--cmd-fg);
+    font-size:13.5px;font-weight:600;padding:6px 12px;border-radius:8px;margin:5px 4px 0 0}
+  .cmd::before{content:"›";opacity:.55;font-weight:800}
+  .cmdrow{margin-top:8px}
+
+  .diag{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
+    padding:18px;overflow-x:auto;font-family:"SFMono-Regular",Consolas,"D2Coding",monospace;
+    font-size:12.5px;color:var(--muted);line-height:1.75;white-space:pre}
+  .diag b{color:var(--accent)}
+
+  .faq{display:flex;flex-direction:column}
+  .faq .q{padding:15px 18px;border-top:1px solid var(--line)}
+  .faq .q:first-child{border-top:0}
+  .faq .q .qq{font-weight:700;font-size:15px}
+  .faq .q .aa{color:var(--muted);font-size:14.5px;margin-top:4px}
+  .faq .aa .mono{background:var(--accent-soft);color:var(--accent);padding:1px 7px;border-radius:5px;font-size:12.5px}
+
+  .foot{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+
+  @media (max-width:560px){
+    .wrap{padding:36px 0 72px}
+    .sub{margin-left:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <span class="eyebrow">4XR 기획전 자동화 · 관리자</span>
+    <h1>직원들의 작업을 한곳에 모아 보고<br>시스템을 개선하는 관리자 설명서</h1>
+    <p class="lede">직원들이 각자 컴퓨터에서 작업하면, <b>작업기록·성공·실패·오류가 내 옵시디언 한 곳으로</b> 모입니다.
+      나는 그걸 보고 고쳐서, <b>개선을 직원들에게 자동으로 내려보냅니다.</b> 이 문서는 그 중앙(관리자) 쪽 설정·운영법입니다.</p>
+  </header>
+
+  <!-- 전체 그림 -->
+  <section>
+    <h2><span class="num">0</span> 전체 그림 — 어떻게 도는가</h2>
+    <p class="sub">GitHub 비공개 저장소를 가운데 두고, 내 옵시디언과 직원 컴퓨터들이 연결됩니다.</p>
+    <div class="diag">        ┌─────────  <b>GitHub 비공개 저장소 (중앙)</b>  ─────────┐
+        │   system   = 스킬·규칙·스크립트     (내가 고침)      │
+        │   기록/     = 직원별 작업기록        (직원이 씀)      │
+        │   개선사항/ · 00_대시보드.md         (내가 봄)        │
+        └───────────┬──────────────────────────┬──────────────┘
+             pull   │ (개선 받기)      push     │ (기록 올리기)
+        ┌───────────┴────────┐          ┌───────┴────────────┐
+        │  내 옵시디언 (중앙)  │   …      │   직원 컴퓨터 ×N     │
+        │  대시보드로 확인·개선│          │   클로드로 작업·채팅 │
+        └────────────────────┘          └────────────────────┘</div>
+    <div style="height:14px"></div>
+    <div class="tip"><div class="ico">🔑</div><div>
+      <p><b>내가 하는 건 딱 두 가지예요.</b> ① 대시보드에서 <b>직원들의 성공·실패·오류를 본다</b> → ② 반복되는 문제를 <b>규칙(스킬)으로 고쳐 올린다</b>. 그럼 직원들에게 자동 반영됩니다.</p>
+    </div></div>
+  </section>
+
+  <!-- GitHub 저장소 -->
+  <section>
+    <h2><span class="num">1</span> 중앙 저장소 (GitHub) — 이미 됨</h2>
+    <p class="sub">모든 자료가 모이는 중앙 창고입니다. 한 번만 만들면 됩니다.</p>
+    <div class="card checks">
+      <div class="check"><div class="tick">✓</div><div>
+        <div class="t">저장소</div>
+        <div class="d"><span class="mono">github.com/4xrcompany-rgb/exhibitions</span> (<b>Private</b>) 로 만들어 이 폴더를 올려둠.</div></div></div>
+      <div class="check"><div class="tick">✓</div><div>
+        <div class="t">회사 GitHub 아이디 1개 공유</div>
+        <div class="d">직원 PC는 이 <b>회사 아이디로 GitHub Desktop에 로그인</b>해서 연결합니다. (누가 했는지는 아이디가 아니라 각 기록의 작업자 이름으로 구분되니 문제없음)</div></div></div>
+      <div class="check"><div class="tick">✓</div><div>
+        <div class="t">비공개 유지</div>
+        <div class="d">회사 자료이므로 저장소는 <b>반드시 Private</b>. 접근은 회사 아이디로 로그인한 PC만.</div></div></div>
+    </div>
+    <div style="height:14px"></div>
+    <div class="tip"><div class="ico">🆕</div><div>
+      <p><b>새 저장소를 처음부터 만들 때만</b> — github.com → New repository → 이름 입력 → <b>Private</b> → Create → 클로드에게 <span class="cmd">이 폴더를 github.com/…/이름 에 올려줘</span> 라고 하면 연결·업로드해 줍니다.</p>
+    </div></div>
+  </section>
+
+  <!-- 옵시디언 -->
+  <section>
+    <h2><span class="num">2</span> 내 옵시디언(중앙) 설정 — 딱 한 번</h2>
+    <p class="sub">직원 기록이 여기로 모입니다. 이미 해두었다면 넘어가세요.</p>
+    <div class="card checks">
+      <div class="check"><div class="tick">1</div><div>
+        <div class="t">옵시디언 설치 · 이 폴더 열기</div>
+        <div class="d"><b>obsidian.md</b>에서 설치 → 첫 화면 <b>“폴더를 보관함으로 열기”</b> → 이 폴더(<span class="mono">★4XR_기획전_자동화</span>) 선택 → <b>“제작자를 신뢰…”</b> 클릭.</div></div></div>
+      <div class="check"><div class="tick">2</div><div>
+        <div class="t">플러그인 2개 설치</div>
+        <div class="d">설정(⚙) → 커뮤니티 플러그인 켜기 → 둘러보기 → <b>“Git”(개발자 Vinzent)</b> 설치·활성화, <b>“Dataview”</b> 설치·활성화.</div></div></div>
+      <div class="check"><div class="tick">3</div><div>
+        <div class="t">Git 플러그인 설정 (받기 위주)</div>
+        <div class="d">설정 → Git → <b>Auto pull interval (minutes)</b> = <span class="mono">10</span>, <b>Pull on startup</b> 켜기. 내가 개선을 올릴 땐 <b>Commit-and-sync</b> 를 씀(아래 §4·§5).</div></div></div>
+      <div class="check"><div class="tick">4</div><div>
+        <div class="t">대시보드 즐겨찾기</div>
+        <div class="d">왼쪽 파일 목록 → <span class="mono">★건들지마세요(시스템)</span> → <span class="mono">00_대시보드.md</span> 열고 <b>북마크</b>. 여기서 실패·오류·직원별 집계가 자동 표로 뜹니다.</div></div></div>
+    </div>
+  </section>
+
+  <!-- 직원 배포 -->
+  <section>
+    <h2><span class="num">3</span> 직원에게 배포하기</h2>
+    <p class="sub">직원은 <span class="mono">사용설명서.html</span> 만 따라 하면 됩니다. 나는 아래 3가지만 챙겨주면 돼요.</p>
+    <div class="card checks">
+      <div class="check"><div class="tick">1</div><div>
+        <div class="t">회사 GitHub 로그인</div>
+        <div class="d">직원이 GitHub Desktop에 로그인할 <b>회사 아이디</b>를 알려주거나, <b>내가 각 PC에서 대신 로그인</b>해 줍니다.</div></div></div>
+      <div class="check"><div class="tick">2</div><div>
+        <div class="t">저장소 주소</div>
+        <div class="d"><span class="mono">github.com/4xrcompany-rgb/exhibitions</span> — GitHub Desktop의 Clone 목록/주소칸에 씁니다.</div></div></div>
+      <div class="check"><div class="tick">3</div><div>
+        <div class="t">직원 이름</div>
+        <div class="d">기록에 찍힐 이름(예: 황다빈). 직원이 <span class="cmd">내 이름 ○○로 WHOAMI 만들어줘</span> 로 등록합니다.</div></div></div>
+    </div>
+    <div style="height:14px"></div>
+    <div class="tip"><div class="ico">⚠️</div><div>
+      <p><b>“USB로 폴더만 복사”는 금지.</b> 그러면 연결이 안 돼서 기록이 안 올라옵니다. 반드시 <b>GitHub Desktop으로 Clone</b> 해서 받게 하세요. (직원 설명서에도 경고해 뒀습니다.)</p>
+    </div></div>
+  </section>
+
+  <!-- 평소 운영 -->
+  <section>
+    <h2><span class="num">4</span> 평소 운영 — 개선 루프</h2>
+    <p class="sub">이게 이 시스템의 핵심입니다. 대시보드를 보고, 문제를 규칙으로 고쳐 내려보냅니다.</p>
+    <div class="card steps">
+      <div class="step"><div class="rail"><div class="n">1</div></div>
+        <div class="body"><div class="h">대시보드 확인</div>
+          <div class="p"><span class="mono" style="background:var(--accent-soft);color:var(--accent);padding:1px 7px;border-radius:5px">00_대시보드.md</span> 를 엽니다. “손봐야 할 것(실패·부분성공)”, “오류 모아보기”, “직원별 건수”가 자동으로 뜹니다. (옵시디언이 10분마다 최신 기록을 받아옴)</div></div></div>
+      <div class="step"><div class="rail"><div class="n">2</div></div>
+        <div class="body"><div class="h">반복 문제 찾기</div>
+          <div class="p">여러 직원에게서 <b>같은 오류</b>가 반복되면 그게 우선 개선 대상입니다. (예: “배너 폰트 404”, “이미지 업로드 403”)</div></div></div>
+      <div class="step"><div class="rail"><div class="n">3</div></div>
+        <div class="body"><div class="h">개선사항으로 정리</div>
+          <div class="p"><span class="mono" style="background:var(--accent-soft);color:var(--accent);padding:1px 7px;border-radius:5px">★건들지마세요(시스템)/개선사항/</span> 에 이슈 하나당 파일 하나로 메모해 둡니다.</div></div></div>
+      <div class="step"><div class="rail"><div class="n">4</div></div>
+        <div class="body"><div class="h">규칙(스킬) 고치기</div>
+          <div class="p">이 폴더에서 <b>클로드 코드를 켜고</b> 문제를 말하면 규칙을 고쳐줍니다. 예:
+            <div class="cmdrow"><span class="cmd">배너 폰트가 자꾸 404 나. 스킬에 폰트 처리 규칙 추가해줘</span></div>
+            <span style="font-size:13px">(직접 <span class="mono" style="background:var(--accent-soft);color:var(--accent);padding:1px 6px;border-radius:5px">.claude/skills/…/SKILL.md</span> 를 열어 고쳐도 됩니다.)</span></div></div></div>
+      <div class="step"><div class="rail"><div class="n">5</div></div>
+        <div class="body"><div class="h">올리기 → 직원 자동 반영</div>
+          <div class="p">옵시디언에서 <b>Ctrl+P → “Git: Commit-and-sync”</b> (또는 Push). 직원들은 다음 작업 때 <b>자동으로 받아가</b> 개선된 규칙으로 일합니다.</div></div></div>
+    </div>
+  </section>
+
+  <!-- Git 조작 -->
+  <section>
+    <h2><span class="num">5</span> 올리기 · 받기 (옵시디언에서)</h2>
+    <p class="sub">터미널 없이 옵시디언 명령으로 다 됩니다. <b>Ctrl+P</b> 를 누르고 아래를 칩니다.</p>
+    <div class="card checks">
+      <div class="check"><div class="tick">↑</div><div>
+        <div class="t">내 변경을 올리기</div>
+        <div class="d"><b>Git: Commit-and-sync</b> — 내가 고친 규칙·개선사항을 커밋하고 GitHub로 올립니다.</div></div></div>
+      <div class="check"><div class="tick">↓</div><div>
+        <div class="t">직원 기록 받기</div>
+        <div class="d"><b>Git: Pull</b> — 수동으로 즉시 받기. (평소엔 10분마다 자동으로 받아오니 안 눌러도 됨)</div></div></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <h2><span class="num">6</span> 막히면</h2>
+    <p class="sub">자주 나오는 상황과 해결법.</p>
+    <div class="card faq">
+      <div class="q"><div class="qq">대시보드 표가 계속 비어 있어요</div><div class="aa">① 아직 직원 기록이 없을 수 있어요(정상). ② <b>Dataview</b> 플러그인이 설치·활성화됐는지 확인. ③ 옵시디언 Git이 <b>Pull</b>을 하는지 확인.</div></div>
+      <div class="q"><div class="qq">직원 기록이 안 올라와요</div><div class="aa">그 직원이 폴더를 <b>GitHub Desktop으로 받지 않고 복사만</b> 했을 가능성. 다시 Clone으로 받게 하세요. 또는 그 PC에서 로그인이 풀렸는지 확인.</div></div>
+      <div class="q"><div class="qq">올리기(Push)가 안 돼요</div><div class="aa">GitHub 로그인이 필요합니다. 옵시디언 Git이 자격 증명을 물으면 회사 아이디로 로그인하세요.</div></div>
+      <div class="q"><div class="qq">직원이 그만뒀어요</div><div class="aa">그 PC의 GitHub 로그인을 해제하거나, 회사 계정 비밀번호를 바꿔 그 PC의 접근을 끊으세요.</div></div>
+      <div class="q"><div class="qq">규칙을 고쳤는데 직원에게 반영이 안 돼요</div><div class="aa">내가 <b>Commit-and-sync(올리기)</b> 를 했는지, 직원 쪽이 <b>Pull(받기)</b> 됐는지 확인. 직원은 다음 작업 시작 때 자동으로 받아갑니다.</div></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    한 문장 요약 — <b>대시보드에서 직원들의 실패·오류를 보고 → 규칙(스킬)을 고쳐 → Commit-and-sync 로 올리면 → 직원들에게 자동 반영.</b>
+    이 문서는 관리자용이며 <span class="mono">★건들지마세요(시스템)</span> 안에 있습니다. 직원 배포본에는 안 보입니다.
+  </div>
+
+</div>
+</body>
+</html>
