@@ -150,6 +150,14 @@
   <section>
     <h2><span class="num">0</span> 처음 한 번만 — 설치</h2>
     <p class="sub">컴퓨터에 아래 6가지를 깔아 둡니다. 한 번 하면 다음부터는 안 해도 됩니다.</p>
+
+    <div class="tip"><div class="ico">💻</div><div>
+      <p><b>먼저, ‘터미널’이 뭔지부터.</b> 컴퓨터에 <b>글자로 명령을 내리는 창</b>이에요. 아래 설치와 다음 §1은 이 창에 명령을 붙여넣어서 합니다. (딱 몇 번만 씁니다.)</p>
+      <p><b>여는 법 —</b> 키보드 <b>⊞(윈도우 키)</b> 한 번 누르고 → <b>powershell</b> 이라고 치면 <b>Windows PowerShell</b> 이 나와요 → 눌러서 엽니다. 파란(또는 검은) 창이 뜹니다.</p>
+      <p><b>명령 넣는 법 —</b> 이 설명서의 <b>회색 칸</b> 글자를 복사(Ctrl+C) → 그 창 안에서 <b>마우스 오른쪽 버튼 한 번</b>(=붙여넣기) → <b>Enter</b>. 이게 “실행”이에요.</p>
+    </div></div>
+    <div style="height:16px"></div>
+
     <div class="card checks">
       <div class="check"><div class="tick">✓</div><div>
         <div class="t">Node.js (18 이상)</div>
@@ -172,8 +180,9 @@
     </div>
     <div style="height:14px"></div>
     <div class="tip"><div class="ico">📁</div><div>
-      <p><b>자동화 폴더</b>를 받아서, 그 폴더 안에서 클로드 코드를 켭니다.</p>
-      <p>처음 켜면 “<b>이 폴더를 신뢰하시겠습니까?</b>”를 물어봐요 → <b>예</b>를 눌러야 자동화가 켜집니다.</p>
+      <p>설치가 끝나면 다음 <b>§1</b>에서 회사 작업 폴더를 받습니다. 앞으로 모든 작업은 <b>그 폴더 안에서</b> 해요.</p>
+      <p><b>클로드 코드 켜는 법 —</b> 그 폴더를 파일 탐색기에서 열고 → 빈 곳 <b>마우스 오른쪽 → “터미널에서 열기”</b> → <b>claude</b> 치고 Enter.</p>
+      <p>처음 켜면 “<b>이 폴더를 신뢰하시겠습니까?</b>” → <b>예</b>를 눌러야 자동화가 켜집니다.</p>
     </div></div>
   </section>
 
@@ -181,6 +190,11 @@
   <section>
     <h2><span class="num">1</span> 회사 시스템에 연결 — 내 기록이 자동으로 모이게 (최초 1회)</h2>
     <p class="sub">이걸 해두면 작업할 때마다 <b>내 작업기록·성공·실패·오류가 회사(관리자)에게 자동 전송</b>됩니다. 처음 한 번만 하면 돼요.</p>
+
+    <div class="tip"><div class="ico">🙋</div><div>
+      <p><b>어렵게 느껴지면 — 이건 ‘처음 한 번’만 하는 설정이에요.</b> 관리자나 컴퓨터를 잘 다루는 사람이 <b>각 컴퓨터에서 한 번만</b> 해주면, 이후 작업자는 <b>채팅만</b> 하면 됩니다.</p>
+    </div></div>
+    <div style="height:14px"></div>
 
     <div class="tip"><div class="ico">🎁</div><div>
       <p><b>먼저 관리자에게 3가지를 받으세요.</b></p>
@@ -194,10 +208,16 @@
         <div class="d"><span class="mono">git-scm.com</span> 접속 → 다운로드 → 설치(전부 ‘Next’). 한 번만 하면 됩니다.</div></div></div>
       <div class="check"><div class="tick">2</div><div>
         <div class="t">작업 폴더 받아오기</div>
-        <div class="d">터미널에 <span class="mono">git clone [관리자가 준 주소]</span> 입력 → 창이 뜨면 <b>Username = 회사 아이디</b>, <b>Password = 받은 토큰</b> 붙여넣기. <b>(비밀번호 아니라 토큰!)</b> 받아진 폴더가 앞으로 작업할 폴더입니다.</div></div></div>
+        <div class="d">받을 위치(예: <b>문서</b> 폴더)를 정하고, 그 폴더에서 <b>터미널</b>을 연 뒤 명령 하나를 붙여넣습니다.
+          <ul class="notelist">
+            <li><b>폴더에서 터미널 여는 법</b> — 파일 탐색기로 그 폴더를 열고 → 빈 곳에서 <b>마우스 오른쪽 → “터미널에서 열기”</b></li>
+            <li>거기에 <span class="mono">git clone [관리자가 준 주소]</span> 붙여넣고 <b>Enter</b></li>
+            <li><b>로그인 창</b>이 뜨면 — 아이디 = <b>회사 GitHub 아이디</b>, 비밀번호 칸 = <b>받은 토큰</b> 붙여넣기 <b>(진짜 비번 아니라 토큰!)</b></li>
+            <li>끝나면 그 자리에 <b>폴더가 하나 생겨요</b> → 이게 앞으로 작업할 폴더</li>
+          </ul></div></div></div>
       <div class="check"><div class="tick">3</div><div>
         <div class="t">내 이름 등록</div>
-        <div class="d">그 폴더에서 클로드 코드를 켜고 이렇게 말하면 끝입니다.
+        <div class="d">받은 폴더에서 클로드 코드를 켜고(빈 곳 오른쪽 클릭 → “터미널에서 열기” → <span class="mono">claude</span>) 이렇게 말하면 끝입니다.
           <div class="cmdrow"><span class="cmd">내 이름 홍길동으로 WHOAMI 만들어줘</span></div></div></div></div>
     </div>
 
