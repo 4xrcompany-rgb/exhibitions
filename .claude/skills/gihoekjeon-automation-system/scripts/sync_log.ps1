@@ -15,7 +15,7 @@ if (Test-Path "WHOAMI.txt") { $who = (Get-Content "WHOAMI.txt" -Raw).Trim() }
 
 $today = Get-Date -Format "yyyy-MM-dd"
 
-git add "기록"
+git add "★건들지마세요(시스템)/기록"
 # 스테이징된 게 있을 때만 커밋
 $staged = git diff --cached --name-only
 if ($staged) {
