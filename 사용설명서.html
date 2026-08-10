@@ -149,31 +149,22 @@
   <!-- 설치 -->
   <section>
     <h2><span class="num">0</span> 처음 한 번만 — 설치</h2>
-    <p class="sub">아래 프로그램들을 <b>웹에서 받아 더블클릭</b>으로 설치합니다. <b>검은 명령창(터미널) 쓸 일 없어요 — 전부 클릭입니다.</b></p>
+    <p class="sub">먼저 아래 <b>3가지만</b> 웹에서 받아 더블클릭으로 설치하세요. 나머지(Node·Python·Git·엑셀/이미지 도구)는 §1에서 <b>파일 더블클릭 2번으로 자동 설치</b>됩니다. <b>명령창(터미널) 쓸 일 없어요.</b></p>
 
     <div class="card checks">
       <div class="check"><div class="tick">1</div><div>
-        <div class="t">Node.js</div>
-        <div class="d"><b>nodejs.org</b> 접속 → 큰 초록 버튼(<b>LTS</b>) 다운로드 → 받은 파일 더블클릭 → 계속 <b>‘Next’</b>.</div></div></div>
-      <div class="check"><div class="tick">2</div><div>
-        <div class="t">Python</div>
-        <div class="d"><b>python.org/downloads</b> → 노란 <b>Download</b> → 받은 파일 더블클릭 → <b>⚠️ 첫 화면 아래 “Add python.exe to PATH” 꼭 체크</b> → Install.</div></div></div>
-      <div class="check"><div class="tick">3</div><div>
         <div class="t">GitHub Desktop <span style="color:var(--muted);font-weight:400">— 회사 폴더를 클릭으로 받는 프로그램</span></div>
-        <div class="d"><b>desktop.github.com</b> → Download → 더블클릭 설치. (§1에서 사용)</div></div></div>
-      <div class="check"><div class="tick">4</div><div>
-        <div class="t">Git <span style="color:var(--muted);font-weight:400">— 자동 저장에 필요(설치만, 명령은 안 침)</span></div>
-        <div class="d"><b>git-scm.com</b> → Download → 더블클릭 → 계속 <b>‘Next’</b>. 한 번만 하면 됩니다.</div></div></div>
-      <div class="check"><div class="tick">5</div><div>
-        <div class="t">클로드 앱 (평소 작업하는 채팅 앱)</div>
+        <div class="d"><b>desktop.github.com</b> 접속 → <b>Download</b> → 받은 파일 더블클릭 설치. (§1에서 사용)</div></div></div>
+      <div class="check"><div class="tick">2</div><div>
+        <div class="t">클로드 앱 <span style="color:var(--muted);font-weight:400">— 평소 작업하는 채팅 앱</span></div>
         <div class="d">기획전 작업은 이 앱에서 <b>채팅</b>으로 합니다. 설치 후 로그인해 두세요.</div></div></div>
-      <div class="check"><div class="tick">6</div><div>
+      <div class="check"><div class="tick">3</div><div>
         <div class="t">피그마 계정 (Full seat)</div>
-        <div class="d">이미지 규격 레이아웃·소재 작업에 사용. View seat은 편집이 안 됩니다.</div></div></div>
+        <div class="d"><b>figma.com</b> 가입/로그인. 이미지 규격 레이아웃·소재 작업에 사용. View seat은 편집이 안 됩니다.</div></div></div>
     </div>
     <div style="height:14px"></div>
     <div class="tip"><div class="ico">📁</div><div>
-      <p><b>엑셀·이미지·배너용 자잘한 도구</b>는 여기서 안 깔아도 돼요. §1에서 회사 폴더를 받은 뒤 <b>파일 하나만 더블클릭</b>하면 자동으로 설치됩니다.</p>
+      <p><b>Node·Python·Git·엑셀·이미지·배너 도구</b>는 여기서 안 깔아도 돼요. §1에서 회사 폴더를 받은 뒤, 폴더 안 <b>파일 2개만 차례로 더블클릭</b>하면 전부 자동 설치됩니다. (웹사이트 돌아다닐 필요 없어요.)</p>
       <p>앞으로 모든 작업은 <b>§1에서 받는 회사 폴더</b> 안에서, <b>클로드 앱에 채팅</b>으로 합니다.</p>
     </div></div>
   </section>
@@ -202,8 +193,12 @@
         <div class="t">회사 폴더 받기 (클릭)</div>
         <div class="d">맨 위 <b>File → Clone repository</b> → 목록에서 <b>회사 저장소를 클릭</b>(또는 주소 붙여넣기) → 받을 위치 고르고 → <b>Clone</b> 버튼. 폴더가 알아서 받아집니다.</div></div></div>
       <div class="check"><div class="tick">3</div><div>
-        <div class="t">준비물 자동 설치 (더블클릭)</div>
-        <div class="d">받아진 폴더를 열고 → <span class="mono">_처음설치_한번만</span> 폴더 → <b><span class="mono">➊_처음설치.bat</span> 더블클릭</b> → 검은 창이 알아서 설치. <b>“설치 끝!”</b> 나오면 닫기.</div></div></div>
+        <div class="t">준비물 자동 설치 (더블클릭 2번)</div>
+        <div class="d">받아진 폴더를 열고 → <span class="mono">_처음설치_한번만</span> 폴더에서 <b>차례로 더블클릭</b>:
+          <ul class="notelist">
+            <li><b><span class="mono">➊_프로그램설치.bat</span></b> → 뜨는 창에서 <b>“예”</b> 한 번 → Node·Python·Git 자동설치 → <b>“끝!”</b> 나오면 닫기</li>
+            <li>이어서 <b><span class="mono">➋_도구설치.bat</span></b> → 엑셀·이미지·배너 도구 자동설치 → <b>“설치 끝!”</b> 나오면 닫기</li>
+          </ul></div></div></div>
       <div class="check"><div class="tick">4</div><div>
         <div class="t">내 이름 등록</div>
         <div class="d">클로드 앱에서 <b>받은 폴더를 열고</b> 채팅에 이렇게 말하면 끝입니다.
@@ -216,26 +211,6 @@
       <p>가끔 <b>회사 최신 개선</b>을 받고 싶으면 GitHub Desktop 위쪽의 <b>“Fetch origin / Pull”</b> 한 번 누르면 됩니다.</p>
     </div></div>
 
-    <div style="height:26px"></div>
-    <p class="sub" style="font-weight:700;color:var(--ink)">📓 (선택) 옵시디언 — 내 기록·개선사항을 눈으로 보고 싶을 때</p>
-    <p class="sub">위 3단계로 <b>기록 전송은 이미 됩니다.</b> 옵시디언은 <b>안 깔아도 돼요.</b> 대시보드·개선사항을 직접 보고 싶은 사람만 하세요.</p>
-    <div class="card checks">
-      <div class="check"><div class="tick">✓</div><div>
-        <div class="t">옵시디언 설치</div>
-        <div class="d"><span class="mono">obsidian.md</span> 접속 → Download → 설치.</div></div></div>
-      <div class="check"><div class="tick">✓</div><div>
-        <div class="t">받은 폴더 열기</div>
-        <div class="d">첫 화면 <b>“폴더를 보관함으로 열기”</b> → <b>2번에서 받아온 폴더</b> 선택 → <b>“제작자를 신뢰…”</b> 창이 뜨면 클릭. (화면이 영어면 설정 → 일반 → 언어 → 한국어)</div></div></div>
-      <div class="check"><div class="tick">✓</div><div>
-        <div class="t">플러그인 2개 설치</div>
-        <div class="d">설정(⚙) → 커뮤니티 플러그인 켜기 → 둘러보기 → <b>“Git”(개발자 Vinzent)</b> 설치·활성화, <b>“Dataview”</b> 설치·활성화.</div></div></div>
-      <div class="check"><div class="tick">✓</div><div>
-        <div class="t">‘받기’만 켜기 (Git 플러그인)</div>
-        <div class="d">설정 → Git → <b>Auto pull interval (minutes)</b> 에 <span class="mono">10</span> 입력. <b>⚠️ Auto commit·sync 류는 켜지 마세요</b> — 기록은 클로드가 알아서 올립니다.</div></div></div>
-      <div class="check"><div class="tick">✓</div><div>
-        <div class="t">대시보드 열기</div>
-        <div class="d">왼쪽 파일 목록 → <span class="mono">★건들지마세요(시스템)</span> → <span class="mono">00_대시보드.md</span></div></div></div>
-    </div>
   </section>
 
   <!-- 자동 모드 -->
