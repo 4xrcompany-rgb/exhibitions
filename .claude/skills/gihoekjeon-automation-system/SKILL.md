@@ -431,7 +431,9 @@ KV        로드 직후 타이포 → 오브젝트 → 뱃지 → 하단 카피 
 **③-b 스크롤 탭(상단 카테고리 네비) 고정 방식 ★** — 게시판은 window가 아니라 내부에서 스크롤되는 경우가 있어 **`position:sticky` 가 불안정**(안 붙음). 대신 **`position:fixed` + 센티넬 JS 핀**을 쓴다(사이트 헤더도 fixed로 잘 되므로 확실). 방식(사용자 확정 2026-08-10):
 - 탭 앞에 0-높이 **센티넬** div. 센티넬 top ≤ OFFSET 이면 탭에 `.pinned`(=`position:fixed;top:0`) 부여 + 센티넬 height=탭높이(점프 방지), 아니면 해제.
 - 스크롤 리스너는 `{capture:true}` (게시판 내부 스크롤러도 잡음) + `IntersectionObserver` 백업.
-- **OFFSET=0 (top:0 핀)**: 스크롤 내리면 탭이 상단에 보이고, **올리면 4XR 사이트 헤더(z-index 100)가 그 위를 덮어 가려짐 — 이게 의도된 동작**. 그래서 탭 z-index 는 헤더보다 낮게(예 90).
+- **OFFSET(사용자 확정): PC=0, 모바일=128** → `apply()` 안에서 `var OFFSET=(innerWidth<=768)?128:0;` 로 폭에 따라 계산, `.snav.pinned` top 도 같게(PC 0 / `@media(max-width:768px)` 128).
+  - **PC(top:0)**: 내리면 탭이 상단에 보이고, **올리면 4XR 헤더(z:100)가 위를 덮어 가려짐 — 의도된 동작**(탭 z-index 는 헤더보다 낮게 90).
+  - **모바일(top:128)**: 사이트 헤더(128px) **아래에 붙어 계속 보임**.
 - 탭은 **히어로/인트로 다음(상품 영역 앞)** 에 흐름상 배치. show/hide 슬라이드 연출은 뺀다.
 ★ **래퍼/조상에 `overflow-x:hidden`(또는 overflow:hidden) 을 두면 sticky 가 깨진다** — 스크롤 컨테이너가 되어 탭이 안 붙는다. 가로 넘침은 마퀴 등 **개별 요소에서 `overflow:hidden`** 으로 막고, 래퍼엔 두지 않는다.
 
