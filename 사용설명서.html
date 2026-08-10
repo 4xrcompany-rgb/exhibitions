@@ -177,9 +177,60 @@
     </div></div>
   </section>
 
+  <!-- 회사 시스템 연결 -->
+  <section>
+    <h2><span class="num">1</span> 회사 시스템에 연결 — 내 기록이 자동으로 모이게 (최초 1회)</h2>
+    <p class="sub">이걸 해두면 작업할 때마다 <b>내 작업기록·성공·실패·오류가 회사(관리자)에게 자동 전송</b>됩니다. 처음 한 번만 하면 돼요.</p>
+
+    <div class="tip"><div class="ico">🎁</div><div>
+      <p><b>먼저 관리자에게 3가지를 받으세요.</b></p>
+      <p>① 저장소 주소　② 접속 토큰(<b>github_pat_…</b> 로 시작하는 긴 문자열)　③ 나에게 쓸 이름</p>
+    </div></div>
+    <div style="height:14px"></div>
+
+    <div class="card checks">
+      <div class="check"><div class="tick">1</div><div>
+        <div class="t">Git 설치 (폴더를 받아오는 프로그램)</div>
+        <div class="d"><span class="mono">git-scm.com</span> 접속 → 다운로드 → 설치(전부 ‘Next’). 한 번만 하면 됩니다.</div></div></div>
+      <div class="check"><div class="tick">2</div><div>
+        <div class="t">작업 폴더 받아오기</div>
+        <div class="d">터미널에 <span class="mono">git clone [관리자가 준 주소]</span> 입력 → 창이 뜨면 <b>Username = 회사 아이디</b>, <b>Password = 받은 토큰</b> 붙여넣기. <b>(비밀번호 아니라 토큰!)</b> 받아진 폴더가 앞으로 작업할 폴더입니다.</div></div></div>
+      <div class="check"><div class="tick">3</div><div>
+        <div class="t">내 이름 등록</div>
+        <div class="d">그 폴더에서 클로드 코드를 켜고 이렇게 말하면 끝입니다.
+          <div class="cmdrow"><span class="cmd">내 이름 홍길동으로 WHOAMI 만들어줘</span></div></div></div></div>
+    </div>
+
+    <div style="height:14px"></div>
+    <div class="tip"><div class="ico">✅</div><div>
+      <p><b>연결 끝!</b> 이제 평소처럼 작업하면 <b>기록이 자동으로 전송</b>됩니다. 따로 올리는 버튼 같은 건 없어요 — 클로드가 알아서 합니다.</p>
+    </div></div>
+
+    <div style="height:26px"></div>
+    <p class="sub" style="font-weight:700;color:var(--ink)">📓 (선택) 옵시디언 — 내 기록·개선사항을 눈으로 보고 싶을 때</p>
+    <p class="sub">위 3단계로 <b>기록 전송은 이미 됩니다.</b> 옵시디언은 <b>안 깔아도 돼요.</b> 대시보드·개선사항을 직접 보고 싶은 사람만 하세요.</p>
+    <div class="card checks">
+      <div class="check"><div class="tick">✓</div><div>
+        <div class="t">옵시디언 설치</div>
+        <div class="d"><span class="mono">obsidian.md</span> 접속 → Download → 설치.</div></div></div>
+      <div class="check"><div class="tick">✓</div><div>
+        <div class="t">받은 폴더 열기</div>
+        <div class="d">첫 화면 <b>“폴더를 보관함으로 열기”</b> → <b>2번에서 받아온 폴더</b> 선택 → <b>“제작자를 신뢰…”</b> 창이 뜨면 클릭. (화면이 영어면 설정 → 일반 → 언어 → 한국어)</div></div></div>
+      <div class="check"><div class="tick">✓</div><div>
+        <div class="t">플러그인 2개 설치</div>
+        <div class="d">설정(⚙) → 커뮤니티 플러그인 켜기 → 둘러보기 → <b>“Git”(개발자 Vinzent)</b> 설치·활성화, <b>“Dataview”</b> 설치·활성화.</div></div></div>
+      <div class="check"><div class="tick">✓</div><div>
+        <div class="t">‘받기’만 켜기 (Git 플러그인)</div>
+        <div class="d">설정 → Git → <b>Auto pull interval (minutes)</b> 에 <span class="mono">10</span> 입력. <b>⚠️ Auto commit·sync 류는 켜지 마세요</b> — 기록은 클로드가 알아서 올립니다.</div></div></div>
+      <div class="check"><div class="tick">✓</div><div>
+        <div class="t">대시보드 열기</div>
+        <div class="d">왼쪽 파일 목록 → <span class="mono">★건들지마세요(시스템)</span> → <span class="mono">00_대시보드.md</span></div></div></div>
+    </div>
+  </section>
+
   <!-- 자동 모드 -->
   <section>
-    <h2><span class="num">1</span> 시작 전 — 채팅방을 ‘자동’ 모드로</h2>
+    <h2><span class="num">2</span> 시작 전 — 채팅방을 ‘자동’ 모드로</h2>
     <p class="sub">이걸 켜면 클로드가 매번 “해도 되나요?”를 안 묻고 알아서 파일을 만들고 고칩니다.</p>
     <div class="tip"><div class="ico">⚙️</div><div>
       <p>채팅창 <b>아래쪽에서 모드를 ‘자동’</b>으로 바꿔 주세요.</p>
@@ -189,7 +240,7 @@
 
   <!-- 작업 순서 -->
   <section>
-    <h2><span class="num">2</span> 작업 순서</h2>
+    <h2><span class="num">3</span> 작업 순서</h2>
     <p class="sub">위에서 아래로 그대로 따라 하세요. 검은 칸은 <b>채팅에 그대로 입력</b>하는 말입니다.</p>
     <div class="legend">
       <span class="who me"><span class="dot"></span>내가 할 일</span>
@@ -283,7 +334,7 @@
 
   <!-- 명령어 요약 -->
   <section>
-    <h2><span class="num">3</span> 채팅에 입력하는 말 — 한눈에</h2>
+    <h2><span class="num">4</span> 채팅에 입력하는 말 — 한눈에</h2>
     <p class="sub">이 말들만 기억하면 됩니다. 그대로 채팅에 입력하세요.</p>
     <div class="card cheat">
       <div class="row"><div class="k"><span class="cmd">기획전 작업 시작</span></div><div class="v">폴더 경로를 준 뒤 — 작업 시작</div></div>
@@ -297,7 +348,7 @@
 
   <!-- 막히면 -->
   <section>
-    <h2><span class="num">4</span> 막히면</h2>
+    <h2><span class="num">5</span> 막히면</h2>
     <p class="sub">자주 나오는 상황과 해결법.</p>
     <div class="card faq">
       <div class="q"><div class="qq">엑셀이 안 읽혀요</div><div class="aa">엑셀이 열려 있으면 못 읽습니다. 엑셀을 닫고 다시 요청하세요.</div></div>
