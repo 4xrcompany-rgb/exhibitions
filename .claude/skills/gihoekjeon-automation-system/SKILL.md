@@ -437,6 +437,12 @@ KV        로드 직후 타이포 → 오브젝트 → 뱃지 → 하단 카피 
 - ★★ **래퍼/조상에 `overflow-x:hidden`(또는 overflow:hidden) 절대 금지** — 스크롤 컨테이너가 되어 sticky 가 깨진다(이걸로 "안 붙음" 사고). 가로 넘침은 마퀴 등 개별 요소에서 `overflow:hidden` 으로 막고 래퍼엔 두지 않는다. (fixed+센티넬 방식은 여백이 생겨 폐기 — sticky 로 한다.)
 ★ **래퍼/조상에 `overflow-x:hidden`(또는 overflow:hidden) 을 두면 sticky 가 깨진다** — 스크롤 컨테이너가 되어 탭이 안 붙는다. 가로 넘침은 마퀴 등 **개별 요소에서 `overflow:hidden`** 으로 막고, 래퍼엔 두지 않는다.
 
+**③-c 납품본의 큰 이미지(KV/메인·큰 섹션 배경)는 base64 내장 대신 몰 업로드 URL 로 넣는다 ★★** — 사용자 확정(2026-08-11):
+- **왜**: KV 를 base64(데이터 URL)로 HTML 안에 통째로 박으면 HTML 이 수십~수백 KB 로 무거워져, 비즈호스트 게시판이 **큰 코드를 거부하거나 잘라서 → 붙여넣으면 빈 화면**처럼 보인다(사고 2026-08-11: 붙여넣기 내용 비어 보임, KV base64 183KB 의심).
+- **어떻게**: KV·큰 섹션 이미지는 **몰(비즈호스트)에 먼저 업로드**하고 HTML 엔 `<img src="https://cdn-tgreen.bizhost.kr/files/goods/…">` **주소만** 넣는다. 상품 이미지가 이미 CDN 직접링크를 쓰는 것과 같은 방식. → HTML 이 가벼워져 붙여넣기가 안정적.
+- 업로드는 몰 관리자/게시판 이미지 첨부로 올려 URL 을 얻는다(사용자에게 업로드 위치·URL 확인). 작은 필수 인라인 아이콘 정도만 base64 허용.
+- ★ 이 규칙은 **게시판 납품본(fragment)** 에만 적용. §2 승인시안·로컬 렌더용 HTML 은 오프라인 렌더 위해 base64 내장 그대로(§352, §7-6).
+
 **④ IDE 없는 작업자용 「복사」 파일을 만든다** — 작업자 PC엔 VS코드가 없다. 크롬으로 HTML을 열면 코드가 아니라 화면이 뜬다. 그래서 **`<기획전명>_비즈호스트_붙여넣기.html`** 를 만든다: 「코드 복사」 버튼 + 미리보기 textarea + 3단계 안내. 작업자는 크롬으로 열고 버튼 눌러 복사 → 비즈호스트 게시판 **소스(HTML) 모드**에 붙여넣기.
 - ★ 코드에 `</script>`·`&quot;` 가 들어있어 **textarea/​script에 raw로 넣으면 깨진다. 반드시 base64로 임베드**하고 클릭 시 `atob`→`decodeURIComponent(escape())` 로 디코드해 복사한다(생성 스크립트로 만든다). clipboard API 실패 시 `execCommand('copy')` 폴백.
 - 이 파일은 「복사 도구」이지 기획전의 백업본이 아니다(①의 백업 금지와 무관).
@@ -670,6 +676,10 @@ url = CDN + quote(path, safe='/._-')     # [ ] → %5B %5D
    $t=[IO.File]::ReadAllText($p,[Text.Encoding]::UTF8); [IO.File]::WriteAllText($p,$t,(New-Object System.Text.UTF8Encoding($true)))
    ```
    `.gitattributes` 에 **`*.ps1 -text`** 도 넣어 clone 시 안 깨지게 고정. (이후 수정도 PowerShell 로 — Edit/Write 로 건드리면 BOM 이 날아간다.)
+7. ★★**Python(및 node) 스크립트로 파일을 쓸 때는 반드시 `encoding='utf-8'` 을 명시한다.** 한글 Windows 의 파이썬 `open()`·`json.dump`·`Path.write_text` 기본 인코딩은 **cp949** 라, 명시 안 하면 한글 값·**한글 파일명**이 깨진다(사고 2026-08-11: 배너 캡처용 `_jobs.json` 을 기본 cp949 로 써서 node 가 배너 JPG 를 깨진 파일명으로 저장). 규칙:
+   - 쓰기: `open(p,'w',encoding='utf-8')`, `json.dump(x,f,ensure_ascii=False)` + 그 f 는 utf-8 로 열기, `Path(p).write_text(s,encoding='utf-8')`
+   - 읽기도 `encoding='utf-8'` 명시(엑셀 파싱 결과·구성표 등)
+   - node 로 넘길 JSON 은 특히 주의 — 한글 파일명/경로가 들어가면 반드시 utf-8. (안전빵으로 `ensure_ascii=True` 로 ASCII 이스케이프해도 됨)
 
 ---
 
