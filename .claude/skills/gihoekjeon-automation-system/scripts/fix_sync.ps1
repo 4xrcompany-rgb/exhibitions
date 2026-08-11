@@ -43,8 +43,14 @@ Log "── 재등록 ──"
 $dest = Join-Path $env:USERPROFILE 'Documents\4XR_기획전'
 $syncScript = Join-Path $dest '.claude\skills\gihoekjeon-automation-system\scripts\sync_log.ps1'
 if (Test-Path $syncScript) {
-    $action = New-ScheduledTaskAction -Execute 'powershell.exe' `
-        -Argument ("-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File `"{0}`"" -f $syncScript)
+    # 완전 숨김 실행기(wscript+vbs)가 있으면 그걸로 등록 → 파란창도 안 뜸. 없으면 숨김 powershell.
+    $vbs = Join-Path (Split-Path $syncScript) 'sync_hidden.vbs'
+    if (Test-Path $vbs) {
+        $action = New-ScheduledTaskAction -Execute 'wscript.exe' -Argument ('"{0}"' -f $vbs)
+    } else {
+        $action = New-ScheduledTaskAction -Execute 'powershell.exe' `
+            -Argument ("-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File `"{0}`"" -f $syncScript)
+    }
     # 30분마다. StartWhenAvailable 일부러 끔(놓친 실행 몰아치기 방지). 겹치면 새 실행 무시.
     $trig = New-ScheduledTaskTrigger -Once -At ((Get-Date).AddMinutes(3)) `
         -RepetitionInterval (New-TimeSpan -Minutes 30)

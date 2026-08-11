@@ -37,14 +37,17 @@ for %%R in (exhibitions 4xr-selecshop-automation 4xr-records) do (
 )
 
 echo.
-echo   [2/3] 자동 최신화(30분마다) 설정...
-if exist "%VAULT%\exhibitions\★건들지마세요(시스템)\관리자도구\sync_all.ps1" (
-  copy /y "%VAULT%\exhibitions\★건들지마세요(시스템)\관리자도구\sync_all.ps1" "%VAULT%\_sync_all.ps1" >nul
-  schtasks /create /f /tn "4XR_all_sync" /tr "powershell -NoProfile -ExecutionPolicy Bypass -File \"%VAULT%\_sync_all.ps1\"" /sc minute /mo 30 /rl highest >nul
+echo   [2/3] 자동 최신화(30분마다) 설정 - 창이 전혀 안 뜨는 숨김 방식...
+set "TOOL=%VAULT%\exhibitions\★건들지마세요(시스템)\관리자도구"
+if exist "%TOOL%\sync_all.ps1" (
+  copy /y "%TOOL%\sync_all.ps1" "%VAULT%\_sync_all.ps1" >nul
+  copy /y "%TOOL%\_sync_all_hidden.vbs" "%VAULT%\_sync_all_hidden.vbs" >nul
+  schtasks /delete /f /tn "4XR_all_sync" >nul 2>&1
+  schtasks /create /f /tn "4XR_all_sync" /tr "wscript.exe %VAULT%\_sync_all_hidden.vbs" /sc minute /mo 30 /rl highest >nul
   schtasks /run /tn "4XR_all_sync" >nul
-  echo         등록 완료 (작업 이름: 4XR_all_sync)
+  echo         등록 완료 (작업 이름: 4XR_all_sync / 파란창 안 뜸)
 ) else (
-  echo         [주의] sync_all.ps1 을 못 찾았습니다. exhibitions 받기가 안 된 듯해요.
+  echo         [주의] 도구 파일을 못 찾았습니다. exhibitions 받기가 안 된 듯해요.
   echo                이 파일을 다시 실행해 주세요.
 )
 
@@ -57,7 +60,7 @@ echo.
 echo        %VAULT%
 echo.
 echo   ==========================================
-echo    그러면 3개 자동화 기록이 한 그래프에 모두 나옵니다.
-echo    (30분마다 자동으로 최신화됩니다.)
+echo    3개 자동화 기록이 한 그래프에 모두 나옵니다.
+echo    30분마다 자동 최신화되고, 이제 파란창은 안 뜹니다.
 echo.
 pause

@@ -31,8 +31,14 @@ if (-not (Test-Path $syncScript)) {
 # ── ① 윈도우 작업 스케줄러 등록 ────────────────────────────────
 Write-Host "  [1/3] 윈도우 작업 스케줄러에 등록 중..."
 try {
-    $action = New-ScheduledTaskAction -Execute "powershell.exe" `
-        -Argument ("-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File `"{0}`"" -f $syncScript)
+    # 완전 숨김 실행기(wscript+vbs)가 있으면 그걸로 → 파란창도 안 뜸. 없으면 숨김 powershell.
+    $vbs = Join-Path $PSScriptRoot "sync_hidden.vbs"
+    if (Test-Path $vbs) {
+        $action = New-ScheduledTaskAction -Execute "wscript.exe" -Argument ('"{0}"' -f $vbs)
+    } else {
+        $action = New-ScheduledTaskAction -Execute "powershell.exe" `
+            -Argument ("-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File `"{0}`"" -f $syncScript)
+    }
 
     $tRepeat = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(2) `
         -RepetitionInterval (New-TimeSpan -Minutes $Minutes)
