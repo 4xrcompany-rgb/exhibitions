@@ -635,6 +635,30 @@ url = CDN + quote(path, safe='/._-')     # [ ] → %5B %5D
    섹션 하나만 사라졌으면 **그 섹션이 쓰는 속성 데이터**를, 전체가 죽었으면 **script 문법**을 본다.
 
 
+### 7-10. 한글 배치파일(.bat)은 UTF-8 로 저장하면 깨진다 ★★ — CP949 로 저장
+
+**증상**: 배포용 `.bat`(4XR_시작.bat, ➊➋➌➍ 등)을 더블클릭하면 한글이 깨지고
+`'.Git'은(는) … 배치 파일이 아닙니다` 같은 **"그런 명령 없다" 에러가 쏟아진다**(사고 2026-08-10).
+
+**원인**: 한글 Windows 의 cmd 는 배치파일을 **CP949(EUC-KR)** 로 읽는다. 파일이 **UTF-8**(Write/Edit 도구 기본값)이면
+한글 주석·echo·경로가 잘못 디코드돼 그 깨진 바이트가 명령으로 해석된다. `chcp 65001` 을 넣어도 소용없다(파싱은 그 전에 일어남).
+
+**규칙**
+1. **한글이 든 `.bat` 은 반드시 CP949 로 저장한다. UTF-8 금지.** Write/Edit 는 UTF-8 로 저장하므로 만든 뒤 **PowerShell 로 CP949 재인코딩**:
+   ```powershell
+   $t=[IO.File]::ReadAllText($p,[Text.Encoding]::UTF8)
+   [IO.File]::WriteAllText($p, ($t -replace "`n","`r`n"), [Text.Encoding]::GetEncoding(949))
+   ```
+   ※ 이후 수정도 **PowerShell 로**. Edit/Write 로 CP949 .bat 을 건드리면 UTF-8 로 되돌아가 또 깨진다.
+2. **`chcp 949`** 를 쓴다(`chcp 65001` 금지). 줄바꿈은 **CRLF**.
+3. **CP949 에 없는 문자 금지** — 동그라미 숫자(➊➋➌➍)·═·▶ 등은 `?` 로 깨진다. `=`·`-`·`>`·`*` 로 대체. (파일명의 ➊ 등은 NTFS 라 괜찮지만 .bat **내용**엔 쓰지 않는다.)
+4. `.gitattributes` 에 **`*.bat -text`** — clone 시 인코딩/줄바꿈이 안 깨지게 바이너리로 고정.
+5. **.bat 안에서 한글 이름(WHOAMI 등)을 `echo >` 로 쓰지 말고** PowerShell 로 UTF-8 저장(환경변수는 Unicode 라 안전):
+   `powershell -Command "[IO.File]::WriteAllText('%DEST%\WHOAMI.txt',$env:WORKER,(New-Object System.Text.UTF8Encoding($false)))"`
+   ※ `.ps1` 은 한글이 문자열이라 깨져도 안 죽지만, **`.bat` 은 명령으로 해석돼 죽는다** — .bat 이 특히 위험.
+
+---
+
 ## 8. 실행 스크립트
 
 | 스크립트 | 역할 |
