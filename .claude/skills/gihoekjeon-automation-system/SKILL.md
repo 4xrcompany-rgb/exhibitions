@@ -680,6 +680,13 @@ url = CDN + quote(path, safe='/._-')     # [ ] → %5B %5D
    - 쓰기: `open(p,'w',encoding='utf-8')`, `json.dump(x,f,ensure_ascii=False)` + 그 f 는 utf-8 로 열기, `Path(p).write_text(s,encoding='utf-8')`
    - 읽기도 `encoding='utf-8'` 명시(엑셀 파싱 결과·구성표 등)
    - node 로 넘길 JSON 은 특히 주의 — 한글 파일명/경로가 들어가면 반드시 utf-8. (안전빵으로 `ensure_ascii=True` 로 ASCII 이스케이프해도 됨)
+8. ★★**작업 스케줄러로 도는 동기화는 `powershell -WindowStyle Hidden` 으론 창이 깜빡인다 — `wscript`+`.vbs` 로 등록해 완전 숨긴다.** 스케줄러가 사용자 세션에서 `powershell.exe`(콘솔앱)를 띄우면 Hidden 적용 직전 conhost 창이 잠깐 떠서 **깜빡인다**(powershell=파란창, .bat=까만창; 안의 `git` 호출 때 한 번 더). 30분정기+로그온+몰아치기가 겹쳐 **랜덤처럼** 보인다(사고 2026-08-11). 해결: VBS 실행기가 powershell 을 창상태 0으로 실행 → conhost 창 자체가 안 생긴다. 자기 폴더 기준으로 대상 .ps1 을 찾게 하면 경로 하드코딩 불필요:
+   ```vbs
+   Dim fso, here : Set fso = CreateObject("Scripting.FileSystemObject")
+   here = fso.GetParentFolderName(WScript.ScriptFullName)
+   CreateObject("WScript.Shell").Run "powershell -NoProfile -ExecutionPolicy Bypass -File """ & here & "\대상.ps1""", 0, False
+   ```
+   예약작업 Action = `wscript.exe "경로\실행기.vbs"`. (SYSTEM/S4U 세션0 실행도 창은 없지만 git 자격증명이 사용자 크레덴셜매니저라 SYSTEM은 pull 인증 실패 → wscript 방식이 안전.) 4XR 파일: `scripts/sync_hidden.vbs`, `관리자도구/_sync_all_hidden.vbs`. setup_auto_sync.ps1·fix_sync.ps1·관리자_전체보기.bat 이 vbs 있으면 wscript로 등록. 진단/정리 = `직원배포/도스창_정리.bat`. [[scheduled-task-no-window]]
 
 ---
 

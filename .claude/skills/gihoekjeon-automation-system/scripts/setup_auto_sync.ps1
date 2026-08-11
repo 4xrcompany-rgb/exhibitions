@@ -45,7 +45,7 @@ try {
     $tLogon  = New-ScheduledTaskTrigger -AtLogOn
 
     $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable `
-        -DontStopIfGoingOnBatteries -AllowStartIfOnBatteries `
+        -DontStopIfGoingOnBatteries -AllowStartIfOnBatteries -MultipleInstances IgnoreNew `
         -ExecutionTimeLimit (New-TimeSpan -Minutes 10)
 
     Register-ScheduledTask -TaskName $TaskName -Action $action `
