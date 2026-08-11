@@ -47,9 +47,11 @@ if (Test-Path $syncScript) {
     $vbs = Join-Path (Split-Path $syncScript) 'sync_hidden.vbs'
     if (Test-Path $vbs) {
         $action = New-ScheduledTaskAction -Execute 'wscript.exe' -Argument ('"{0}"' -f $vbs)
+        $method = "wscript 완전숨김(vbs) — 창 절대 안 뜸 ✔"
     } else {
         $action = New-ScheduledTaskAction -Execute 'powershell.exe' `
             -Argument ("-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File `"{0}`"" -f $syncScript)
+        $method = "powershell 숨김 — vbs 없음! 4XR_시작.bat 을 한 번 더 실행해 vbs 를 받은 뒤 이 파일을 다시 실행하세요 (그래야 까만창이 완전히 없어짐)"
     }
     # 30분마다. StartWhenAvailable 일부러 끔(놓친 실행 몰아치기 방지). 겹치면 새 실행 무시.
     $trig = New-ScheduledTaskTrigger -Once -At ((Get-Date).AddMinutes(3)) `
@@ -58,7 +60,10 @@ if (Test-Path $syncScript) {
         -ExecutionTimeLimit (New-TimeSpan -Minutes 10) -MultipleInstances IgnoreNew
     Register-ScheduledTask -TaskName '4XR_기획전_기록동기화' -Action $action -Trigger $trig -Settings $set `
         -Description "4XR 작업기록 자동 동기화(숨김·30분)" -Force | Out-Null
-    Log "  재등록: 4XR_기획전_기록동기화 (powershell 숨김, 30분, 몰아치기 없음, 겹침무시)"
+    Log "  재등록: 4XR_기획전_기록동기화 (30분, 몰아치기 없음, 겹침무시)"
+    Log "  방식: $method"
+    $reg = Get-ScheduledTask -TaskName '4XR_기획전_기록동기화'
+    Log ("  실제 실행줄: " + (($reg.Actions | ForEach-Object { "$($_.Execute) $($_.Arguments)" }) -join ' '))
 } else {
     Log "  워커 저장소가 없어 재등록 생략: $syncScript"
     Log "  (관리자 PC라면 정상 — 여기선 4XR_all_sync 만 있으면 됩니다.)"
