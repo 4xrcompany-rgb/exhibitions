@@ -1,2 +1,4 @@
 # 배치파일은 한글 Windows용 CP949 인코딩 + CRLF 로 고정. git 이 줄바꿈/인코딩을 건드리지 않게 바이너리 취급.
 *.bat -text
+# .ps1 도 인코딩(UTF-8 BOM) 보존 — PowerShell 5.1 이 한글을 제대로 읽어야 한다.
+*.ps1 -text

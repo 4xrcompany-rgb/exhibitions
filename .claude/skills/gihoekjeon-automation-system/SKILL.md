@@ -655,7 +655,11 @@ url = CDN + quote(path, safe='/._-')     # [ ] → %5B %5D
 4. `.gitattributes` 에 **`*.bat -text`** — clone 시 인코딩/줄바꿈이 안 깨지게 바이너리로 고정.
 5. **.bat 안에서 한글 이름(WHOAMI 등)을 `echo >` 로 쓰지 말고** PowerShell 로 UTF-8 저장(환경변수는 Unicode 라 안전):
    `powershell -Command "[IO.File]::WriteAllText('%DEST%\WHOAMI.txt',$env:WORKER,(New-Object System.Text.UTF8Encoding($false)))"`
-   ※ `.ps1` 은 한글이 문자열이라 깨져도 안 죽지만, **`.bat` 은 명령으로 해석돼 죽는다** — .bat 이 특히 위험.
+6. ★★**한글이 든 `.ps1` 은 반드시 UTF-8 BOM 으로 저장한다.** Windows PowerShell 5.1(스케줄러가 쓰는 `powershell.exe`)은 **BOM 없는 .ps1 을 ANSI(CP949)로 읽어** 한글이 깨진다. 특히 동기화 스크립트의 `git add "★건들지마세요(시스템)/기록"` 한글 경로가 깨지면 **아무 파일도 스테이징 안 돼 에러 하나 없이 동기화가 조용히 실패**한다(사고 2026-08-11: **전 직원 기록이 하나도 안 올라옴**, 로그도 "올릴 것 없음"만 반복). `.bat`(cmd)은 요란하게 죽지만 **`.ps1`(PS5.1)은 조용히 틀린 경로를 쓴다 — 더 위험.** Write/Edit 는 BOM 없이 저장하므로 만든 뒤 PowerShell 로 BOM 추가:
+   ```powershell
+   $t=[IO.File]::ReadAllText($p,[Text.Encoding]::UTF8); [IO.File]::WriteAllText($p,$t,(New-Object System.Text.UTF8Encoding($true)))
+   ```
+   `.gitattributes` 에 **`*.ps1 -text`** 도 넣어 clone 시 안 깨지게 고정. (이후 수정도 PowerShell 로 — Edit/Write 로 건드리면 BOM 이 날아간다.)
 
 ---
 
