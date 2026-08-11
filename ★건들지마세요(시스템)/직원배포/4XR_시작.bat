@@ -27,7 +27,7 @@ set /p "WORKER=  이름을 입력하고 Enter (예: 황다빈): "
 if "%WORKER%"=="" set "WORKER=이름미정"
 
 echo.
-echo   [1/3] 필수 프로그램 설치 (Git, Node, Python)...
+echo   [1/4] 필수 프로그램 설치 (Git, Node, Python)...
 where winget >nul 2>&1
 if %errorlevel%==0 (
   winget install --id Git.Git -e --accept-source-agreements --accept-package-agreements
@@ -41,7 +41,7 @@ if not exist "%GIT%" set "GIT=git"
 set "PATH=%PATH%;%ProgramFiles%\Git\cmd"
 
 echo.
-echo   [2/3] 회사 폴더 받기 - 로그인 창이 뜨면 "회사 GitHub 아이디" 로 로그인하세요.
+echo   [2/4] 회사 폴더 받기 - 로그인 창이 뜨면 "회사 GitHub 아이디" 로 로그인하세요.
 if exist "%DEST%\.git" (
   echo         이미 받아져 있음. 최신으로 갱신합니다.
   "%GIT%" -C "%DEST%" pull
@@ -58,15 +58,27 @@ if not exist "%DEST%\.git" (
 )
 
 echo.
-echo   [3/3] 내 이름 등록 + 작업기록 자동 동기화 설정...
+echo   [3/4] 내 이름 등록 + 작업기록 자동 동기화 설정...
 powershell -NoProfile -Command "[IO.File]::WriteAllText('%DEST%\WHOAMI.txt', $env:WORKER, (New-Object System.Text.UTF8Encoding($false)))"
 powershell -NoProfile -ExecutionPolicy Bypass -File "%DEST%\.claude\skills\gihoekjeon-automation-system\scripts\setup_auto_sync.ps1"
+
+echo.
+echo   [4/4] 작업자에게 필요 없는 폴더/파일 숨김 (기획전_제작 / _처음설치_한번만 / 사용설명서.html 만 보이게)...
+if exist "%DEST%\★건들지마세요(시스템)" attrib +h "%DEST%\★건들지마세요(시스템)"
+if exist "%DEST%\.claude" attrib +h "%DEST%\.claude"
+if exist "%DEST%\CLAUDE.md" attrib +h "%DEST%\CLAUDE.md"
+if exist "%DEST%\.mcp.json" attrib +h "%DEST%\.mcp.json"
+if exist "%DEST%\.gitignore" attrib +h "%DEST%\.gitignore"
+if exist "%DEST%\.gitattributes" attrib +h "%DEST%\.gitattributes"
+if exist "%DEST%\WHOAMI.txt" attrib +h "%DEST%\WHOAMI.txt"
+if exist "%DEST%\.git" attrib +h "%DEST%\.git"
 
 echo.
 echo   ==========================================
 echo     끝! 준비 완료입니다.  (작업자: %WORKER%)
 echo   ==========================================
 echo    작업 폴더 :  %DEST%
+echo    ( 폴더 안에 기획전_제작 / _처음설치_한번만 / 사용설명서.html 만 보이면 정상 )
 echo.
 echo    이제 코워크(또는 클로드 코드)에서 위 폴더를 열고
 echo    채팅으로 작업하면 됩니다.
