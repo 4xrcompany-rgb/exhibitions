@@ -1,0 +1,564 @@
+<link href="https://cdn.jsdelivr.net/npm/pretendard@1.3.8/dist/web/static/pretendard.css" rel="stylesheet"/>
+
+<style>
+/* 콘텐츠 틀 초기화 */
+body, html { font-family: 'Pretendard', sans-serif !important; }
+.magazine_view{ width: auto;}
+.cont img{ width: 100%;}
+#contents .page_info,
+.magazine_view .cont .title,
+.magazine_view .cont .txt_03,
+.magazine_view .cont .txt_info,
+.magazine_view .cont .txt_01,
+.magazine_view .cont .txt_02,
+.magazine_view .line_01{ display: none;}
+.magazine_view .relate_link,
+.magazine_view .hashtag_box{ width: 1400px;}
+.magazine_view .relate_link{ margin: 0 auto 30px;}
+.magazine_view .hashtag_box{ margin: 0 auto;}
+.base_slider_list .product .infor_box .p_conts { font-size: 15px; }
+.base_slider_list .product .price_box .ori_price { font-size: 14px; }
+
+/* common */
+*{ box-sizing: border-box }
+a {color: inherit; text-decoration: none; }
+#wrapper_ey { margin:0;}
+#wrapper_ey img { width: 100%; }
+.mo_ey { display: none; }
+
+/* #visual_section */
+#visual_section { position: relative; width: 100%; overflow: hidden; }
+#visual_section .visual_text_box { position: absolute; top: 60%; left: 50%; width: 100%; transform: translate(-50%, -50%); text-align: center; }
+
+#visual_section .visual_title,
+#visual_section .visual_sub_title,
+#visual_section .visual_desc { color: #fff; }
+
+#visual_section .visual_title { font-size: 150px; font-weight: 800;  opacity: 0; letter-spacing: 0.42em; transform: translateY(12px); filter: blur(6px);
+    animation: visualTitleSpacingIn 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+#visual_section .visual_sub_title { margin-top: 26px; font-size: 60px; font-weight: 400; opacity: 0; transform: translateY(28px); filter: blur(4px);
+    animation: visualFadeUpIn 0.8s ease forwards; animation-delay: 1.0s; }
+#visual_section .visual_desc { margin: 150px 0 0; font-size: 20px; font-weight: 300; line-height: 1.45em; }
+#visual_section .visual_desc_line { display: block; opacity: 0; transform: translateY(28px); filter: blur(4px); animation: visualFadeUpIn 0.8s ease forwards; }
+#visual_section .visual_desc_line:nth-child(1) { animation-delay: 1.28s; }
+#visual_section .visual_desc_line:nth-child(2) { margin-top: 4px; animation-delay: 1.52s; }
+
+@keyframes visualTitleSpacingIn {
+    0% { opacity: 0; letter-spacing: 0.42em; transform: translateY(12px); filter: blur(6px); }
+    100% { opacity: 1; letter-spacing: -0.04em; transform: translateY(0); filter: blur(0); }}
+
+@keyframes visualFadeUpIn {
+    0% { opacity: 0; transform: translateY(28px); filter: blur(4px); }
+    100% { opacity: 1; transform: translateY(0); filter: blur(0); }}
+
+@-webkit-keyframes visualTitleMaskRevealMo {
+    0% { opacity: 0; -webkit-transform: translateY(115%); transform: translateY(115%); }
+    100% { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }}
+
+@keyframes visualTitleMaskRevealMo {
+    0% { opacity: 0; -webkit-transform: translateY(115%); transform: translateY(115%); }
+    100% { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }}
+
+/* #timer_section */
+#timer_section {  padding: 100px 0 0; text-align: center; }
+#timer_section .timer_inner { width: 100%; max-width: 1200px; margin: 0 auto; }
+#timer_section .timer_date { font-size: 40px; font-weight: 400; color: #000; }
+#timer_section .timer_count { margin-top: 22px; font-size: 110px; font-weight: 700; color: #0ec70e; letter-spacing: -0.04em; }
+
+/* #pd_section */
+#pd_section { margin: 150px 0 100px; }
+#pd_section .pd_inner { width: 100%; max-width: 1200px; margin: 0 auto; }
+#pd_section .pd_grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 150px 5px; }
+#pd_section .pd_item { position: relative; }
+#pd_section .pd_thumb { position: relative; overflow: visible; border: 1px solid #dededc; box-sizing: border-box; transition: border-color 0.35s ease,
+    transform 0.35s ease, box-shadow 0.35s ease; }
+#pd_section .pd_item.is-switching .pd_img { opacity: 0.96;}
+
+#pd_section .pd_img_link,
+#pd_section .pd_discount_img,
+#pd_section .pd_color_link,
+#pd_section .pd_color_chip { display: block; }
+
+#pd_section .pd_img_link { position: relative; overflow: hidden; }
+
+#pd_section .pd_img,
+#pd_section .pd_discount_img { width: 100%; height: auto; }
+
+#pd_section .pd_img { display: block; transform: scale(1); transition: transform 0.45s ease, filter 0.35s ease, opacity 0.3s ease; }
+#pd_section .pd_badge { position: absolute; top: -40px; left: 50%; z-index: 4; padding: 14px 22px; background: #000; transform: translateX(-50%) rotate(-3deg); }
+#pd_section .pd_badge_text { font-size: 54px; font-weight: 800; color: #fff; white-space: nowrap; }
+#pd_section .pd_info { position: absolute; left: 24px; right: 24px; bottom: 36px; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+
+#pd_section .pd_info_left,
+#pd_section .pd_meta_left { flex: 1; min-width: 0; }
+
+#pd_section .pd_info_left,
+#pd_section .pd_name { text-align: left; }
+
+#pd_section .pd_price_box,
+#pd_section .pd_color_row,
+#pd_section .pd_color_list { display: flex; align-items: center; flex-wrap: wrap; }
+
+#pd_section .pd_price_box { align-items: flex-end; gap: 12px;} 
+#pd_section .pd_origin_price { font-size: 36px; font-weight: 400; color: #fff; text-decoration: line-through; }
+#pd_section .pd_sale_price { font-size: 56px; font-weight: 800; color: #2fd612; letter-spacing: -0.04em; }
+#pd_section .pd_sale_price .won { margin-left: 4px; font-size: 20px; font-weight: 400; }
+#pd_section .pd_name { display: block; width: 100%; margin-top: 14px; font-size: 24px; font-weight: 400; color: #fff; }
+#pd_section .pd_discount { position: relative; top: 16px; left: 5px; flex: 0 0 auto; width: var(--pd_discount_width, 196px); }
+#pd_section .pd_discount_text { position: absolute; top: 50%; left: 50%; font-size: 64px; font-weight: 800; color: #fff; letter-spacing: -0.06em; transform: translate(-50%, -50%); }
+#pd_section .pd_meta { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; padding: 0 24px; }
+#pd_section .pd_color_row { gap: 17px; }
+#pd_section .pd_color_title { font-size: 20px; font-weight: 500; color: #000; }
+#pd_section .pd_color_list { gap: 6px; }
+#pd_section .pd_color_link { width: 75px; height: 25px; }
+#pd_section .pd_color_chip { width: 100%; height: 100%; }
+#pd_section .pd_move_text { font-size: 18px; font-weight: 300; color: #000; text-align: right; word-break: keep-all; }
+
+#pd_section .pd_soldout { position: absolute; inset: 0; z-index: 3; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.35); }
+#pd_section .pd_soldout_text { font-size: 62px; font-weight: 800; color: #2fd612; }
+#pd_section .pd_item.is-soldout .pd_badge,
+#pd_section .pd_item.is-soldout .pd_img_link,
+#pd_section .pd_item.is-soldout .pd_info,
+#pd_section .pd_item.is-soldout .pd_meta { filter: grayscale(1); }
+
+#pd_section .pd_item.is-soldout .pd_img_link,
+#pd_section .pd_item.is-soldout .pd_info,
+#pd_section .pd_item.is-soldout .pd_meta { opacity: 0.82; }
+
+#pd_section .pd_item.is-soldout .pd_thumb { border-color: #bdbdbd; }
+#pd_section .pd_item.is-soldout .pd_color_chip { filter: grayscale(1); }
+#pd_section .pd_item.is-soldout .pd_move_text { color: #666; }
+
+@media(max-width: 768px){
+body, html { font-family: 'Pretendard', sans-serif !important; max-width: 100%; }
+/* 기존 form에서 변경해야할 곳 */
+.magazine_conts_top { margin: 70px 0 30px; }
+.page_cont.padding_01{ padding:0;}
+.page_view_top > *:not(.data_box){ display: none;}
+.page_view_top > .data_box{ display: none; }
+/* ----------- 기존 form에서 변경해야할 곳 ----------- */
+.base_slider_list.list_mode ul li { margin-bottom: 0; }
+.discount_view .goods_list > div .btn_top{ right: 20px; top: 96px; }
+.discount_view .goods_list>div { padding-top: 70px; }
+.base_slider_list .product .infor_box .p_conts { font-size: 24px; }
+.base_slider_list .product .infor_box .p_name { font-size: 24px; }
+.base_slider_list .product .price_box .ori_price  { font-size: 26px; }
+.base_slider_list .box_01 .price_box .current_price { font-size: 28px; }
+.base_slider_list .product .price_box .sale { font-size: 28px; font-weight: 500; }
+.mb110 { margin-bottom: 20px !important; }
+.connect_product_box { margin-bottom: 0; }
+
+/* common 768 */
+.mo_ey { display: block; }
+.pc_ey { display: none; }
+#wrapper_ey { width: 100%; overflow-x: hidden; }
+
+/* #visual_section */
+#visual_section { display: block; width: 100%; }
+#visual_section .visual_text_box { width: 100%; top: 54%; overflow: hidden; }
+#visual_section .visual_title.visual_title_mo { font-size: 130px; opacity: 1; transform: none; filter: none; letter-spacing: normal; animation: none; }
+#visual_section .visual_title.visual_title_mo .visual_title_mask { display: block; overflow: hidden; line-height: 0.95em; }
+#visual_section .visual_title.visual_title_mo .visual_title_line { display: block; white-space: nowrap; opacity: 0; -webkit-transform: translateY(115%);
+    transform: translateY(115%); -webkit-animation: visualTitleMaskRevealMo 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: visualTitleMaskRevealMo 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+#visual_section .visual_title.visual_title_mo .visual_title_mask:nth-child(2) .visual_title_line { -webkit-animation-delay: 0.12s; animation-delay: 0.12s; }
+#visual_section .visual_sub_title { margin-top: 66px; font-size: 66px; }
+#visual_section .visual_desc { margin-top: 120px; font-size: 28px; line-height: 1.6em; }
+
+/* #timer_section */
+#timer_section { padding: 140px 0 0; }
+#timer_section .timer_date { font-size: 40px; }
+#timer_section .timer_count {  margin-top: 16px; font-size: 94px; }
+
+/* #pd_section */
+#pd_section { padding:0 20px 0; }
+#pd_section .pd_grid { grid-template-columns: 1fr; gap: 140px; }
+#pd_section .pd_badge { top: -40px; padding: 20px 40px; }
+#pd_section .pd_badge_text { font-size: 50px; }
+#pd_section .pd_info { left: 20px; right: 16px; bottom: 40px; }
+#pd_section .pd_price_box { gap: 12px; } 
+#pd_section .pd_origin_price { font-size: 52px; }
+#pd_section .pd_sale_price { font-size: 76px; }
+#pd_section .pd_sale_price .won { font-size: 32px; margin-left: 8px; }
+#pd_section .pd_name { font-size: 30px; text-align: left; }
+#pd_section .pd_discount { width:var(--pd_discount_width_mo, 195px); left: -3px; }
+#pd_section .pd_discount_text { font-size: 72px; }
+#pd_section .pd_meta { margin-top: 16px; padding: 0; }
+#pd_section .pd_color_title { font-size: 32px; }
+#pd_section .pd_color_link { width: 100px; height: 46px; }
+#pd_section .pd_move_text { font-size: 23px; }
+#pd_section .pd_soldout_text { font-size: 90px; }
+}
+</style>
+
+<div id="wrapper_ey">
+    <div id="visual_section">
+        <img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/04/SOL/img/top/img_top_pc.jpg" class="pc_ey" alt="4TYPE 4DAY 44% 세일 PC 이미지">
+        <img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/04/SOL/img/top/img_top_m.jpg" class="mo_ey" alt="4TYPE 4DAY 44% 세일 MOBILE 이미지">
+            <div class="visual_text_box pc_ey">
+                <h1 class="visual_title">4TYPE 4DAY 44%</h1>
+                <h2 class="visual_sub_title">전부 44% OFF</h2>
+                <h3 class="visual_desc">
+                    <span class="visual_desc_line">고민 끝. 4개만 준비했습니다.</span>
+                    <span class="visual_desc_line">지금 안 사면 끝. 오직 4일 동안만 무조건 44% 할인</span>
+                </h3>
+            </div>
+            <div class="visual_text_box mo_ey">
+                <h1 class="visual_title visual_title_mo">
+                    <span class="visual_title_mask">
+                        <span class="visual_title_line">4TYPE</span>
+                    </span>
+                    <span class="visual_title_mask">
+                        <span class="visual_title_line">4DAY 44%</span>
+                    </span>
+                </h1>
+                <h2 class="visual_sub_title">전부 44% OFF</h2>
+                <h3 class="visual_desc">
+                    <span class="visual_desc_line">고민 끝. 4개만 준비했습니다.</span>
+                    <span class="visual_desc_line">지금 안 사면 끝. 오직 4일 동안만 무조건 44% 할인</span>
+                </h3>
+            </div>
+    </div>
+    <div id="timer_section">
+        <div class="timer_inner">
+            <h2 class="timer_date" id="timer_date">26.08.04 - 08.07</h2>
+            <h1 class="timer_count" id="timer_count">00 : 00 : 00 : 00</h1>
+        </div>
+    </div>
+    <div id="pd_section">
+        <div class="pd_inner">
+            <div class="pd_grid" id="pd_grid"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const imageBaseURL = 'https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/04/SOL/img/pd/';
+    const goodsBaseURL = '/shop/view.php?index_no=';
+
+    const eventConfig = {
+        startDateLabel: '26.08.04 - 08.07',
+        endDateKST: '2026-08-07T23:59:59+09:00'
+    };
+
+//',' 구분 켜기+끄기
+    const priceFormatConfig = {
+    use_comma: false
+    };
+
+//퍼센트 뱃지
+    const discountBadgeImageURL = 'https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/04/SOL/img/pd/pd_discount_badge.png';
+    const discountBadgeConfig = {
+        pc_width: 180,
+        mo_width: 195
+    };
+
+//상품 이미지
+    const colorItem = (color_code, link) => ({ color_code, link });
+    const stateItem = ({ number, name, original_price, img, name_color, original_price_color }) =>
+    ({ number, name, original_price, img, name_color, original_price_color });
+
+    const products = [
+    { discount_price: '36680', discount: '44%', soldout: false,
+        colors: [
+            colorItem('#ccaf88', '/shop/view.php?index_no=687800'),
+            colorItem('#000', '/shop/view.php?index_no=687799')
+        ],
+        default_state: stateItem({
+            number: '687800', name: 'BC 로고나염 카펜더 팬츠 (BEIGE)', original_price: '65500', img: '/img_pd01_01.jpg', name_color: '#fff', original_price_color: '#fff' }),
+        hover_state: stateItem({
+            number: '687800', name: 'BC 로고나염 카펜더 팬츠 (BEIGE)', original_price: '65500', img: '/img_pd01_02.jpg', name_color: '#000', original_price_color: '#000' })
+    },
+
+    { discount_price: '33320', discount: '44%', soldout: false,
+        colors: [
+            colorItem('#3c4130', '/shop/view.php?index_no=688424'),
+            colorItem('#000', '/shop/view.php?index_no=688425')
+        ],
+        default_state: stateItem({
+            number: '688424', name: '더블니 밀리터리 와이드 팬츠 카키', original_price: '59500', img: '/img_pd02_01.jpg', name_color: '#fff', original_price_color: '#fff' }),
+        hover_state: stateItem({
+            number: '688424', name: '더블니 밀리터리 와이드 팬츠 카키', original_price: '59500', img: '/img_pd02_02.jpg', name_color: '#000', original_price_color: '#000' })
+    },
+
+    { discount_price: '26600', discount: '44%', soldout: false,
+        colors: [
+            colorItem('#91abcf', '/shop/view.php?index_no=684132'),
+        ],
+        default_state: stateItem({
+            number: '684132', name: '워시드 스트레이트 데님팬츠', original_price: '47500', img: '/img_pd03_01.jpg', name_color: '#fff', original_price_color: '#fff' }),
+        hover_state: stateItem({
+            number: '684132', name: '워시드 스트레이트 데님팬츠', original_price: '47500', img: '/img_pd03_02.jpg', name_color: '#000', original_price_color: '#000' })
+    },
+
+    { discount_price: '29120', discount: '44%', soldout: false,
+        colors: [
+            colorItem('#696935', '/shop/view.php?index_no=687716'),
+            colorItem('#b4b4b4', '/shop/view.php?index_no=687718'),
+            colorItem('#101535', '/shop/view.php?index_no=687719')
+        ],
+        default_state: stateItem({
+            number: '663277', name: 'AUBE 로고 스웻팬츠 올리브그린', original_price: '52000', img: '/img_pd04_01.jpg', name_color: '#fff', original_price_color: '#fff' }),
+        hover_state: stateItem({
+            number: '663277', name: 'AUBE 로고 스웻팬츠 올리브그린', original_price: '52000',  img: '/img_pd04_02.jpg', name_color: '#000', original_price_color: '#000' })
+    }
+];
+
+//상품 정보 + 타이머
+    const timerDate = document.getElementById('timer_date');
+    const timerCount = document.getElementById('timer_count');
+    const pdGrid = document.getElementById('pd_grid');
+
+    timerDate.textContent = eventConfig.startDateLabel;
+
+    function formatNumber(value) {
+    const numberValue = Number(value);
+
+    if (!priceFormatConfig.use_comma) {
+        return String(numberValue);
+    }
+
+    return numberValue.toLocaleString('ko-KR');
+    }
+
+    function padNumber(value) {
+        return String(value).padStart(2, '0');
+    }
+
+    function updateTimer() {
+        const now = new Date();
+        const end = new Date(eventConfig.endDateKST);
+        const diff = end.getTime() - now.getTime();
+
+        if (diff <= 0) {
+            timerCount.textContent = '00 : 00 : 00 : 00';
+            return;
+        }
+
+        const day = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hour = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const min = Math.floor((diff / (1000 * 60)) % 60);
+        const sec = Math.floor((diff / 1000) % 60);
+
+        timerCount.textContent = [
+            padNumber(day),
+            padNumber(hour),
+            padNumber(min),
+            padNumber(sec)
+        ].join(' : ');
+    }
+
+    function getProductLink(number) {
+        return goodsBaseURL + number;
+    }
+
+    function renderColors(colors) {
+        if (!colors || !colors.length) return '';
+
+        return colors.map(function (color) {
+            return `
+                <a href="${color.link}" target="_blank" rel="noopener noreferrer" class="pd_color_link">
+                    <span class="pd_color_chip" style="background:${color.color_code};"></span>
+                </a>
+            `;
+        }).join('');
+    }
+
+    function renderProducts() {
+    if (!pdGrid) return;
+
+    pdGrid.innerHTML = products.map(function (product, index) {
+        const state = product.default_state;
+        const productLink = getProductLink(state.number);
+        const imageURL = imageBaseURL + state.img;
+
+        return `
+            <div class="pd_item ${product.soldout ? 'is-soldout' : ''}"
+            data_product_index="${index}"
+            style="--pd_discount_width:${discountBadgeConfig.pc_width}px; --pd_discount_width_mo:${discountBadgeConfig.mo_width}px;">
+                <div class="pd_thumb">
+                    <div class="pd_badge">
+                        <h3 class="pd_badge_text">4TYPE 4DAY</h3>
+                    </div>
+
+                    <a href="${productLink}" target="_blank" rel="noopener noreferrer" class="pd_img_link">
+                        <img src="${imageURL}" alt="${state.name}" class="pd_img">
+                    </a>
+
+                    ${product.soldout ? `
+                        <div class="pd_soldout">
+                            <h3 class="pd_soldout_text">SOLD OUT</h3>
+                        </div>
+                    ` : ''}
+
+                    <div class="pd_info">
+                        <div class="pd_info_left">
+                            <div class="pd_price_box">
+                                <h4 class="pd_origin_price" style="color:${state.original_price_color};">${formatNumber(state.original_price)}</h4>
+                                <h2 class="pd_sale_price">${formatNumber(product.discount_price)}<span class="won">원</span></h2>
+                            </div>
+                            <h3 class="pd_name" style="color:${state.name_color};">${state.name}</h3>
+                        </div>
+
+                        <div class="pd_discount">
+                            <img src="${discountBadgeImageURL}" alt="${product.discount} 할인" class="pd_discount_img">
+                            <h3 class="pd_discount_text">${product.discount}</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pd_meta">
+                    <div class="pd_meta_left">
+                        <div class="pd_color_row">
+                            <h4 class="pd_color_title">COLOR</h4>
+                            <div class="pd_color_list">
+                                ${renderColors(product.colors)}
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="pd_move_text">색상 클릭 시 해당 상품 이동</h4>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    bindProductHover();
+    runMobileAutoPreview();
+}
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+    renderProducts();
+
+    function applyProductState(pdItem, productState) {
+    const imgLink = pdItem.querySelector('.pd_img_link');
+    const img = pdItem.querySelector('.pd_img');
+    const name = pdItem.querySelector('.pd_name');
+    const originPrice = pdItem.querySelector('.pd_origin_price');
+
+    if (imgLink) {
+        imgLink.href = getProductLink(productState.number);
+    }
+
+    if (img) {
+        img.src = imageBaseURL + productState.img;
+        img.alt = productState.name;
+    }
+
+    if (name) {
+        name.textContent = productState.name;
+        name.style.color = productState.name_color || '';
+    }
+
+    if (originPrice) {
+        originPrice.textContent = formatNumber(productState.original_price);
+        originPrice.style.color = productState.original_price_color || '';
+    }
+}
+
+function bindProductHover() {
+    const pdItems = document.querySelectorAll('.pd_item');
+
+    pdItems.forEach(function (pdItem) {
+        const productIndex = Number(pdItem.getAttribute('data_product_index'));
+        const product = products[productIndex];
+
+        if (!product || !product.hover_state) return;
+
+        let hoverTimer = null;
+        let leaveTimer = null;
+
+        pdItem.addEventListener('mouseenter', function () {
+            if (window.innerWidth <= 768) return;
+
+            clearTimeout(leaveTimer);
+
+            hoverTimer = setTimeout(function () {
+                pdItem.classList.add('is-switching');
+                applyProductState(pdItem, product.hover_state);
+
+                setTimeout(function () {
+                    pdItem.classList.remove('is-switching');
+                }, 220);
+            }, 70);
+        });
+
+        pdItem.addEventListener('mouseleave', function () {
+            if (window.innerWidth <= 768) return;
+
+            clearTimeout(hoverTimer);
+
+            leaveTimer = setTimeout(function () {
+                pdItem.classList.add('is-switching');
+                applyProductState(pdItem, product.default_state);
+
+                setTimeout(function () {
+                    pdItem.classList.remove('is-switching');
+                }, 220);
+            }, 40);
+        });
+    });
+}
+
+function runMobileAutoPreview() {
+    if (window.innerWidth > 768) return;
+
+    const pdItems = document.querySelectorAll('.pd_item');
+    let isPreviewRunning = false;
+
+    if (!('IntersectionObserver' in window)) {
+        return;
+    }
+
+    const observer = new IntersectionObserver(function (entries, obs) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            if (entry.intersectionRatio < 0.98) return;
+
+            const pdItem = entry.target;
+
+            if (pdItem.dataset.mobilePreviewPlayed === 'true') {
+                obs.unobserve(pdItem);
+                return;
+            }
+
+            if (isPreviewRunning) return;
+
+            const productIndex = Number(pdItem.getAttribute('data_product_index'));
+            const product = products[productIndex];
+
+            if (!product || !product.hover_state) {
+                obs.unobserve(pdItem);
+                return;
+            }
+
+            isPreviewRunning = true;
+            pdItem.dataset.mobilePreviewPlayed = 'true';
+
+            setTimeout(function () {
+                pdItem.classList.add('is-switching');
+                applyProductState(pdItem, product.hover_state);
+
+                setTimeout(function () {
+                    applyProductState(pdItem, product.default_state);
+                    pdItem.classList.remove('is-switching');
+                    isPreviewRunning = false;
+                }, 900);
+            }, 250);
+
+            obs.unobserve(pdItem);
+        });
+    }, {
+        threshold: [0.98, 1]
+    });
+
+    pdItems.forEach(function (pdItem) {
+        observer.observe(pdItem);
+    });
+}
+});
+</script>
+

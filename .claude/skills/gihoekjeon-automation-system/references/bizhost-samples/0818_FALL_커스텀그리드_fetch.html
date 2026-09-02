@@ -1,0 +1,569 @@
+<style>
+  /* 콘텐츠 틀 초기화 */
+  .magazine_view{width:auto;margin-bottom:0!important}
+  .cont img{width:100%}
+  .magazine_view .cont{margin-bottom:0!important}
+  #contents .page_info,
+  .magazine_view .cont .title,
+  .magazine_view .cont .txt_03,
+  .magazine_view .cont .txt_info,
+  .magazine_view .cont .txt_01,
+  .magazine_view .cont .txt_02,
+  .magazine_view .line_01,
+  .magazine_view .relate_link,
+  .magazine_view .hashtag_box{display:none}
+
+  *{box-sizing:border-box}
+  html,body{margin:0;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  :root{
+    --dark-color:#000;
+    --lime-color:#C0EF94;
+  }
+
+  /* FALL ARCHIVE SALE 메인 비주얼 */
+  .archive-hero,.archive-hero__sticky{background:var(--dark-color);width:100%}
+  .archive-hero{position:relative;height:190vh;min-height:1250px;margin:-160px 0 0;font-family:Pretendard,sans-serif!important}
+  .archive-hero__sticky{position:-webkit-sticky;position:sticky;top:0;height:100vh;min-height:620px;overflow:hidden;isolation:isolate}
+  .archive-hero__sticky::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(68% 35% at 50% 63%,#000 35%,rgba(2,30,79,0) 100%);z-index:12}
+  .archive-hero__center{position:absolute;left:50%;top:50%;z-index:20;width:min(900px,72vw);text-align:center;transform:translate3d(-50%,-15%,0)}
+  .archive-hero__badge{display:inline-flex;align-items:center;justify-content:center;min-width:210px;min-height:53px;margin:0 0 28px;padding:9px 25px 7px;border-radius:5px;color:var(--dark-color);background:var(--lime-color);font-size:clamp(24px,1.9vw,36px);font-weight:900;line-height:1;letter-spacing:-.06em}
+  .archive-hero__title{margin:0;color:#fff;font-size:clamp(52px,5.05vw,96px);font-weight:700;line-height:.95;white-space:nowrap}
+  .archive-hero__scroll{position:absolute;left:50%;bottom:32px;z-index:30;display:flex;flex-direction:column;align-items:center;gap:10px;color:#fff;opacity:1;visibility:visible;transform:translateX(-50%);transition:opacity .3s ease,visibility .3s ease,transform .3s ease;pointer-events:none}
+  .archive-hero__scroll.is-hidden{opacity:0;visibility:hidden;transform:translate(-50%,-8px)}
+  .archive-hero__scroll-text{font-size:11px;font-weight:600;line-height:1;letter-spacing:.22em;text-indent:.22em}
+  .archive-hero__scroll-line{position:relative;width:14px;height:40px;overflow:hidden}
+  .archive-hero__scroll-line::after{content:'';position:absolute;top:-10px;left:50%;width:8px;height:8px;border-right:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:translateX(-50%) rotate(45deg);animation:archiveScrollGuide 1.7s cubic-bezier(.55,0,.45,1) infinite}
+  @keyframes archiveScrollGuide{
+    0%{opacity:0;transform:translate(-50%,0) rotate(45deg)}
+    15%{opacity:1}
+    70%{opacity:1;transform:translate(-50%,48px) rotate(45deg)}
+    100%{opacity:0;transform:translate(-50%,48px) rotate(45deg)}
+  }
+  .archive-hero__media{--move-x:0px;--move-y:0px;position:absolute;z-index:2;overflow:hidden;margin:0;border-radius:5px;background:#e5e5e5;opacity:0;transform:translate3d(var(--move-x),var(--move-y),0);will-change:transform,opacity;width:15.8%;height:38%}
+  .archive-hero__media img{display:block;width:100%;height:100%;object-fit:cover}
+  .archive-hero__media img:not([src]),
+  .archive-hero__media img[src=""]{visibility:hidden}
+
+  /* 중앙 텍스트를 중심으로 시계 방향의 원형 배치 */
+  .archive-hero__media--1{left:42%;top:0%;z-index:1;--move-x:0px;--move-y:-245px}
+  .archive-hero__media--2{left:56%;top:6%;z-index:2;--move-x:145px;--move-y:-220px}
+  .archive-hero__media--3{left:70%;top:22%;z-index:3;--move-x:235px;--move-y:-150px}
+  .archive-hero__media--4{left:78%;top:45%;z-index:4;--move-x:285px;--move-y:0px}
+  .archive-hero__media--5{left:70%;top:68%;z-index:5;--move-x:235px;--move-y:150px}
+  .archive-hero__media--6{left:56%;top:74%;z-index:6;--move-x:145px;--move-y:220px}
+  .archive-hero__media--7{left:42%;top:84%;z-index:7;--move-x:0px;--move-y:245px}
+  .archive-hero__media--8{left:28%;top:74%;z-index:8;--move-x:-145px;--move-y:220px}
+  .archive-hero__media--9{left:14%;top:68%;z-index:9;--move-x:-235px;--move-y:150px}
+  .archive-hero__media--10{left:6%;top:45%;z-index:10;--move-x:-285px;--move-y:0px}
+  .archive-hero__media--11{left:14%;top:22%;z-index:11;--move-x:-235px;--move-y:-150px}
+  .archive-hero__media--12{left:28%;top:6%;z-index:12;--move-x:-145px;--move-y:-220px}
+
+
+  /* archive-hero 하단 콘텐츠 */
+  .archive-main{position:relative;font-family:'Pretendard',sans-serif!important}
+  .archive-content{background:#000;color:#fff}
+  .archive-content__intro{padding:90px 24px;text-align:center}
+  .archive-content__intro p{margin:0;font-size:18px;font-weight:400;line-height:1.75;letter-spacing:-.04em}
+  .archive-content__nav{position:-webkit-sticky;position:sticky;top:0;z-index:90;background:var(--lime-color);transform:translateZ(0)}
+  .archive-content__nav-scroll{overflow:visible}
+  .archive-content__nav ul{display:flex;width:min(1180px,100%);height:60px;align-items:center;justify-content:center;gap:90px;margin:0 auto;padding:0 24px;list-style:none}
+  .archive-content__nav a{color:var(--dark-color);font-size:18px;font-weight:600;text-decoration:none;white-space:nowrap}
+  .archive-content__nav a.is-active{font-weight: 800;}
+
+  .archive-products{padding:105px 0 140px;background:#fff;color:#111;font-family:'Pretendard',sans-serif!important}
+  .archive-product-group{width:min(1400px,calc(100% - 48px));margin:0 auto 145px;scroll-margin-top:90px}
+  .archive-product-group:last-child{margin-bottom:0}
+  .archive-brand-banner{height:250px;overflow:hidden;margin-bottom:22px;background:#eee}
+  .archive-brand-banner img{display:block;width:100%;height:100%;object-fit:cover}
+  .archive-product-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:54px 16px}
+  .archive-product-card{position:relative;min-width:0}
+  .archive-product-card__link{position:absolute;inset:0;z-index:1}
+  .archive-product-card__image{position:relative;overflow:hidden;aspect-ratio:4/5;margin:0 0 16px;background:#eee}
+  .archive-product-card__image.is-loaded{aspect-ratio:auto;background:transparent}
+  .archive-product-card__image img{display:block;width:100%;height:auto}
+  .archive-product-card__image img[hidden]{display:none}
+  .archive-product-card__loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#777;font-size:12px;font-weight:600;letter-spacing:.04em}
+  .archive-product-card__loading[hidden]{display:none}
+  .archive-product-card__brand{position:relative;z-index:2;display:block;overflow:hidden;height:auto;margin:0 0 8px;color:#111;font-size:14px;font-weight:700;letter-spacing:-.03em;text-align:left;text-decoration:none;white-space:nowrap;text-overflow:ellipsis}
+  .archive-product-card__name{overflow:hidden;min-height:0;margin:0;color:#555;font-size:14px;line-height:1.45;letter-spacing:-.035em;text-align:left;white-space:nowrap;text-overflow:ellipsis}
+  .archive-product-card__meta{--archive-product-meta-gap:7px;display:flex;align-items:baseline;gap:var(--archive-product-meta-gap);margin-top:14px}
+  .archive-product-card__price{font-size:16px;font-weight:800}
+  .archive-product-card__original{color:#aaa;font-size:12px;text-decoration:line-through}
+  .archive-product-card__discount{color:#ef3b2d;font-size:16px;font-weight:800}
+  .archive-product-card__original[hidden],
+  .archive-product-card__discount[hidden]{display:none}
+  .archive-product-card__review{display:none;margin:0;color:#999;font-size:12px;line-height:1.3}
+  .archive-product-card__review.is-visible{display:inline-block}
+
+  @media screen and (min-width:1940px){
+    #container{padding-top:180px}
+    .magazine_view_wrap{width:100%}
+  }
+
+  @media(max-width:1024px){
+    .archive-content__nav ul{gap:48px}
+    .archive-product-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  }
+
+  @media(max-width:768px){
+    .page_cont.padding_01{padding:0;margin-bottom:0!important}
+    .page_view_top>*{display:none}
+    #wrap{overflow:initial}
+    #header,.banner_sh_top{position: relative; z-index: 20;}
+
+    .archive-hero{margin: -270px 0 0;}
+    .archive-hero__sticky::after{background:radial-gradient(100% 40% at 50% 56%, #000 10%, rgba(2, 30, 79, 0) 100%);}
+    .archive-hero__center{top:52%;width:94vw}
+    .archive-hero__badge{padding:7px 15px 6px;font-size:40px}
+    .archive-hero__title{font-size:clamp(36px,10.5vw,72px);letter-spacing:-.07em}
+    .archive-hero__scroll{bottom:24px;gap:8px}
+    .archive-hero__scroll-text{font-size:20px}
+    .archive-hero__scroll-line{height:52px}
+    .archive-hero__media{width:34%;height:24%}
+    .archive-hero__media--1{left:33%;top:16%;--move-x:0px;--move-y:-145px}
+    .archive-hero__media--2{left:57%;top:20%;--move-x:65px;--move-y:-125px}
+    .archive-hero__media--3{left:75%;top:25%;--move-x:110px;--move-y:-80px}
+    .archive-hero__media--4{left:81%;top:46%;--move-x:130px;--move-y:0px}
+    .archive-hero__media--5{left:75%;top:67%;--move-x:110px;--move-y:80px}
+    .archive-hero__media--6{left:57%;top:73%;--move-x:65px;--move-y:125px}
+    .archive-hero__media--7{left:33%;top:76%;--move-x:0px;--move-y:145px}
+    .archive-hero__media--8{left:9%;top:73%;--move-x:-65px;--move-y:125px}
+    .archive-hero__media--9{left:-9%;top:67%;--move-x:-110px;--move-y:80px}
+    .archive-hero__media--10{left:-15%;top:46%;--move-x:-130px;--move-y:0px}
+    .archive-hero__media--11{left:-9%;top:25%;--move-x:-110px;--move-y:-80px}
+    .archive-hero__media--12{left:9%;top:20%;--move-x:-65px;--move-y:-125px}
+
+    .archive-content__intro{ margin-top: -1px;}
+    .archive-content__intro p{font-size:26px}
+    .archive-content__nav{ top: 100px;}
+    .archive-content__nav-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .archive-content__nav-scroll::-webkit-scrollbar{display:none}
+    .archive-content__nav ul{width:max-content;justify-content:flex-start;gap:34px;padding:0 24px}
+    .archive-content__nav a{font-size:26px}
+    .archive-products{padding:55px 0 90px}
+    .archive-product-group{width:calc(100% - 28px);margin-bottom:82px;scroll-margin-top:68px}
+    /* .archive-brand-banner{height:125px;margin-bottom:14px} */
+    .archive-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:38px 10px}
+    .archive-product-card__image{margin-bottom:11px}
+    .archive-product-card__brand{font-size:22px}
+    .archive-product-card__name{min-height:0;font-size:24px}
+    /* .archive-product-card__meta{flex-wrap:wrap;gap:4px 6px;margin-top:10px} */
+    .archive-product-card__price{font-size:24px}
+    .archive-product-card__original{font-size:18px}
+    .archive-product-card__discount{font-size:24px}
+    .archive-product-card__review{ font-size: 18px;}
+    .archive-product-card__review.is-visible{display:inline-block!important;visibility:visible!important;opacity:1!important}
+  }
+
+  /* 750px 이하에서는 12개 중 2개를 제외하고 10개를 원형으로 재배치합니다. */
+  @media(max-width:750px){
+    .archive-hero__media--11,.archive-hero__media--12{display:none}
+    .archive-hero__media--1{left:33%;top:10%;--move-x:0px;--move-y:-145px}
+    .archive-hero__media--2{left:61%;top:14%;--move-x:78px;--move-y:-120px}
+    .archive-hero__media--3{left:72%;top:33%;--move-x:125px;--move-y:-55px}
+    .archive-hero__media--4{left:79%;top:56%;--move-x:125px;--move-y:55px}
+    .archive-hero__media--5{left:61%;top:72%;--move-x:78px;--move-y:120px}
+    .archive-hero__media--6{left:33%;top:76%;--move-x:0px;--move-y:145px}
+    .archive-hero__media--7{left:5%;top:72%;--move-x:-78px;--move-y:120px}
+    .archive-hero__media--8{left:-13%;top:56%;--move-x:-125px;--move-y:55px}
+    .archive-hero__media--9{left:-7%;top:33%;--move-x:-125px;--move-y:-55px}
+    .archive-hero__media--10{left:5%;top:14%;--move-x:-78px;--move-y:-120px}
+  }
+
+  /* 화면 폭과 관계없이 휴대폰으로 판별되면 동일한 10개 배치를 적용합니다. */
+  html.is-archive-mobile .archive-hero__media--11,
+  html.is-archive-mobile .archive-hero__media--12{display:none}
+  html.is-archive-mobile .archive-hero__media--1{left:33%;top:10%;--move-x:0px;--move-y:-145px}
+  html.is-archive-mobile .archive-hero__media--2{left:61%;top:14%;--move-x:78px;--move-y:-120px}
+  html.is-archive-mobile .archive-hero__media--3{left:72%;top:33%;--move-x:125px;--move-y:-55px}
+  html.is-archive-mobile .archive-hero__media--4{left:79%;top:56%;--move-x:125px;--move-y:55px}
+  html.is-archive-mobile .archive-hero__media--5{left:61%;top:72%;--move-x:78px;--move-y:120px}
+  html.is-archive-mobile .archive-hero__media--6{left:33%;top:76%;--move-x:0px;--move-y:145px}
+  html.is-archive-mobile .archive-hero__media--7{left:5%;top:72%;--move-x:-78px;--move-y:120px}
+  html.is-archive-mobile .archive-hero__media--8{left:-13%;top:56%;--move-x:-125px;--move-y:55px}
+  html.is-archive-mobile .archive-hero__media--9{left:-7%;top:33%;--move-x:-125px;--move-y:-55px}
+  html.is-archive-mobile .archive-hero__media--10{left:5%;top:14%;--move-x:-78px;--move-y:-120px}
+
+  @media(prefers-reduced-motion:reduce){
+    .archive-hero__media{will-change:auto}
+    .archive-hero__scroll-line::after{animation:none;top:34px;opacity:1}
+  }
+</style>
+
+<section class="archive-hero" aria-label="FALL ARCHIVE SALE 가을 이월 세일">
+  <div class="archive-hero__sticky">
+    <!-- 이미지 적용 시 각 img의 src 속성에 이미지 주소를 입력하세요. -->
+    <figure class="archive-hero__media archive-hero__media--1"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top01.jpg" alt="가을 아카이브 상품 이미지 1"></figure>
+    <figure class="archive-hero__media archive-hero__media--2"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top02_nw.jpg" alt="가을 아카이브 상품 이미지 2"></figure>
+    <figure class="archive-hero__media archive-hero__media--3"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top03.jpg" alt="가을 아카이브 상품 이미지 3"></figure>
+    <figure class="archive-hero__media archive-hero__media--4"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top04.jpg" alt="가을 아카이브 상품 이미지 4"></figure>
+    <figure class="archive-hero__media archive-hero__media--5"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top05.jpg" alt="가을 아카이브 상품 이미지 5"></figure>
+    <figure class="archive-hero__media archive-hero__media--6"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top06.jpg" alt="가을 아카이브 상품 이미지 6"></figure>
+    <figure class="archive-hero__media archive-hero__media--7"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top07.jpg" alt="가을 아카이브 상품 이미지 7"></figure>
+    <figure class="archive-hero__media archive-hero__media--8"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top08.jpg" alt="가을 아카이브 상품 이미지 8"></figure>
+    <figure class="archive-hero__media archive-hero__media--9"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top09.jpg" alt="가을 아카이브 상품 이미지 9"></figure>
+    <figure class="archive-hero__media archive-hero__media--10"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top10.jpg" alt="가을 아카이브 상품 이미지 10"></figure>
+    <figure class="archive-hero__media archive-hero__media--11"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top11.jpg" alt="가을 아카이브 상품 이미지 11"></figure>
+    <figure class="archive-hero__media archive-hero__media--12"><img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/top/img_top12.jpg" alt="가을 아카이브 상품 이미지 12"></figure>
+
+    <div class="archive-hero__center">
+      <p class="archive-hero__badge">UP TO 83%</p>
+      <h1 class="archive-hero__title">FALL ARCHIVE SALE</h1>
+    </div>
+
+    <div class="archive-hero__scroll" aria-hidden="true">
+      <span class="archive-hero__scroll-text">SCROLL</span>
+      <span class="archive-hero__scroll-line"></span>
+    </div>
+  </div>
+</section>
+
+<main class="archive-main">
+<section class="archive-content" aria-label="가을 이월 세일 소개와 카테고리">
+  <div class="archive-content__intro">
+    <p>가을은 아직, 가격은 지금<br>지난 시즌 가을 베스트를 가장 좋은 가격으로 준비했습니다.<br>26.8.18 - 8.24</p>
+  </div>
+</section>
+<nav class="archive-content__nav" aria-label="상품 카테고리 바로가기">
+  <div class="archive-content__nav-scroll">
+    <ul>
+      <li><a href="#archive-rugged-house">RUGGED HOUSE</a></li>
+      <li><a href="#archive-burning-capone">BURNING CAPONE</a></li>
+      <li><a href="#archive-airit">AIRIT</a></li>
+      <li><a href="#archive-mozmoz">MOZMOZ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="archive-products" aria-label="FALL ARCHIVE SALE 상품">
+  <div id="archive-product-groups"></div>
+</section>
+</main>
+
+<script>
+  (() => {
+    const isPhone = /Android|iPhone|iPod|Mobile/i.test(navigator.userAgent);
+    document.documentElement.classList.toggle('is-archive-mobile', isPhone);
+  })();
+
+  (() => {
+    const hero = document.querySelector('.archive-hero');
+    if (!hero) return;
+
+    const mediaItems = [...hero.querySelectorAll('.archive-hero__media')];
+    const scrollGuide = hero.querySelector('.archive-hero__scroll');
+    const mobileMotionQuery = window.matchMedia('(max-width: 750px)');
+    const MOBILE_SCROLL_SPEED = 1.8;
+    let ticking = false;
+
+    const updateArchiveMotion = () => {
+      if (scrollGuide) {
+        scrollGuide.classList.toggle('is-hidden', window.scrollY > 1);
+      }
+      const rect = hero.getBoundingClientRect();
+      const scrollRange = Math.max(hero.offsetHeight - window.innerHeight, 1);
+      const heroDocumentTop = rect.top + window.scrollY;
+      const animationStart = Math.max(heroDocumentTop, 0);
+      const rawProgress = Math.min(Math.max((window.scrollY - animationStart) / scrollRange, 0), 1);
+      const isMobileMotion = mobileMotionQuery.matches || document.documentElement.classList.contains('is-archive-mobile');
+      const scrollSpeed = isMobileMotion ? MOBILE_SCROLL_SPEED : 1;
+      const progress = Math.min(rawProgress * scrollSpeed, 1);
+      const outwardProgress = 1 - progress;
+      mediaItems.forEach((item) => {
+        const style = getComputedStyle(item);
+        const moveX = parseFloat(style.getPropertyValue('--move-x')) || 0;
+        const moveY = parseFloat(style.getPropertyValue('--move-y')) || 0;
+        item.style.transform = `translate3d(${moveX * outwardProgress}px,${moveY * outwardProgress}px,0)`;
+        item.style.opacity = String(Math.min(progress * 1.5, 1));
+      });
+      ticking = false;
+    };
+
+    const requestArchiveMotion = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateArchiveMotion);
+    };
+
+    updateArchiveMotion();
+    window.addEventListener('scroll', requestArchiveMotion, {passive:true});
+    window.addEventListener('resize', requestArchiveMotion, {passive:true});
+    window.addEventListener('orientationchange', requestArchiveMotion, {passive:true});
+    window.addEventListener('pageshow', requestArchiveMotion, {passive:true});
+  })();
+
+  (() => {
+    // 브랜드 배너 공통 이미지 경로입니다. 각 배너는 아래 bannerFileName만 변경하세요.
+    const archiveBrandBannerPath = 'https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/18/KEY/fall/img/cate/';
+    const groups = [
+      {id:'archive-rugged-house', label:'러기드하우스 베스트', bannerFileName:'img_cate01.jpg', productNos:[689212,689097,689095,689092,689090,689088,688958,688939,688690,688686,688659,688553,688544,688519]},
+      {id:'archive-burning-capone', label:'버닝카포네 베스트', bannerFileName:'img_cate02.jpg', productNos:[688312,687950,687875,687873,687808,687801,687800,687798,687793,687316,684098,674082,668777,668724]},
+      {id:'archive-airit', label:'에어릿 70%', bannerFileName:'img_cate03.jpg', productNos:[671469,657263,657262,656481,655012,654808,654807,654450,654449]},
+      {id:'archive-mozmoz', label:'모즈모즈 만원', bannerFileName:'img_cate04.jpg', productNos:[627001,623722,623721,623719,623718,623717,623716,615641,615640,615637]}
+    ];
+    const root = document.querySelector('#archive-product-groups');
+    if (!root) return;
+
+    const productCard = (group, productNo) => `
+      <article class="archive-product-card" data-goods-no="${productNo}">
+        <a class="archive-product-card__link" href="/shop/view.php?index_no=${productNo}" target="_blank" rel="noopener noreferrer" aria-label="${group.label} 상품 ${productNo}"></a>
+        <div class="archive-product-card__image">
+          <span class="archive-product-card__loading">loading</span>
+          <img src="" alt="" hidden>
+        </div>
+        <a class="archive-product-card__brand" href="#" target="_blank" rel="noopener noreferrer">상품번호 ${productNo}</a>
+        <p class="archive-product-card__name">상품 정보를 불러오는 중입니다.</p>
+        <div class="archive-product-card__meta">
+          <strong class="archive-product-card__price" data-field="sale-price"></strong>
+          <del class="archive-product-card__original" data-field="original-price" hidden></del>
+          <span class="archive-product-card__discount" data-field="discount-rate" hidden></span>
+          <span class="archive-product-card__review" data-field="review-count"></span>
+        </div>
+      </article>`;
+
+    root.innerHTML = groups.map((group) => `
+      <section class="archive-product-group" id="${group.id}" aria-label="${group.label}">
+        <div class="archive-brand-banner">
+          <img src="${archiveBrandBannerPath}${group.bannerFileName}" alt="${group.label} 브랜드 배너" loading="lazy">
+        </div>
+        <div class="archive-product-grid">${group.productNos.map((productNo) => productCard(group, productNo)).join('')}</div>
+      </section>`).join('');
+
+    const won = (value) => {
+      const number = Number(String(value || '').replace(/[^0-9]/g, ''));
+      return number ? `${number.toLocaleString('ko-KR')}원` : '';
+    };
+
+    const isMobileGoodsView = () => window.matchMedia('(max-width: 749px)').matches
+      || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+    const readGoodsPage = async (productNo) => {
+      const url = `/shop/view.php?index_no=${productNo}`;
+      const response = await fetch(url, {credentials:'same-origin'});
+      if (!response.ok) throw new Error(`상품 ${productNo} 조회 실패`);
+
+      const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+      const meta = (property) => doc.querySelector(`meta[property="${property}"]`)?.content?.trim() || '';
+      const originalText = doc.querySelector('.price_01 span')?.textContent?.trim() || '';
+      const discountText = doc.querySelector('.price_02 .sale')?.textContent?.trim() || '';
+      const original = Number(originalText.replace(/[^0-9]/g, '')) || 0;
+      const sale = Number(meta('product:sale_price:amount')) || original;
+      const reviewSelectors = [
+        ...(isMobileGoodsView() ? ['.btn_review .count_ey'] : []),
+        '.review_new_wrap .tit_24 strong',
+        '.detail_top .review strong',
+        '.review_count',
+        '.review-count',
+        '.prd_review_count',
+        '[data-review-count]',
+        'a[href*="review"] .count',
+        'a[href*="review"] strong'
+      ];
+      const reviewElement = reviewSelectors
+        .map((selector) => doc.querySelector(selector))
+        .find((element) => element && /\d/.test(element.getAttribute('data-review-count') || element.textContent || ''));
+      const reviewValue = reviewElement
+        ? (reviewElement.getAttribute('data-review-count') || reviewElement.textContent || '')
+        : '';
+      const pageSource = doc.documentElement.innerHTML;
+      const reviewSourceMatch = pageSource.match(/(?:reviewCount|review_count|reviewCnt|review_cnt|goodsReviewCount)["']?\s*[:=]\s*["']?([0-9,]+)/i);
+      const reviewCount = Number(String(reviewValue || reviewSourceMatch?.[1] || '0').replace(/[^0-9]/g, '')) || 0;
+      const brandLink = doc.querySelector('.prd_brand a[href], .brand_name a[href], .goods_info a[href*="brand"], a[href*="brand="]');
+
+      return {
+        url,
+        image: meta('og:image'),
+        brand: meta('product:brand'),
+        brandUrl: brandLink?.getAttribute('href') || '',
+        name: meta('og:title').replace(/\s*-\s*4XR\s*$/i, ''),
+        price: won(sale),
+        originalPrice: originalText || (original > sale ? won(original) : ''),
+        discount: discountText || (original > sale ? `${Math.round((1 - sale / original) * 100)}%` : ''),
+        reviewCount
+      };
+    };
+
+    const renderGoods = async (card) => {
+      try {
+        const productNo = card.dataset.goodsNo;
+        const goods = isMobileGoodsView()
+          ? await readGoodsPage(productNo)
+          : (typeof window.getArchiveGoods === 'function'
+            ? await window.getArchiveGoods(productNo)
+            : await readGoodsPage(productNo));
+        if (!goods) throw new Error(`상품 ${productNo} 데이터 없음`);
+
+        const link = card.querySelector('.archive-product-card__link');
+        const imageWrap = card.querySelector('.archive-product-card__image');
+        const image = imageWrap.querySelector('img');
+        const loading = card.querySelector('.archive-product-card__loading');
+        link.href = goods.url || `/shop/view.php?index_no=${productNo}`;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        if (goods.image) {
+          const showThumbnail = () => {
+            image.hidden = false;
+            loading.hidden = true;
+            imageWrap.classList.add('is-loaded');
+          };
+          image.addEventListener('load', showThumbnail, {once:true});
+          image.addEventListener('error', () => {
+            loading.textContent = '상품 이미지 없음';
+          }, {once:true});
+          image.src = goods.image;
+          image.alt = goods.name || `상품 ${productNo}`;
+          if (image.complete && image.naturalWidth) showThumbnail();
+        } else {
+          loading.textContent = '상품 이미지 없음';
+        }
+        const brand = card.querySelector('.archive-product-card__brand');
+        brand.textContent = goods.brand || '';
+        brand.href = goods.brandUrl || goods.brandLink || '#';
+        brand.style.pointerEvents = (goods.brandUrl || goods.brandLink) ? '' : 'none';
+        card.querySelector('.archive-product-card__name').textContent = goods.name || '';
+        const salePrice = goods.price || goods.salePrice || '';
+        const originalPrice = goods.originalPrice || goods.original || '';
+        const discountRate = goods.discount || goods.discountRate || goods.sale || '';
+        card.querySelector('[data-field="sale-price"]').textContent = salePrice;
+        const original = card.querySelector('[data-field="original-price"]');
+        const discount = card.querySelector('[data-field="discount-rate"]');
+        original.textContent = originalPrice;
+        original.hidden = !originalPrice;
+        discount.textContent = discountRate;
+        discount.hidden = !discountRate;
+        const reviewRaw = goods.reviewCount
+          ?? goods.review_count
+          ?? goods.reviewCnt
+          ?? goods.review_cnt
+          ?? goods.goodsReviewCount
+          ?? goods.review
+          ?? 0;
+        const reviewCount = Number(String(reviewRaw).replace(/[^0-9]/g, '')) || 0;
+        const review = card.querySelector('[data-field="review-count"]');
+        if (reviewCount > 0) {
+          review.textContent = `(${reviewCount.toLocaleString('ko-KR')})`;
+          review.classList.add('is-visible');
+        } else {
+          review.textContent = '';
+          review.classList.remove('is-visible');
+        }
+      } catch (error) {
+        card.querySelector('.archive-product-card__loading').textContent = '상품 정보 없음';
+        card.querySelector('.archive-product-card__name').textContent = '상품 정보를 확인해 주세요.';
+      }
+    };
+
+    const cards = [...root.querySelectorAll('[data-goods-no]')];
+    const loadInBatches = async () => {
+      for (let i = 0; i < cards.length; i += 6) {
+        await Promise.all(cards.slice(i, i + 6).map(renderGoods));
+      }
+    };
+    loadInBatches();
+  })();
+
+  (() => {
+    const nav = document.querySelector('.archive-content__nav');
+    if (!nav) return;
+
+    const links = [...nav.querySelectorAll('a[href^="#"]')];
+    const sections = links.map((link) => document.querySelector(link.getAttribute('href')));
+    if (!links.length || sections.some((section) => !section)) return;
+
+    let scrollTicking = false;
+
+    const activateMenu = (activeLink, moveIntoView = false) => {
+      links.forEach((link) => {
+        const isActive = link === activeLink;
+        link.classList.toggle('is-active', isActive);
+        if (isActive) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
+      });
+
+      if (moveIntoView) {
+        const scrollBox = nav.querySelector('.archive-content__nav-scroll');
+        const targetLeft = activeLink.offsetLeft - (scrollBox.clientWidth - activeLink.offsetWidth) / 2;
+        scrollBox.scrollTo({left:Math.max(targetLeft, 0), behavior:'smooth'});
+      }
+    };
+
+    const getNavHeight = () => nav.getBoundingClientRect().height;
+
+    const scrollToSection = (section) => {
+      const top = window.pageYOffset + section.getBoundingClientRect().top - getNavHeight() - 12;
+      window.scrollTo({top:Math.max(top, 0), behavior:'smooth'});
+    };
+
+    links.forEach((link, index) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        activateMenu(link, true);
+        scrollToSection(sections[index]);
+
+        if (history.replaceState) history.replaceState(null, '', link.getAttribute('href'));
+      });
+    });
+
+    const updateActiveMenu = () => {
+      const marker = window.pageYOffset + getNavHeight() + 24;
+      let activeIndex = 0;
+
+      sections.forEach((section, index) => {
+        const sectionTop = window.pageYOffset + section.getBoundingClientRect().top;
+        if (sectionTop <= marker) activeIndex = index;
+      });
+
+      activateMenu(links[activeIndex], true);
+      scrollTicking = false;
+    };
+
+    const requestActiveMenuUpdate = () => {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(updateActiveMenu);
+    };
+
+    window.addEventListener('scroll', requestActiveMenuUpdate, {passive:true});
+    window.addEventListener('resize', requestActiveMenuUpdate, {passive:true});
+
+    const initialIndex = links.findIndex((link) => link.getAttribute('href') === location.hash);
+    if (initialIndex >= 0) {
+      requestAnimationFrame(() => {
+        activateMenu(links[initialIndex], true);
+        scrollToSection(sections[initialIndex]);
+      });
+    } else {
+      updateActiveMenu();
+    }
+  })();
+
+  (() => {
+    const titleSelector = '.discount_view .goods_list > div .tit_40, .discount_view .goods_list > div .txt_46';
+
+    if (!('IntersectionObserver' in window)) {
+      const restoreSaturation = () => document.querySelectorAll(titleSelector).forEach((title) => title.classList.add('is-saturated'));
+      restoreSaturation();
+      new MutationObserver(restoreSaturation).observe(document.body, {childList:true,subtree:true});
+      return;
+    }
+
+    const saturationObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-saturated');
+        observer.unobserve(entry.target);
+      });
+    }, {threshold:.2});
+
+    const observeCategoryTitles = (root = document) => {
+      if (root.nodeType !== Node.ELEMENT_NODE && root.nodeType !== Node.DOCUMENT_NODE) return;
+      if (root.nodeType === Node.ELEMENT_NODE && root.matches(titleSelector)) saturationObserver.observe(root);
+      root.querySelectorAll(titleSelector).forEach((title) => saturationObserver.observe(title));
+    };
+
+    observeCategoryTitles();
+    new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => mutation.addedNodes.forEach((node) => observeCategoryTitles(node)));
+    }).observe(document.body, {childList:true,subtree:true});
+  })();
+</script>

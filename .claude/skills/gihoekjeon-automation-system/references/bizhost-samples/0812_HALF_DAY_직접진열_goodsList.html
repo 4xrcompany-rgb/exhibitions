@@ -1,0 +1,375 @@
+<link rel="stylesheet" href="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/12/KEY/font/font.css">
+<style>
+    /* 콘텐츠 틀 초기화 */
+    .magazine_view{ width: auto; margin-bottom: 0 !important;}
+    .cont img{ width: 100%;}
+    .magazine_view .cont{ margin-bottom: 0 !important;}
+    #contents .page_info,
+    .magazine_view .cont .title,
+    .magazine_view .cont .txt_03,
+    .magazine_view .cont .txt_info,
+    .magazine_view .cont .txt_01,
+    .magazine_view .cont .txt_02,
+    .magazine_view .line_01,
+    .magazine_view .relate_link,
+    .magazine_view .hashtag_box{ display: none;}
+    .base_slider_list{ margin-top: 0 !important;}
+
+    /* 관련상품 상단_TAB */
+    .img_memo_wrap{ position: sticky; position: -webkit-sticky; top: -1px; flex-wrap: wrap; gap: 80px; margin: 0 0 0; background-color: #211515; z-index: 99;}
+    .img_memo_wrap li.on a{ font-weight: 700; color:#42E33D;}
+    .img_memo_wrap li{ padding: 18px 20px; box-sizing: border-box; text-align: center; border-radius: 0; background-color: inherit;}
+    .img_memo_wrap li:last-child{ border-right: none;}
+    .img_memo_wrap li a{ font-size: 22px; transition: font-weight .05s;}
+
+    /* 카테고리 */
+    .discount_view .goods_list > div{ margin-bottom: 0; padding-top: 90px;}
+    .discount_view .goods_list > div .btn_top{ display: none;}
+    .discount_view .goods_list > div .tit_40{ padding-top: 250px; font-size: 0; filter: grayscale(1); transition: filter 1.2s ease;}
+    .discount_view .goods_list > div .tit_40.is-saturated{ filter: grayscale(0);}
+    #goodsList1.discount_view .goods_list > div .tit_40{ background: url(https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/12/KEY/cate/img_cate_pc01.jpg) no-repeat center; background-size: cover;}
+    #goodsList2.discount_view .goods_list > div .tit_40{ background: url(https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/12/KEY/cate/img_cate_pc02.jpg) no-repeat center; background-size: cover;}
+    #goodsList3.discount_view .goods_list > div .tit_40{ background: url(https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/12/KEY/cate/img_cate_pc03.jpg) no-repeat center; background-size: cover;}
+    #goodsList4.discount_view .goods_list > div .tit_40{ background: url(https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/12/KEY/cate/img_cate_pc04.jpg) no-repeat center; background-size: cover;}
+
+    /* 관련상품 */
+    /* .more_btn{ color: #fff !important; background: linear-gradient(45deg, black, #ffffff); border-color: #000;} */
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+    /* HALF DAY 메인 비주얼 */
+    .black-hero,.content_box{font-family:'SB Aggro','Pretendard',sans-serif!important}
+    .black-hero{
+      /* 반팔·반바지·반값 위치: 아래 두 값만 수정하세요. */
+      --hero-copy-left:96%; /* 값이 클수록 오른쪽 */
+      --hero-copy-top:calc(73% - clamp(52px,4.6vw,68px)); /* 값이 클수록 아래 */
+      position:relative;width:100%;height:min(750px,100vh);min-height:620px;overflow:hidden;background:#42E33D;color:#211515
+    }
+    .black-hero__inner{position:relative;width:min(1320px,100%);height:100%;margin:0 auto;-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
+    .hero-top{position:absolute;left:50%;top:16%;width:min(1120px,92%);height:210px;transform:translateX(-50%)}
+    .hero-title{position:absolute;left:50%;bottom:0;display:flex;align-items:center;justify-content:center;margin:0;color:#fff;font-size:clamp(120px,14vw,250px);font-weight:900;line-height:.78;letter-spacing:-.09em;white-space:nowrap;transform:translateX(-50%)}
+    .hero-letter{display:block;opacity:0;-webkit-transform:translateY(70px);transform:translateY(70px)}
+    .hero-letter--right{letter-spacing:0}
+    .hero-line--bridge{position:relative;display:block;width:clamp(90px,15vw,250px);height:43px;margin:0 -218px 15px -20px;background:#fff;opacity:0;-webkit-transform:translateY(70px);transform:translateY(70px)}
+    .hero-line--bridge::after{content:"";position:absolute;left:2px;top:-16px;width:100%;height:32px;background:#42E33D;transform:translateY(-50%)}
+    .hero-line--extend{position:absolute;left:53.3%;top:79.2%;display:block;width:100vw;height:43.5px;background:#fff;-webkit-transform:translateY(-50%) scaleX(0);transform:translateY(-50%) scaleX(0);-webkit-transform-origin:left center;transform-origin:left center}
+    .hero-copy{position:absolute;left:var(--hero-copy-left);top:var(--hero-copy-top);display:flex;flex-direction:row;align-items:center;gap:1em;width:max-content;margin:0;color:#fff;font-size:clamp(26px,3.4vw,48px);font-weight:500;line-height:1.05;white-space:nowrap;opacity:0;-webkit-transform:translate(-50%,45px);transform:translate(-50%,45px)}
+    .hero-copy__word{display:flex;width:3em;flex:0 0 3em;justify-content:space-between;letter-spacing:0}
+    /* 데이 연결선: 위치·크기·색상은 아래 값으로 직접 수정할 수 있습니다. */
+    .hero-day-line{position:absolute;top:48.5%;left:73.2%;width:53px;height:100%;background:#211515;opacity:0;-webkit-transform:translateY(55px);transform:translateY(55px)}
+    .hero-bottom{position:absolute;left:50%;top:53%;width:min(1120px,92%);height:270px;transform:translateX(-50%)}
+    .hero-day{position:absolute;left:50%;top:0;margin:0;font-size:clamp(150px,18vw,250px);font-weight:900;line-height:.8;letter-spacing:0;white-space:nowrap;opacity:0;-webkit-transform:translateY(55px);transform:translateY(55px)}
+    .hero-band{position:absolute;right:48.3%;top:42px;width:100vw;height:61px;background:#ffff25;-webkit-transform:scaleX(0);transform:scaleX(0);-webkit-transform-origin:right center;transform-origin:right center}
+    .hero-band__text{position:absolute;right:calc(67% + 26px);top:57px;display:flex;gap:55px;align-items:center;font-size:clamp(23px,2.3vw,30px);font-weight:500;white-space:nowrap;opacity:0;-webkit-transform:translateX(-70px);transform:translateX(-70px)}
+    .hero-band__text strong{font-size: 40px;font-weight:700}
+    .hero-side{position:absolute;left:calc(83.5% + 33px);top:-32px;margin:0;font-size:30px;font-weight:500;line-height:1;white-space:nowrap;opacity:0;-webkit-transform-origin:left top;transform-origin:left top;-webkit-transform:translateX(-20px) rotate(90deg);transform:translateX(-20px) rotate(90deg)}
+    @keyframes hero-line-extend{to{transform:translateY(-50%) scaleX(1)}}
+    @keyframes hero-rise{to{opacity:1;transform:translateY(0)}}
+    @keyframes hero-day-rise{to{opacity:1;transform:translateY(0)}}
+    @keyframes hero-day-line-rise{to{opacity:1;transform:translateY(0)}}
+    @keyframes hero-copy-rise{to{opacity:1;transform:translate(-50%,0)}}
+    @keyframes band-grow{to{transform:scaleX(1)}}
+    @keyframes band-text{to{opacity:1;transform:translateX(0)}}
+    @keyframes side-show{to{opacity:1;transform:translateX(0) rotate(90deg)}}
+    /* iPhone의 모든 브라우저는 WebKit 엔진을 사용하므로 합성 레이어와 접두사를 함께 지정합니다. */
+    .hero-letter,.hero-line--bridge,.hero-line--extend,.hero-copy,.hero-day-line,.hero-day,.hero-band,.hero-band__text,.hero-side,
+    .content_keywords li,.content_box p{
+      -webkit-backface-visibility:hidden;backface-visibility:hidden;
+      -webkit-transform-style:preserve-3d;transform-style:preserve-3d;
+      will-change:transform,opacity;
+    }
+    @-webkit-keyframes hero-line-extend{to{-webkit-transform:translateY(-50%) scaleX(1);transform:translateY(-50%) scaleX(1)}}
+    @-webkit-keyframes hero-rise{to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}
+    @-webkit-keyframes hero-day-rise{to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}
+    @-webkit-keyframes hero-day-line-rise{to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}
+    @-webkit-keyframes hero-copy-rise{to{opacity:1;-webkit-transform:translate(-50%,0);transform:translate(-50%,0)}}
+    @-webkit-keyframes band-grow{to{-webkit-transform:scaleX(1);transform:scaleX(1)}}
+    @-webkit-keyframes band-text{to{opacity:1;-webkit-transform:translateX(0);transform:translateX(0)}}
+    @-webkit-keyframes side-show{to{opacity:1;-webkit-transform:translateX(0) rotate(90deg);transform:translateX(0) rotate(90deg)}}
+    /* 준비 클래스가 붙은 뒤 애니메이션 자체를 생성해 iOS의 animation:none 복구 오류를 피합니다. */
+    .black-hero.is-ready .hero-letter,.black-hero.is-ready .hero-line--bridge{-webkit-animation:hero-rise .55s cubic-bezier(.2,.75,.25,1) .05s forwards;animation:hero-rise .55s cubic-bezier(.2,.75,.25,1) .05s forwards}
+    .black-hero.is-ready .hero-day-line{-webkit-animation:hero-day-line-rise .48s cubic-bezier(.2,.75,.25,1) .5s forwards;animation:hero-day-line-rise .48s cubic-bezier(.2,.75,.25,1) .5s forwards}
+    .black-hero.is-ready .hero-day{-webkit-animation:hero-day-rise .48s cubic-bezier(.2,.75,.25,1) .5s forwards;animation:hero-day-rise .48s cubic-bezier(.2,.75,.25,1) .5s forwards}
+    .black-hero.is-ready .hero-line--extend{-webkit-animation:hero-line-extend .58s cubic-bezier(.75,0,.2,1) .92s forwards;animation:hero-line-extend .58s cubic-bezier(.75,0,.2,1) .92s forwards}
+    .black-hero.is-ready .hero-copy{-webkit-animation:hero-copy-rise .48s cubic-bezier(.2,.75,.25,1) 1.42s forwards;animation:hero-copy-rise .48s cubic-bezier(.2,.75,.25,1) 1.42s forwards}
+    .black-hero.is-ready .hero-band{-webkit-animation:band-grow .6s cubic-bezier(.75,0,.2,1) 1.82s forwards;animation:band-grow .6s cubic-bezier(.75,0,.2,1) 1.82s forwards}
+    .black-hero.is-ready .hero-band__text{-webkit-animation:band-text .6s ease-out 1.82s forwards;animation:band-text .6s ease-out 1.82s forwards}
+    .black-hero.is-ready .hero-side{-webkit-animation:side-show .38s ease-out 2.34s forwards;animation:side-show .38s ease-out 2.34s forwards}
+    .content_box{min-height:375px;padding:76px 24px;text-align:center;color:#171111;background:#42E33D;overflow:hidden}
+    .content_keywords{display:flex;justify-content:center;align-items:center;gap:58px;margin:0 0 58px;padding:0;list-style:none}
+    .content_keywords li{position:relative;min-width:190px;font-size:28px;font-weight:800;line-height:1.25;opacity:0;transform:translateY(45px)}
+    .content_keywords li:not(:last-child)::after{content:"";position:absolute;right:-30px;top:8px;width:2px;height:56px;background:#171111;transform:scaleY(0);transform-origin:center bottom;transition:transform .5s ease}
+    .content_box p{margin:0;font-size:19px;line-height:1.65;opacity:0;transform:translateY(35px)}
+    .content_box.is-visible .content_keywords li{-webkit-animation:content-rise .65s ease-out forwards;animation:content-rise .65s ease-out forwards}
+    .content_box.is-visible .content_keywords li:nth-child(2){-webkit-animation-delay:.12s;animation-delay:.12s}
+    .content_box.is-visible .content_keywords li:nth-child(3){-webkit-animation-delay:.24s;animation-delay:.24s}
+    .content_box.is-visible .content_keywords li:nth-child(4){-webkit-animation-delay:.36s;animation-delay:.36s}
+    .content_box.is-visible .content_keywords li::after{transform:scaleY(1)}
+    .content_box.is-visible p{-webkit-animation:content-rise .75s ease-out .55s forwards;animation:content-rise .75s ease-out .55s forwards}
+    @keyframes content-rise{to{opacity:1;transform:translateY(0)}}
+    @-webkit-keyframes content-rise{to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}
+ 
+    @media screen and (min-width: 1940px){
+      /* 콘텐츠 틀 초기화 1940 */
+      #container{ padding-top: 180px;}
+      .magazine_view_wrap{ width: 100%;}
+    }
+    @media(max-width: 768px){
+      /* 콘텐츠 틀 초기화 768 */
+      .page_cont{}
+      .page_cont.padding_01{ padding:0; margin-bottom: 0 !important;}
+      .page_view_top > *{ display: none;}
+
+      /* 모바일 sticky 활성화 */
+      #wrap { overflow: initial;}
+
+      /* 관련상품 상단_TAB 768 */
+      .img_memo_wrap{ top: 100px; gap: 0;}
+      .img_memo_wrap li { width: 25%;/* 탭 개수에 맞춰서 조정*/ padding: 23px 0;}
+      .img_memo_wrap li a{ font-size: 28px;}
+
+      /* 카테고리 768 */
+      .discount_view .goods_list > div{ padding-top: 100px;}
+      .discount_view .goods_list > div#goodsList1{ padding-top: 0;}
+      .discount_view .goods_list > div:last-child{ margin-bottom: 100px; padding-bottom: 70px;}
+      .discount_view .goods_list > div:before{ display: none;}
+      .discount_view .goods_list > div .txt_46{ padding-top: 300px; font-size: 0; filter: grayscale(1); transition: filter 1.2s ease;}
+      .discount_view .goods_list > div .txt_46.is-saturated{ filter: grayscale(0);}
+      .discount_view .goods_list > #goodsList1 .txt_46{ background: url(https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/12/KEY/cate/img_cate_m01.jpg) no-repeat center; background-size: cover;}
+      .discount_view .goods_list > #goodsList2 .txt_46{ background: url(https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/12/KEY/cate/img_cate_m02.jpg) no-repeat center; background-size: cover;}
+      .discount_view .goods_list > #goodsList3 .txt_46{ background: url(https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/12/KEY/cate/img_cate_m03.jpg) no-repeat center; background-size: cover;}
+      .discount_view .goods_list > #goodsList4 .txt_46{ background: url(https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/08/12/KEY/cate/img_cate_m04.jpg) no-repeat center; background-size: cover;}
+      .base_slider_list .product .infor_box .p_conts{ font-size: 26px;}
+
+      .black-hero{
+        /* 모바일 반팔·반바지·반값 위치 */
+        --hero-copy-left:86%;
+        --hero-copy-top:-40px;
+        height:800px;min-height:0
+      }
+      .hero-top{top:30%;width:92%;height:150px}
+      .hero-title{font-size:clamp(90px,50vw,210px)}
+      .hero-line--bridge{width:clamp(42px,80vw,222px);margin:0 -184px 15px -20px}
+      .hero-line--bridge::after{left:6px;height: 32px;}
+      .hero-line--extend{left: 54.5%;height:36px}
+      .hero-copy{gap:.5em;font-size:clamp(18px,5vw,30px);flex-direction: column;}
+      .hero-copy__word{ width: 4em;flex: auto;}
+      .hero-day-line{top:56%;left:84.8%;width:44px;}
+      .hero-bottom{top:59%;width:100%;height:220px}
+      .hero-day{left:50%;font-size:clamp(125px,35vw,210px)}
+      .hero-band{right:47.2%;top:37px;height:50px}
+      .hero-band__text{right:calc(60% + 14px);top:48px;flex-direction: column-reverse;gap:18px;font-size:clamp(17px,4.5vw,26px)}
+      .hero-band__text strong{ font-size: 34px;}
+      .hero-side{left:calc(78% + 28px);top:178px;font-size:23px}
+      .content_keywords{ justify-content: space-around;}
+      .content_keywords li{min-width:0;font-size:30px}
+      .content_box{ padding-top: 118px;}
+      .content_box p{font-size:24px}
+    }
+
+    /* iPhone의 '동작 줄이기' 설정에서도 요청된 모션이 완전히 사라지지 않게 유지합니다. */
+    @media (prefers-reduced-motion:reduce){
+      .black-hero.is-ready .hero-line--extend,.black-hero.is-ready .hero-line--bridge,.black-hero.is-ready .hero-letter,.black-hero.is-ready .hero-copy,.black-hero.is-ready .hero-day-line,.black-hero.is-ready .hero-day,.black-hero.is-ready .hero-band,.black-hero.is-ready .hero-band__text,.black-hero.is-ready .hero-side,.content_box.is-visible *{-webkit-animation-duration:.35s!important;animation-duration:.35s!important}
+    }
+</style>
+
+<section class="black-hero" aria-label="하프데이 반팔 반바지 할인전">
+  <div class="black-hero__inner">
+    <div class="hero-top">
+      <h1 class="hero-title"><span class="hero-letter">하</span><span class="hero-line--bridge" aria-hidden="true"></span><span class="hero-letter hero-letter--right">프</span><span class="hero-line--extend" aria-hidden="true"></span></h1>
+      <p class="hero-copy"><span class="hero-copy__word"><span>반</span><span>팔</span></span><span class="hero-copy__word"><span>반</span><span>바</span><span>지</span></span><span class="hero-copy__word"><span>반</span><span>값</span></span></p>
+    </div>
+    <div class="hero-bottom">
+      <h2 class="hero-day"><span>데</span><span class="hero-day__last">이</span></h2>
+      <span class="hero-band" aria-hidden="true"></span>
+      <p class="hero-band__text"><span>26.8.12 – 8.18</span><strong>UP TO 70%</strong></p>
+      <p class="hero-side">8월 단, 7일간</p>
+    </div>
+    <span class="hero-day-line" aria-hidden="true"></span>
+  </div>
+</section>
+<section class="content_box">
+  <ul class="content_keywords">
+    <li>여름<br>BEST</li>
+    <li>최대<br>70% OFF</li>
+    <li>SUMMER<br>ITEM</li>
+    <li>반팔<br>반바지</li>
+  </ul>
+  <p>더운 여름, 가볍게 입고 시원하게 즐겨요.<br>옷도 하프, 가격도 하프!<br>놓치면 아쉬운 하프데이 지금 가장 시원한 쇼핑을 시작하세요.</p>
+</section>
+
+<script>
+    (() => {
+      const hero = document.querySelector('.black-hero');
+      if (!hero) return;
+
+      const alignHalfDayTitle = () => {
+        const inner = hero.querySelector('.black-hero__inner');
+        const top = hero.querySelector('.hero-top');
+        const bottom = hero.querySelector('.hero-bottom');
+        const title = hero.querySelector('.hero-title');
+        const rightLetter = hero.querySelector('.hero-letter--right');
+        const day = hero.querySelector('.hero-day');
+        if (!inner || !top || !bottom || !title || !rightLetter || !day) return;
+
+        title.style.left = '0px';
+        title.style.transform = 'none';
+        day.style.left = '0px';
+
+        const innerRect = inner.getBoundingClientRect();
+        const topRect = top.getBoundingClientRect();
+        const bottomRect = bottom.getBoundingClientRect();
+        const titleWidth = title.offsetWidth;
+        const dayWidth = day.offsetWidth;
+        const rightLetterStart = rightLetter.offsetLeft;
+        const combinedWidth = Math.max(titleWidth, rightLetterStart + dayWidth);
+        const titleLeftInInner = (inner.clientWidth - combinedWidth) / 2;
+        const topLeftInInner = topRect.left - innerRect.left;
+        const bottomLeftInInner = bottomRect.left - innerRect.left;
+        const titleLeftInTop = titleLeftInInner - topLeftInInner;
+        const dayLeftInBottom = titleLeftInInner + rightLetterStart - bottomLeftInInner;
+
+        title.style.left = `${titleLeftInTop}px`;
+        day.style.left = `${dayLeftInBottom}px`;
+
+      };
+
+      let resizeFrame;
+      const requestTitleAlignment = () => {
+        cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(alignHalfDayTitle);
+      };
+
+      window.addEventListener('resize', requestTitleAlignment, { passive: true });
+
+      let heroStarted = false;
+      const startHero = () => {
+        if (heroStarted) return;
+        heroStarted = true;
+        requestTitleAlignment();
+        requestAnimationFrame(() => {
+          /* 초기 상태를 먼저 확정하고 다음 프레임에 애니메이션 선언을 생성합니다. */
+          void hero.offsetWidth;
+          requestAnimationFrame(() => {
+            hero.classList.add('is-ready');
+            try {
+              hero.dispatchEvent(new Event('heroanimationstart'));
+            } catch (error) {
+              const startEvent = document.createEvent('Event');
+              startEvent.initEvent('heroanimationstart', false, false);
+              hero.dispatchEvent(startEvent);
+            }
+          });
+        });
+      };
+
+      /* 외부 폰트 응답과 무관하게 즉시 시작합니다. 폰트가 바뀌면 정렬만 다시 계산합니다. */
+      startHero();
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(requestTitleAlignment, requestTitleAlignment);
+      }
+
+      /* iOS의 뒤로가기 캐시 및 화면 회전 후에도 정렬과 시작 상태를 복구합니다. */
+      window.addEventListener('pageshow', (event) => {
+        requestTitleAlignment();
+        if (!hero.classList.contains('is-ready')) startHero();
+      }, { passive: true });
+      window.addEventListener('orientationchange', requestTitleAlignment, { passive: true });
+    })();
+
+    (() => {
+      const titleSelector = '.discount_view .goods_list > div .tit_40, .discount_view .goods_list > div .txt_46';
+
+      if (!('IntersectionObserver' in window)) {
+        const restoreSaturation = () => {
+          document.querySelectorAll(titleSelector).forEach((title) => title.classList.add('is-saturated'));
+        };
+        restoreSaturation();
+        new MutationObserver(restoreSaturation).observe(document.body, { childList: true, subtree: true });
+        return;
+      }
+
+      const saturationObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-saturated');
+          observer.unobserve(entry.target);
+        });
+      }, {
+        threshold: 0.2
+      });
+
+      const observeCategoryTitles = (root = document) => {
+        if (root.nodeType !== Node.ELEMENT_NODE && root.nodeType !== Node.DOCUMENT_NODE) return;
+
+        if (root.nodeType === Node.ELEMENT_NODE && root.matches(titleSelector)) {
+          saturationObserver.observe(root);
+        }
+        root.querySelectorAll(titleSelector).forEach((title) => saturationObserver.observe(title));
+      };
+
+      observeCategoryTitles();
+
+      new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => observeCategoryTitles(node));
+        });
+      }).observe(document.body, { childList: true, subtree: true });
+    })();
+
+    (() => {
+      const content = document.querySelector('.content_box');
+      if (!content) return;
+
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      const showContent = () => content.classList.add('is-visible');
+
+      if (isMobile) {
+        /* 모바일: 스크롤과 관계없이 메인 비주얼의 마지막 애니메이션 후 실행 */
+        const finalHeroMotion = document.querySelector('.black-hero__inner .hero-side');
+        if (!finalHeroMotion) {
+          showContent();
+          return;
+        }
+
+        let contentStarted = false;
+        let contentFallback;
+        const startAfterHero = (event) => {
+          if (event && event.animationName && event.animationName !== 'side-show') return;
+          if (contentStarted) return;
+          contentStarted = true;
+          clearTimeout(contentFallback);
+          showContent();
+        };
+        finalHeroMotion.addEventListener('animationend', startAfterHero, { once: true });
+        finalHeroMotion.addEventListener('webkitAnimationEnd', startAfterHero, { once: true });
+
+        /* animationend가 누락되는 일부 iOS WebView에서도 마지막 모션 뒤 반드시 실행합니다. */
+        const armContentFallback = () => {
+          clearTimeout(contentFallback);
+          contentFallback = setTimeout(startAfterHero, 3100);
+        };
+        const heroElement = document.querySelector('.black-hero');
+        if (heroElement && heroElement.classList.contains('is-ready')) armContentFallback();
+        else if (heroElement) heroElement.addEventListener('heroanimationstart', armContentFallback, { once: true });
+        return;
+      }
+
+      /* PC: 기존처럼 content_box가 화면에 들어올 때 스크롤 애니메이션 실행 */
+      if (!('IntersectionObserver' in window)) {
+        showContent();
+        return;
+      }
+
+      const contentObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          showContent();
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.25 });
+
+      contentObserver.observe(content);
+    })();
+  </script>
