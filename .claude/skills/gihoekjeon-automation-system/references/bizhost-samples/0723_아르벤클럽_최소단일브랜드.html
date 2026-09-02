@@ -1,0 +1,259 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.8/dist/web/static/pretendard.css">
+
+<style>
+/* 기존 form에서 변경해야할 곳 */
+.page_info .count,
+.page_info .count em{ color: #b9b9c3;}
+.page_info > div > div:first-child,
+.page_info .count:after{ display: none;}
+
+#contents .page_info{ position: absolute; right: 0; z-index: 9;}
+.magazine_view{ width: auto; margin: 0 auto 30px;}
+.magazine_view .cont .title,
+.magazine_view .cont .txt_03,
+.magazine_view .cont .txt_info,
+.magazine_view .cont .txt_01,
+.magazine_view .cont .txt_02,
+.magazine_view .line_01,
+.magazine_view .relate_link,
+.hashtag_list ul li:nth-child(1){ display: none;}
+.magazine_view .hashtag_box{ width: 1400px; margin: 0 auto;}
+.magazine_view .hashtag_box .hashtag_list ul li a{ padding: 10px 20px; border: 1px solid #b6b6b6; border-radius: 50px; color: #4f4f4f; font-size: 15px; font-weight: 500;}
+.mb80{ padding: 0 50px !important;}
+.padding_02{ padding: 0;}
+#wrap_ey{ font-family: "Pretendard Variable";}
+
+/* 관련상품 상단_TAB */
+.img_memo_wrap{ position: -webkit-sticky; position: sticky; top: -1px; flex-wrap: wrap; gap: 0; margin: 0; background-color: #000; z-index: 99;}
+.img_memo_wrap li{ width: 10%;/* 탭 개수에 맞춰서 조정*/ padding: 21px 0; box-sizing: border-box; text-align: center; border-radius: 0; background-color: inherit;}
+.img_memo_wrap li.on{ background-color: #fff;}
+.img_memo_wrap li.on a{ color: #000; font-weight: 500;}
+.img_memo_wrap li:last-child{ border-right: none;}
+
+/* #visual_section */
+#visual_section{ width: 100%; overflow: hidden;}
+#visual_section .visual_con{ position: relative;}
+#visual_section .visual_con .sale_txt{ position: absolute; top: 10%; right: 3.5%; color: #fff; font-size: clamp(52px, 6.1vw, 118px); font-weight: 500; line-height: .82; letter-spacing: -.02em; text-align: right; pointer-events: none; z-index: 5;}
+#visual_section .visual_con .sale_txt span{ display: block;}
+.visual_m{ display: none;}
+
+/* 타이틀 영역 */
+#content_section .content_con{ width: 80%; margin: 150px auto;}
+#content_section .content_con .content_flex{ display: flex; align-items: flex-start; color: #000; text-align: left;}
+#content_section .content_con .content_flex h1{ font-size: 60px; line-height: 1.25em; text-transform: uppercase;}
+#content_section .content_con .content_flex h4{ font-size: 19px; font-weight: 400; line-height: 1.5em;}
+#content_section .content_con .content_flex .date_con{ width: 8%; word-break: keep-all;}
+#content_section .content_con .content_flex .date_con h4 span{ position: relative; display: block;}
+#content_section .content_con .content_flex .date_con h4 span::before{ content: '-'; position: absolute; top: 0; left: -8%; font-weight: 500;}
+#content_section .content_con .content_flex .title_con{ width: 70%; margin: -14px 66px 0 94px;}
+#content_section .content_con .content_flex .sub_title_con{ width: 39%; text-align: right;}
+#content_section .content_con .content_flex .sub_title_con h4{ margin-left: auto;}
+
+/* 상품 */
+.pd_box{ width: 70%; margin: 0 auto;}
+.pd_box ul{ display: flex; flex-wrap: wrap; gap: 15px; margin: 0; padding: 0; list-style: none;}
+.pd_box ul li{ width: calc((100% - 30px) / 3);}
+.pd_box ul li img{ display: block; width: 100%;}
+
+.btn_box_ey{ margin: 100px 0; text-align: center;}
+.brand_direct{ display: inline-block; width: 300px; height: 70px; background-color: #000; color: #fff !important; font-size: 20px; line-height: 70px;}
+
+@media(max-width: 750px){
+#visual_section .visual_con .sale_txt{ top: 5%; right: auto !important; left: 3.5% !important; white-space: nowrap; font-size: clamp(62px, 6.1vw, 118px); text-align: left;}
+#visual_section .visual_con .sale_txt span{ display: inline;}
+/* 기존 form에서 변경해야할 곳 */
+.page_cont.padding_01{ padding: 0;}
+.page_view_top > *:not(.data_box){ display: none;}
+.page_view_top > .data_box{ display: none; position: absolute; right: 0; margin: 0 !important; padding: 20px 0; text-align: right; z-index: 9;}
+/* ----------- 기존 form에서 변경해야할 곳 ----------- */
+
+/* 모바일 sticky 활성화 */
+#wrap { overflow: initial; }
+
+/* 관련상품 상단_TAB 768 */
+.img_memo_wrap{ top: 100px;}
+.img_memo_wrap li{ width: 25%;/* 탭 개수에 맞춰서 조정*/ padding: 25px 0;}
+.img_memo_wrap li a{ font-size: 24px;}
+.mb110{ margin-bottom: 0 !important;}
+.base_slider_list.list_mode ul li{ margin-bottom: 0;}
+.discount_view .goods_list > div .btn_top{ right: 20px;}
+
+.visual_pc{ display: none;}
+.visual_m{ display: block;}
+
+/* 타이틀 영역 */
+#content_section .content_con{ width: 95%; margin: 130px auto;}
+#content_section .content_con .content_flex{ flex-direction: column; align-items: stretch; text-align: center;}
+#content_section .content_con .content_flex h1{ margin: 53px 0 28px; font-size: 54px;}
+#content_section .content_con .content_flex h4{ font-size: 28px;}
+#content_section .content_con .content_flex .date_con,
+#content_section .content_con .content_flex .title_con,
+#content_section .content_con .content_flex .sub_title_con{ width: 100%;}
+#content_section .content_con .content_flex .date_con h4 span{ display: inline-block; padding-left: 10px;}
+#content_section .content_con .content_flex .date_con h4 span::before{ left: -1px;}
+#content_section .content_con .content_flex .title_con{ margin: 0;}
+#content_section .content_con .content_flex .sub_title_con{ text-align: center;}
+
+/* 상품 */
+.pd_box{ width: 95%;}
+.pd_box ul{ gap: 20px;}
+.pd_box ul li{ width: calc((100% - 40px) / 3);}
+
+/* 전 상품 보러 가기 */
+.brand_direct{ width: 600px; height: 85px; font-size: 26px; line-height: 85px;}
+
+}
+</style>
+
+<div id="wrap_ey">
+    <div id="visual_section">
+        <div class="visual_con">
+            <img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/07/23/HSH/img/top/img_top_pc_01.jpg" alt="VISUAL IMAGE PC" class="visual_pc">
+            <img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/07/23/HSH/img/top/img_top_m_01.jpg" alt="VISUAL IMAGE MO" class="visual_m">
+            <div class="sale_txt">
+                <span>~51%</span>
+                <span>SALE</span>
+            </div>
+        </div>
+    </div>
+    <div id="content_section">
+        <div class="content_con">
+            <div class="content_flex">
+                <div class="date_con"><h4>2026.07.23 <span>2026.07.29</span></h4></div>
+                <div class="title_con">
+                    <h1>GRAPHIC. OVERSIZED. DAILY.</h1>
+                </div>
+                <div class="sub_title_con">
+                    <h4>
+                        감각적인 그래픽과 여유로운 실루엣의 조화<br>
+                        트렌드와 편안함을 모두 담은 매일 손이 가는 스트릿 캐주얼<br>
+                        아르벤클럽 단독 기획전<br>
+                        최대 51% 할인으로 일상에 더하는 스트릿 무드를 즐겨보자!
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pd_box" id="pdBox"></div>
+
+<script>
+(function () {
+    var IMG_PATH = 'https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/07/23/HSH/img/pd/';
+    var SHOP_VIEW_PATH = '/shop/view.php?index_no=';
+
+    var products = [
+        { product: '688902', img: 'img_pd01.jpg' },
+        { product: '688894', img: 'img_pd02.jpg' },
+        { product: '688884', img: 'img_pd03.jpg' },
+        { product: '688900', img: 'img_pd04.jpg' },
+        { product: '688873', img: 'img_pd05.jpg' },
+        { product: '688880', img: 'img_pd06.jpg' },
+        { product: '688932', img: 'img_pd07.jpg' },
+        { product: '688922', img: 'img_pd08.jpg' },
+        { product: '689277', img: 'img_pd09.jpg' }
+    ];
+
+    var pdBox = document.getElementById('pdBox');
+    var productNameCache = {};
+
+    if (!pdBox) {
+        return;
+    }
+
+    function findProductName(html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var selectors = [
+            'meta[property="og:title"]',
+            'meta[name="title"]',
+            '.goods_name',
+            '.goods_view .name',
+            '.item_detail_tit h3',
+            '.detail_info h1',
+            'h1'
+        ];
+
+        for (var i = 0; i < selectors.length; i++) {
+            var element = doc.querySelector(selectors[i]);
+            var productName = '';
+
+            if (!element) {
+                continue;
+            }
+
+            productName = element.getAttribute('content') || element.textContent || '';
+            productName = productName.replace(/\s+/g, ' ').trim();
+
+            if (productName) {
+                return productName;
+            }
+        }
+
+        return '';
+    }
+
+    function setProductAlt(productNo, img, link) {
+        var fallbackAlt = '상품번호 ' + productNo + ' 상품 이미지';
+
+        img.alt = fallbackAlt;
+        link.setAttribute('aria-label', fallbackAlt);
+
+        if (productNameCache[productNo]) {
+            img.alt = productNameCache[productNo];
+            link.setAttribute('aria-label', productNameCache[productNo]);
+            return;
+        }
+
+        fetch(SHOP_VIEW_PATH + encodeURIComponent(productNo), {
+            credentials: 'same-origin'
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('상품 정보 조회 실패');
+                }
+
+                return response.text();
+            })
+            .then(function (html) {
+                var productName = findProductName(html);
+
+                if (!productName) {
+                    return;
+                }
+
+                productNameCache[productNo] = productName;
+                img.alt = productName;
+                link.setAttribute('aria-label', productName);
+            })
+            .catch(function () {
+                /* 실패하면 상품번호 기반 alt를 유지합니다. */
+            });
+    }
+
+    var ul = document.createElement('ul');
+
+    for (var i = 0; i < products.length; i++) {
+        var productNo = products[i].product;
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        var img = document.createElement('img');
+
+        a.href = SHOP_VIEW_PATH + encodeURIComponent(productNo);
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+
+        img.src = IMG_PATH + products[i].img;
+        setProductAlt(productNo, img, a);
+
+        a.appendChild(img);
+        li.appendChild(a);
+        ul.appendChild(li);
+    }
+
+    pdBox.appendChild(ul);
+}());
+</script>
+
+    <div class="btn_box_ey">
+        <a href="/shop/brand_goods.php?brand=475" target="_blank" class="brand_direct">아르벤클럽 전 상품 보기</a>
+    </div>
+</div>

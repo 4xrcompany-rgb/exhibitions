@@ -1,0 +1,962 @@
+
+<link rel="preconnect" href="https://cdn-tgreen.bizhost.kr" crossorigin>
+<link rel="dns-prefetch" href="//cdn-tgreen.bizhost.kr">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+<style>
+    :root{
+        --common_width: 1300px;
+    }
+    /* 콘텐츠 틀 초기화 */
+    .magazine_view{ width: auto; font-family: 'Noto Sans KR';}
+    .magazine_view .cont{ margin-bottom: 0 !important;}
+    #contents .page_info,
+    .magazine_view .cont .title,
+    .magazine_view .cont .txt_03,
+    .magazine_view .cont .txt_info,
+    .magazine_view .cont .txt_01,
+    .magazine_view .cont .txt_02,
+    .magazine_view .line_01{ display: none;}
+
+    .magazine_view .relate_link,
+    .magazine_view .hashtag_box{ width: 1400px;}
+    .magazine_view .relate_link{ margin: 0 auto 30px;}
+    .magazine_view .hashtag_box{ margin: 0 auto;}
+
+    /* 관련상품 상단_TAB */
+    .img_memo_wrap{ position: sticky; position: -webkit-sticky; top: -1px; flex-wrap: wrap; gap: 0; margin: 0 0 0; background-color: #000; z-index: 99;}
+    .img_memo_wrap li.on{ background-color: #01C5FF;}
+    /* .img_memo_wrap li.on a{ color: #fff;} */
+    .img_memo_wrap li{ width: 13%;/* 탭 개수에 맞춰서 조정*/ padding: 20px 0; box-sizing: border-box; text-align: center; border-radius: 0; background-color: inherit;}
+    .img_memo_wrap li:last-child{ border-right: none;}
+
+    /* 카테고리 */
+    .discount_view .goods_list > div{ margin-bottom: 0; padding-top: 90px;}
+    .discount_view .goods_list > div .btn_top{ top: 106px; right: 0;}
+
+    /* common */
+    .mo_ey {display: none;}
+    .gray_bg {background-color: #FEFFEF;}
+
+    .body_section{width: var(--common_width); margin: 0 auto; padding: 6% 0 8%; text-align: center; color: #000;}
+    .body_section .section_title {margin-bottom: 60px; position: relative; text-align: left;}
+    .body_section h1{ position: relative; font-size: 40px; line-height: 1.5; z-index: 3;}
+    .body_section h2 { font-size: 18px; font-weight: 500; margin: 20px 0 0;}
+    .body_section h3 { font-size: 26px; line-height: 1.3;}
+    .body_section h4  {font-size: 18px; margin-bottom: 20px; font-weight: 400; line-height: 1.6; word-break: keep-all;}
+
+    .main_section:nth-child(odd) .body_img{order: 1;}
+    .main_section:nth-child(odd) .body_text{order: 2; max-width: 650px; }
+
+    .main_section:nth-child(even) .body_img{order: 2;}
+    .main_section:nth-child(even) .body_text{order: 1; max-width: 650px;}
+
+    .title_con{ text-align: center;}
+
+    .pd_slide h3{color: #000; font-size: 22px; text-align: left; margin-bottom: 30px;}
+
+    .brand_strip{position:relative; padding:20px 0 16px; background:#01C5FF; color: #000; overflow:hidden}
+    .brand_track{display:flex;width:max-content;animation:marquee 42s linear infinite}
+    .brand_group{display:flex;align-items:center;gap:90px;padding-right:34px}
+    .brand_group span{font-size: 26px; font-family: "Bebas Neue", sans-serif; white-space:nowrap}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+
+    .style_swiper{ padding-top: 10px;}
+    .style_swiper .swiper-button-prev {background-image: url('https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/07/21/KEY/img/pd/icon_arrow.png'); transform: rotate(180deg);}
+    .style_swiper .swiper-button-next {background-image: url('https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/07/21/KEY/img/pd/icon_arrow.png');}
+    /* .swiper-button-prev, .swiper-button-next {height: 25px;}   */
+
+    /* 상품 */
+    .pd_slide a{display: block; text-align: left;}
+    .pd_slide a .brand{font-size: 12px; margin: 13px 0 5px; font-weight: 400;}
+    .pd_slide a .pd_name{font-weight: 400; color: #000; font-size: 14px; line-height: 1.5em; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin-bottom: 0;}
+
+    .grade_con[data-grade="undefined"]{ display: none;}
+    .grade_con{ position: absolute; top: -10px; left: 0;}
+    .grade_con .grade_ey{ display: block; width: 50px; height: 45px; line-height: 45px; text-align: center; font-size: 18px; font-weight: 500; background-color: #000; color: #fff;}
+
+    #section01 .grade_con .grade_ey{ background-color: #f03a17;}
+    #section02 .grade_con .grade_ey{ background-color: #8cbd18;}
+    #section03 .grade_con .grade_ey{ background-color: #0078d7;}
+    #section04 .grade_con .grade_ey{ background-color: #ffc83d;}
+    #section05 .grade_con .grade_ey{ background-color: #83beec;}
+
+    /* 상단 sticky */
+    #sticky_section { display: flex; justify-content: center; position: sticky; top: 0; width: 100%; background: #000; z-index: 20;}
+    #sticky_section div { width: 10%; height: 52px; line-height: 52px; text-align: center; font-size: 18px; font-weight: 400; color: #b9b9b9;}
+    #sticky_section div.on{ color:#01C5FF; font-weight: 700;}
+    #sticky_section div a { display: block;}
+
+    /* 서브 타이틀 */
+    #content_section{ position: relative; padding: 90px 0; text-align: center; color: #000; background-color: #FEFFEF;}
+    #content_section .text_con h1{ font-size: 30px; font-weight: 500;}
+    #content_section .text_con h5{ font-size: 18px; font-weight: 400; margin: 30px 0;}
+    #content_section .text_con h6{ font-size: 16px; font-weight: 400; line-height: 1.66em;}
+
+    /* 전체 상품 보기 */
+    .view_pd_fixed{ position: fixed; bottom: 50px; right: 160px; z-index: 99;}
+    .view_pd_fixed a.btn_view_pd{ opacity: 0; display: flex; justify-content: center; align-items: center; width: 210px; height: 50px; line-height: 50px; font-size: 20px; border-radius: 50px; color: #000; background-color: #fff; border: 1px solid #000; box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.1); transition: opacity 150ms linear;}
+    .view_pd_fixed a.btn_view_pd.show{ opacity: 1;}
+
+    /* 공유 섹션 컬러 조정 */
+    .page_info .date , .page_info .count, .page_info .count em {color: #000;}
+
+    @media screen and (min-width: 1940px){
+        :root{
+            --common_width: 1730px;
+        }
+        .magazine_view_wrap{ width: 100%;}
+        #contents .page_info{ left: 0; width: 1900px; margin: 0 auto; box-sizing: border-box;}
+    }
+
+    @media(max-width: 768px){
+        :root{
+            --common_width: 100%;
+        }
+        /* 콘텐츠 틀 초기화 768 */
+        .page_cont{ font-family: 'Noto Sans KR';}
+        .page_cont.padding_01{ padding:0; margin-bottom: 0 !important;}
+        .page_view_top > *{ display: none;}
+
+        /* 모바일 sticky 활성화 */
+        #wrap { overflow: initial;}
+
+        /* 관련상품 상단_TAB 768 */
+        .img_memo_wrap{ top: 100px;}
+        .img_memo_wrap li { width: 20%;/* 탭 개수에 맞춰서 조정*/ padding: 23px 0;}
+        .img_memo_wrap li a{ font-size: 26px;}
+
+        /* 카테고리 768 */
+        .discount_view .goods_list > div{ padding-top: 100px;}
+        .discount_view .goods_list > div .btn_top{ top: 120px; right: 20px;}
+
+        .pc_ey {display: none;}
+        .mo_ey {display: block;}
+
+        .body_section {overflow: hidden; width: 100%; margin: 0 auto;}
+        .body_section .section_title { align-items: end; justify-content: space-between; margin: 8% 4%;}
+        .body_section h1 {font-size: 49px;}
+        .body_section h2{ font-size: 28px;}
+        .body_section h3 {font-size: 31px; }
+        .body_section h4 {font-size: 26px; margin-bottom: 40px;}
+        .body_section h5 {font-size: 28px;}
+
+        .main_section:nth-child(even) .body_text {order: 2;}
+        .main_section:nth-child(odd) .body_text, .main_section:nth-child(even) .body_text{max-width: 800px; }
+
+        .pd_slide  { margin: 8% 4%; }
+        .pd_slide h3 {font-size: 28px;}
+        .pd_slide a{ margin: 0 0 5px;}
+        .pd_slide a .brand {font-size: 20px;}
+        .pd_slide a .pd_name {font-size: 24px;}
+
+        .brand_strip{padding:15px 0}
+        .brand_group span{ font-size: 36px;}
+
+        #content_section{ padding: 90px 80px;}
+
+        #section01 .section_title h4:last-child {margin-bottom: 0;}
+
+        /* sticky section */
+        #wrap { overflow: initial; }
+        #sticky_section {justify-content: flex-start; top: 100px; overflow-x: auto; overflow-y: hidden; flex-wrap: nowrap; -webkit-overflow-scrolling: touch;  overscroll-behavior-x: contain;
+            scroll-behavior: smooth; scrollbar-width: none; touch-action: pan-x pan-y;}
+        #sticky_section::-webkit-scrollbar { display: none;}
+        #sticky_section div {flex: 0 0 auto; width: auto; min-width: 20%; height: 72px; padding: 0 22px; line-height: 67px; font-size: 22px; white-space: nowrap; box-sizing: border-box;}
+        #sticky_section div a {-webkit-user-drag: none; user-select: none;}
+        #sticky_section div:last-child {margin-right:0;}
+
+        /* 비주얼 768 */
+        /* 서브 타이틀 768 */
+        #content_section .text_con h1{ font-size: 50px;}
+        #content_section .text_con h5{ font-size: 28px;}
+        #content_section .text_con h6{ font-size: 22px; font-weight: 600;}
+
+        .grade_con .grade_ey{ width: 70px; height: 65px; line-height: 65px; font-size: 28px;}
+
+        /* 전체 상품 보기 768 */
+        .view_pd_fixed{ bottom: 20px; right: auto; left: 25px;}
+        .view_pd_fixed a.btn_view_pd {font-size: 24px;}
+    }
+</style>
+<div id="wrapper_ey">
+    <div class="view_pd_fixed">
+        <a href="#goodsList1" class="btn_view_pd show">관련 상품 보기</a>
+    </div>
+    <div id="visual_section">
+        <div class="visual_con">
+            <img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/07/21/KEY/img/top/img_top_pc.gif" alt="" class="pc_ey">
+            <img src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/07/21/KEY/img/top/img_top_m750.gif" alt="" class="mo_ey">
+        </div>
+        <div class="brand_strip" aria-label="참여 브랜드">
+            <div class="brand_track">
+                <div class="brand_group">
+                    <span>PEID</span><span>323TAG</span><span>NEWAUBE</span><span>THE NORTH FACE</span><span>NIKE</span><span>BURNING CAPONE</span><span>MANHATTAN</span><span>YOSEMITE</span><span>DEUS EX MACHINA</span><span>DICKIES</span><span>RUGGED HOUSE</span><span>MAC SPORTS BLACK</span><span>SELECT SHOP</span><span>AGORAM1978</span><span>ANDRA</span><span>CONCEPT B</span><span>Henrik207061</span>
+                </div>
+                <div class="brand_group" aria-hidden="true">
+                    <span>PEID</span><span>323TAG</span><span>NEWAUBE</span><span>THE NORTH FACE</span><span>NIKE</span><span>BURNING CAPONE</span><span>MANHATTAN</span><span>YOSEMITE</span><span>DEUS EX MACHINA</span><span>DICKIES</span><span>RUGGED HOUSE</span><span>MAC SPORTS BLACK</span><span>SELECT SHOP</span><span>AGORAM1978</span><span>ANDRA</span><span>CONCEPT B</span><span>Henrik207061</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content_section">
+        <div class="text_con">
+            <h1>여름 반팔 능력평가</h1>
+            <h5>26.07.21 - 07.27</h5>
+            <h6>반팔이라고 다 같은 반팔은 아닙니다.<br>가격 잘하는 반팔, 두 장씩 챙겨주는 반팔, 존재감 확실한 반팔부터 매일 입기 좋은 반팔까지.</h6>
+        </div>
+    </div>
+    <!-- sticky section -->
+    <div id="sticky_section">
+        <div><a href="#section01" class="scroll_btn">가격 능력</a></div>
+        <div><a href="#section02" class="scroll_btn">구성 능력</a></div>
+        <div><a href="#section03" class="scroll_btn">존재감 능력</a></div>
+        <div><a href="#section04" class="scroll_btn">활용도 능력</a></div>
+        <div><a href="#section05" class="scroll_btn">쿨링 능력</a></div>
+        <div><a href="#goodsList1" class="scroll_btn">전체상품</a></div>
+    </div>
+    <div id="interview_box">
+
+        <!-- 버뮤다 팬츠 -->
+        <div id="section01" class="main_section wait_scroll">
+            <div class="show_trigger"></div>
+            <div class="body_section">
+                <div class="section_title">
+                    <h1>1. 가격이 일을 너무 잘함</h1>
+                    <h2>☑️ 가격표를 두 번 보게 만드는 반팔들</h2>
+                </div>
+
+                <!-- 상품 -->
+                <div class="pd_slide">
+                    <!-- <h3>버뮤다 아이템</h3> -->
+                    <div class="swiper-container style_swiper">
+                        <div class="swiper-wrapper"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+        <!-- 여름 반팔 -->
+        <div id="section02" class="gray_bg main_section wait_scroll">
+            <div class="show_trigger"></div>
+            <div class="body_section">
+                <div class="section_title">
+                    <h1>2. 하나 샀는데 옷장이 든든함</h1>
+                    <h2>☑️ 빨래해도 입을 옷이 남아 있는 든든한 구성</h2>
+                </div>
+
+                <!-- 상품 -->
+                 <div class="pd_slide">
+                    <!-- <h3>반팔 아이템</h3> -->
+                    <div class="swiper-container style_swiper">
+                        <div class="swiper-wrapper"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+        
+        <!-- 카라티 -->
+        <div id="section03" class="main_section wait_scroll">
+            <div class="show_trigger"></div>
+            <div class="body_section">
+                <div class="section_title">
+                    <h1>3. 평범하게 입을 생각 없음</h1>
+                    <h2>☑️ 멀리서 봐도 존재감 확실한 그래픽</h2>
+                </div>
+
+                <!-- 상품 -->
+                <div class="pd_slide">
+                    <!-- <h3>카라티 아이템</h3> -->
+                    <div class="swiper-container style_swiper">
+                        <div class="swiper-wrapper"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+        <!-- 슬랙스 -->
+        <div id="section04" class="gray_bg main_section wait_scroll">
+            <div class="show_trigger"></div>
+            <div class="body_section">
+                <div class="section_title">
+                    <h1>4. 세탁기에서 나오면 또 입음</h1>
+                    <h2>☑️ 튀지는 않지만 결국 가장 자주 찾게 되는 옷</h2>
+                </div>
+
+                <!-- 상품 -->
+                <div class="pd_slide">
+                    <!-- <h3>슬랙스 아이템</h3> -->
+                    <div class="swiper-container style_swiper">
+                        <div class="swiper-wrapper"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+        <!-- 요구르트 -->
+        <div id="section05" class="main_section wait_scroll">
+            <div class="show_trigger"></div>
+            <div class="body_section">
+                <div class="section_title">
+                    <h1>5. 더위 앞에서 제일 침착함</h1>
+                    <h2>☑️ 시원함과 깔끔함을 동시에 챙기는 여름 상의</h2>
+                </div>
+
+                <!-- 상품 -->
+                 <div class="pd_slide">
+                    <!-- <h3>셔츠 아이템</h3> -->
+                    <div class="swiper-container style_swiper">
+                        <div class="swiper-wrapper"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let resp;
+    let lastActiveStickyItem = null;
+
+    function moveStickyItemIntoView(item, behavior){
+        if (window.innerWidth > 768 || !item) return;
+
+        const stickyMenu = document.getElementById('sticky_section');
+        if (!stickyMenu) return;
+
+        const targetLeft = item.offsetLeft - (stickyMenu.clientWidth - item.offsetWidth) / 2;
+        stickyMenu.scrollTo({
+            left: Math.max(0, targetLeft),
+            behavior: behavior || 'smooth'
+        });
+    }
+
+    $(function(){
+        if($(window).width() > 768){
+            resp = 2
+        } else {
+            resp = -100
+        }
+        $(document).on("scroll", onScroll);
+
+        $(document).on('click', '.scroll_btn', function(event){
+
+            event.preventDefault();
+            $(document).off("scroll");
+
+            $('.scroll_btn').each(function(){
+                $(this).parent().removeClass("on");
+            });
+            const activeItem = $(this).parent().addClass("on")[0];
+            lastActiveStickyItem = activeItem;
+            moveStickyItemIntoView(activeItem);
+
+            $("html,body").stop().animate({
+                'scrollTop': $($.attr(this, 'href')).offset().top + resp
+            }, 1000,'swing', function(){
+                $(document).on("scroll", onScroll);
+            });
+        });
+    });
+
+    function onScroll(event){
+        var scrollPos = $(document).scrollTop() - resp;
+        $(".scroll_btn").each(function () {
+            var currLink = $(this);
+            var refElement = $(currLink.attr("href"));
+            if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+                $('.scroll_btn').parent().removeClass("on");
+                currLink.parent().addClass("on");
+            }
+            else{
+                currLink.parent().removeClass("on");
+            }
+        });
+
+        const activeItem = document.querySelector('#sticky_section > div.on');
+        if (activeItem && activeItem !== lastActiveStickyItem) {
+            lastActiveStickyItem = activeItem;
+            moveStickyItemIntoView(activeItem);
+        }
+    }
+
+    function initProductSlides(){
+        /*
+         * 유지보수 영역
+         * 각 섹션 배열에 상품번호만 순서대로 입력하면 됩니다.
+         * 배열 앞에서부터 1위, 2위, 3위가 자동으로 지정됩니다.
+         */
+        const pdContData = {
+            section01: [691078,685232,681196,629550,664705,669015,679214,682653,682661,685118,689309,652616],
+            section02: [688241,689201,689487,689013,683410,681153,691138,664099,691668,690507,629139,679345,679155],
+            section03: [689179,689738,689747,691525,689750,691158,691152,689740,691076,690945,689184,690614,690100,688843],
+            section04: [689518,681543,666287,691000,690873,690740,690732,690467,689986,689516,688682,688680,688419,682912],
+            section05: [681539,630007,690953,691587,691575,691284,691249,691144,690989,690973,690875,690070,689953,689323],
+        };
+
+        const SHOP_ORIGIN = location.hostname.includes('4xr.co.kr') ? location.origin : 'https://www.4xr.co.kr';
+        // 브랜드 추출 방식 변경 시 기존의 잘못 저장된 캐시를 사용하지 않도록 버전을 올립니다.
+        const PRODUCT_CACHE_KEY = 'tshirts_awards_product_v8';
+        const PRODUCT_CACHE_TTL = 1000 * 60 * 60 * 24;
+        const PRODUCT_FETCH_CONCURRENCY = 8;
+        const INITIAL_BATCH_SIZE = window.innerWidth <= 980 ? 8 : 8;
+        const GRADE_DISPLAY_COUNT = 3;
+        const MAX_HEAD_MARKUP_LENGTH = 320000;
+        const EMPTY_IMAGE = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22760%22 viewBox=%220 0 600 760%22%3E%3Crect width=%22600%22 height=%22760%22 fill=%22%23f4f4f4%22/%3E%3C/svg%3E';
+
+        const productCache = readProductCacheStore();
+        const pendingProducts = new Map();
+        const highPriorityQueue = [];
+        const normalPriorityQueue = [];
+        const sectionJobs = [];
+        let activeFetchCount = 0;
+        let cacheSaveTimer = null;
+
+        function ensurePreconnect(href){
+            if (document.querySelector(`link[rel="preconnect"][href="${href}"]`)) return;
+            const link = document.createElement('link');
+            link.rel = 'preconnect';
+            link.href = href;
+            link.crossOrigin = 'anonymous';
+            document.head.appendChild(link);
+        }
+
+        ensurePreconnect('https://cdn-tgreen.bizhost.kr');
+
+        function normalizeText(value){
+            return String(value || '').replace(/\s+/g, ' ').trim();
+        }
+
+        function escapeHtml(value){
+            return String(value ?? '').replace(/[&<>"']/g, function(char){
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                }[char];
+            });
+        }
+
+        function toAbsoluteUrl(value, baseUrl){
+            if (!value) return '';
+            try {
+                return new URL(value, baseUrl || SHOP_ORIGIN).href;
+            } catch (error) {
+                return String(value);
+            }
+        }
+
+        function getProductUrl(number){
+            return `${SHOP_ORIGIN}/shop/view.php?index_no=${encodeURIComponent(number)}`;
+        }
+
+        function readProductCacheStore(){
+            try {
+                const saved = JSON.parse(localStorage.getItem(PRODUCT_CACHE_KEY) || '{}');
+                const now = Date.now();
+                const validCache = {};
+
+                Object.entries(saved).forEach(function([number, entry]){
+                    if (!entry?.time || !entry?.product) return;
+                    if (now - entry.time >= PRODUCT_CACHE_TTL) return;
+                    validCache[number] = entry;
+                });
+
+                return validCache;
+            } catch (error) {
+                return {};
+            }
+        }
+
+        function getCachedProduct(productNo){
+            const entry = productCache[String(productNo || '').trim()];
+            return entry?.product || null;
+        }
+
+        function saveProductCache(){
+            clearTimeout(cacheSaveTimer);
+            cacheSaveTimer = setTimeout(function(){
+                try {
+                    localStorage.setItem(PRODUCT_CACHE_KEY, JSON.stringify(productCache));
+                } catch (error) {}
+            }, 250);
+        }
+
+        function setCachedProduct(productNo, product){
+            productCache[String(productNo)] = {
+                time: Date.now(),
+                product
+            };
+            saveProductCache();
+        }
+
+        function getMeta(doc, selector){
+            const element = doc.querySelector(selector);
+            return normalizeText(element?.getAttribute('content') || element?.getAttribute('href') || '');
+        }
+
+        function stripSiteName(value){
+            return normalizeText(value)
+                .replace(/\s*[-|:]\s*4XR.*$/i, '')
+                .replace(/\s*::.*$/i, '')
+                .trim();
+        }
+
+        function findProductSchema(value){
+            if (!value) return null;
+            if (Array.isArray(value)) {
+                for (const item of value) {
+                    const found = findProductSchema(item);
+                    if (found) return found;
+                }
+                return null;
+            }
+            if (typeof value !== 'object') return null;
+
+            const type = value['@type'];
+            const types = Array.isArray(type) ? type : [type];
+            if (types.some(function(item){
+                return String(item || '').toLowerCase() === 'product';
+            })) return value;
+
+            for (const child of Object.values(value)) {
+                const found = findProductSchema(child);
+                if (found) return found;
+            }
+            return null;
+        }
+
+        function getProductSchema(doc){
+            const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
+            for (const script of scripts) {
+                try {
+                    const schema = findProductSchema(JSON.parse(script.textContent || ''));
+                    if (schema) return schema;
+                } catch (error) {}
+            }
+            return null;
+        }
+
+        function getProductName(doc, productNo, schema){
+            const schemaName = stripSiteName(schema?.name);
+            if (schemaName) return schemaName;
+
+            const metaName = stripSiteName(
+                getMeta(doc, 'meta[property="og:title"]') ||
+                getMeta(doc, 'meta[name="title"]') ||
+                doc.querySelector('title')?.textContent
+            );
+            if (metaName) return metaName;
+
+            const selectors = ['.goods_view_name', '.goods_name', '.view_tit', '.item_detail_tit', '.prd_name'];
+            for (const selector of selectors) {
+                const name = normalizeText(doc.querySelector(selector)?.textContent);
+                if (name) return name;
+            }
+            return `상품번호 ${productNo}`;
+        }
+
+        function getBrandPageUrl(doc, brandName, pageUrl){
+            const links = Array.from(doc.querySelectorAll('a[href*="brand_goods.php"]'));
+            const normalizedBrand = normalizeText(brandName).replace(/^#/, '');
+            const exactMatch = links.find(function(link){
+                return normalizeText(link.textContent).replace(/^#/, '') === normalizedBrand;
+            });
+            const brandLink = exactMatch || links.find(function(link){
+                return /(?:^|[?&])brand=\d+(?:&|$)/.test(link.getAttribute('href') || '');
+            });
+
+            if (!brandLink) return '';
+
+            try {
+                const url = new URL(brandLink.getAttribute('href'), pageUrl || SHOP_ORIGIN);
+                const brandNumber = url.searchParams.get('brand');
+                if (!/^\d+$/.test(brandNumber || '')) return '';
+                return `${SHOP_ORIGIN}/shop/brand_goods.php?brand=${encodeURIComponent(brandNumber)}`;
+            } catch (error) {
+                return '';
+            }
+        }
+
+        function getBrandInfo(doc, schema, pageUrl){
+            // 구조화 데이터에는 쇼핑몰명(4XR)이 들어가는 상품이 있어
+            // 상품 상세 영역의 실제 브랜드 링크를 가장 먼저 확인합니다.
+            const selectors = [
+                '.goods_view .brand a',
+                '.goods_info .brand a',
+                '.view_info .brand a',
+                '.brand_name a',
+                '.goods_view a[href*="brand_goods.php"]',
+                '.goods_info a[href*="brand_goods.php"]',
+                '.view_info a[href*="brand_goods.php"]'
+            ];
+            for (const selector of selectors) {
+                const element = doc.querySelector(selector);
+                const brand = normalizeText(element?.textContent).replace(/^#/, '');
+                if (brand && brand !== '브랜드') {
+                    return {
+                        name: brand,
+                        url: getBrandPageUrl(doc, brand, pageUrl)
+                    };
+                }
+            }
+
+            const schemaBrand = typeof schema?.brand === 'string' ? schema.brand : schema?.brand?.name;
+            if (normalizeText(schemaBrand)) {
+                return {
+                    name: normalizeText(schemaBrand),
+                    url: getBrandPageUrl(doc, schemaBrand, pageUrl) || toAbsoluteUrl(schema?.brand?.url, pageUrl)
+                };
+            }
+
+            const metaBrand = getMeta(doc, 'meta[property="product:brand"]') || getMeta(doc, 'meta[name="brand"]');
+            if (metaBrand) return { name: metaBrand, url: getBrandPageUrl(doc, metaBrand, pageUrl) };
+
+            return { name: '4XR', url: SHOP_ORIGIN };
+        }
+
+        function collectSchemaImages(schema){
+            const values = [];
+            const image = schema?.image;
+            if (Array.isArray(image)) values.push(...image);
+            else if (image && typeof image === 'object') values.push(image.url, image.contentUrl);
+            else values.push(image);
+            return values.filter(Boolean);
+        }
+
+        function getProductImage(doc, productNo, schema, pageUrl){
+            const candidates = [];
+            const push = function(value){
+                if (!value) return;
+                String(value).split(',').forEach(function(item){
+                    const raw = item.trim().split(/\s+/)[0];
+                    const url = toAbsoluteUrl(raw, pageUrl);
+                    if (url && !candidates.includes(url)) candidates.push(url);
+                });
+            };
+
+            collectSchemaImages(schema).forEach(push);
+            push(getMeta(doc, 'meta[property="og:image"]'));
+            push(getMeta(doc, 'meta[name="twitter:image"]'));
+            push(doc.querySelector('link[rel="image_src"]')?.getAttribute('href'));
+
+            if (!candidates.length) {
+                const selectors = [
+                    `img[src*="/files/goods/${productNo}/"]`,
+                    `img[data-src*="/files/goods/${productNo}/"]`,
+                    '.goods_view img',
+                    '.goods_img img',
+                    '.item_photo img'
+                ];
+                for (const selector of selectors) {
+                    const image = doc.querySelector(selector);
+                    if (!image) continue;
+                    push(image.getAttribute('src'));
+                    push(image.getAttribute('data-src'));
+                    push(image.getAttribute('data-original'));
+                    if (candidates.length) break;
+                }
+            }
+
+            const preferred = candidates.find(function(url){
+                return /_0\.(webp|jpe?g|png|gif)(?:[?#]|$)/i.test(url);
+            });
+            return preferred || candidates[0] || '';
+        }
+
+        async function readProductMarkup(response){
+            // 실제 브랜드 표시는 상품 페이지 본문에 있으므로 전체 HTML을 읽습니다.
+            return response.text();
+        }
+
+        async function fetchProduct(productNo){
+            const number = String(productNo || '').trim();
+            const pageUrl = getProductUrl(number);
+            const controller = typeof AbortController === 'function' ? new AbortController() : null;
+            const timeoutId = controller ? setTimeout(function(){ controller.abort(); }, 12000) : null;
+
+            try {
+                const response = await fetch(pageUrl, {
+                    credentials: 'same-origin',
+                    cache: 'force-cache',
+                    signal: controller?.signal
+                });
+                if (!response.ok) throw new Error(`상품 조회 실패: ${response.status}`);
+
+                const markup = await readProductMarkup(response);
+                const doc = new DOMParser().parseFromString(markup, 'text/html');
+                const schema = getProductSchema(doc);
+                const brand = getBrandInfo(doc, schema, pageUrl);
+                const product = {
+                    number,
+                    url: pageUrl,
+                    brand: brand.name,
+                    brandUrl: brand.url,
+                    name: getProductName(doc, number, schema),
+                    image: getProductImage(doc, number, schema, pageUrl)
+                };
+
+                setCachedProduct(number, product);
+                return product;
+            } finally {
+                if (timeoutId) clearTimeout(timeoutId);
+            }
+        }
+
+        function pumpProductQueue(){
+            while (activeFetchCount < PRODUCT_FETCH_CONCURRENCY && (highPriorityQueue.length || normalPriorityQueue.length)) {
+                const job = highPriorityQueue.shift() || normalPriorityQueue.shift();
+                activeFetchCount += 1;
+
+                fetchProduct(job.productNo)
+                    .then(job.resolve)
+                    .catch(job.reject)
+                    .finally(function(){
+                        activeFetchCount -= 1;
+                        pendingProducts.delete(job.productNo);
+                        pumpProductQueue();
+                    });
+            }
+        }
+
+        function requestProduct(productNo, priority){
+            const number = String(productNo || '').trim();
+            if (!number) return Promise.reject(new Error('상품번호가 없습니다.'));
+
+            const cached = getCachedProduct(number);
+            if (cached) return Promise.resolve(cached);
+            if (pendingProducts.has(number)) return pendingProducts.get(number);
+
+            const promise = new Promise(function(resolve, reject){
+                const queue = priority === 'high' ? highPriorityQueue : normalPriorityQueue;
+                queue.push({ productNo: number, resolve, reject });
+                pumpProductQueue();
+            });
+
+            pendingProducts.set(number, promise);
+            return promise;
+        }
+
+        function createProductSlide(productNo, index, product){
+            const number = String(productNo || '').trim();
+            const grade = index < GRADE_DISPLAY_COUNT ? index + 1 : null;
+            const gradeHtml = grade
+                ? `<div class="grade_con" data-grade="${grade}"><span class="grade_ey">${grade}위</span></div>`
+                : '';
+            const initial = product || {
+                number,
+                url: getProductUrl(number),
+                brand: '상품 정보 확인 중',
+                brandUrl: '',
+                name: `상품번호 ${number}`,
+                image: EMPTY_IMAGE
+            };
+            const eager = index < INITIAL_BATCH_SIZE;
+
+            return `<div class="swiper-slide" data-product-no="${escapeHtml(number)}" data-product-index="${index}">
+                        <a class="product_image_link" href="${escapeHtml(initial.url)}" target="_blank" rel="noopener noreferrer">
+                            <img src="${escapeHtml(initial.image || EMPTY_IMAGE)}" alt="${escapeHtml(initial.name)}" loading="${eager ? 'eager' : 'lazy'}" decoding="async" fetchpriority="${eager ? 'high' : 'auto'}">
+                            ${gradeHtml}
+                        </a>
+                        <a class="brand_link" href="${escapeHtml(initial.brandUrl || initial.url)}" target="_blank" rel="noopener noreferrer"><h2 class="brand">${escapeHtml(initial.brand)}</h2></a>
+                        <a class="product_name_link" href="${escapeHtml(initial.url)}" target="_blank" rel="noopener noreferrer"><h3 class="pd_name">${escapeHtml(initial.name)}</h3></a>
+                    </div>`;
+        }
+
+        function applyProductToSlide(slide, product){
+            if (!slide || !product) return;
+            const productLinks = slide.querySelectorAll('.product_image_link, .product_name_link');
+            const brandLink = slide.querySelector('.brand_link');
+            const image = slide.querySelector('img');
+            const brand = slide.querySelector('.brand');
+            const name = slide.querySelector('.pd_name');
+
+            productLinks.forEach(function(link){
+                link.href = product.url || getProductUrl(product.number);
+            });
+            if (brandLink) brandLink.href = product.brandUrl || product.url || getProductUrl(product.number);
+            if (image) {
+                if (product.image && image.getAttribute('src') !== product.image) image.src = product.image;
+                image.alt = product.name || `상품번호 ${product.number}`;
+            }
+            if (brand) brand.textContent = product.brand || '4XR';
+            if (name) name.textContent = product.name || `상품번호 ${product.number}`;
+            slide.classList.add('product_loaded');
+        }
+
+        function applyProductError(slide, number, error){
+            const brand = slide?.querySelector('.brand');
+            const name = slide?.querySelector('.pd_name');
+            if (brand) brand.textContent = '4XR';
+            if (name) name.textContent = `상품번호 ${number}`;
+            console.warn(`[상품 자동 조회] ${number} 상품 정보를 불러오지 못했습니다.`, error);
+        }
+
+        function hydrateProduct(job, index, priority){
+            if (!job || index < 0 || index >= job.items.length || job.requested.has(index)) {
+                return Promise.resolve();
+            }
+
+            job.requested.add(index);
+            const number = String(job.items[index]);
+            const slide = job.wrapper.children[index];
+            const cached = getCachedProduct(number);
+
+            if (cached) {
+                applyProductToSlide(slide, cached);
+                return Promise.resolve(cached);
+            }
+
+            return requestProduct(number, priority)
+                .then(function(product){
+                    applyProductToSlide(slide, product);
+                    return product;
+                })
+                .catch(function(error){
+                    applyProductError(slide, number, error);
+                });
+        }
+
+        function hydrateRange(job, start, end, priority){
+            const requests = [];
+            const last = Math.min(end, job.items.length);
+            for (let index = Math.max(0, start); index < last; index += 1) {
+                requests.push(hydrateProduct(job, index, priority));
+            }
+            return Promise.allSettled(requests);
+        }
+
+        function scheduleRemainingProducts(job){
+            if (!job || job.backgroundScheduled) return;
+            job.backgroundScheduled = true;
+
+            const enqueue = function(){
+                hydrateRange(job, INITIAL_BATCH_SIZE, job.items.length, 'normal');
+            };
+
+            if (typeof requestIdleCallback === 'function') {
+                requestIdleCallback(enqueue, { timeout: 1500 });
+            } else {
+                setTimeout(enqueue, 250);
+            }
+        }
+
+        function hydrateSection(job){
+            if (!job || job.started) return;
+            job.started = true;
+
+            hydrateRange(job, 0, INITIAL_BATCH_SIZE, 'high')
+                .finally(function(){
+                    scheduleRemainingProducts(job);
+                });
+        }
+
+        Object.entries(pdContData).forEach(function([sectionId, items]){
+            const section = document.getElementById(sectionId);
+            const wrapper = section?.querySelector('.style_swiper .swiper-wrapper');
+            if (!section || !wrapper) return;
+
+            wrapper.innerHTML = items.map(function(productNo, index){
+                return createProductSlide(productNo, index, getCachedProduct(productNo));
+            }).join('');
+
+            sectionJobs.push({
+                section,
+                wrapper,
+                items,
+                requested: new Set(),
+                started: false,
+                backgroundScheduled: false,
+                swiper: null
+            });
+        });
+
+        if (typeof Swiper === 'function') {
+            sectionJobs.forEach(function(job){
+                const swiperElement = job.section.querySelector('.style_swiper');
+                job.swiper = new Swiper(swiperElement, {
+                    slidesPerView: 6.4,
+                    spaceBetween: 10,
+                    watchSlidesProgress: true,
+                    navigation: {
+                        nextEl: swiperElement.querySelector('.swiper-button-next'),
+                        prevEl: swiperElement.querySelector('.swiper-button-prev')
+                    },
+                    breakpoints: {
+                        980: {
+                            slidesPerView: 3.5,
+                            slidesPerColumn: 2,
+                            slidesPerColumnFill: 'row'
+                        }
+                    },
+                    on: {
+                        slideChange: function(){
+                            const start = Math.max(0, Number(this.activeIndex || 0));
+                            hydrateRange(job, start, start + INITIAL_BATCH_SIZE + 2, 'high');
+                        }
+                    }
+                });
+            });
+        }
+
+        const firstJob = sectionJobs[0];
+        hydrateSection(firstJob);
+
+        if ('IntersectionObserver' in window) {
+            const sectionObserver = new IntersectionObserver(function(entries, observer){
+                entries.forEach(function(entry){
+                    if (!entry.isIntersecting) return;
+                    const job = sectionJobs.find(function(item){ return item.section === entry.target; });
+                    hydrateSection(job);
+                    observer.unobserve(entry.target);
+                });
+            }, { rootMargin: '700px 0px' });
+
+            sectionJobs.slice(1).forEach(function(job){
+                sectionObserver.observe(job.section);
+            });
+        } else {
+            sectionJobs.slice(1).forEach(hydrateSection);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initProductSlides, { once: true });
+    } else {
+        initProductSlides();
+    }
+
+
+    //메인 top 스와이퍼
+    autoSwiper();
+    function autoSwiper(){
+        const auto_Sw = document.getElementsByClassName("autoSwiper");
+        let arr_slide = Array.from(auto_Sw);
+        arr_slide.forEach((ele, idx, array) => {
+            array[idx].classList.add("type" + idx);
+
+            const Swiper_sub01 = new Swiper( '.type' + idx, {
+                effect : 'fade',
+                loop : true,
+                autoplay: {
+                    delay: 2000,
+                },
+            });
+        });
+    }
+</script>
