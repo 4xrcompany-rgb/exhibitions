@@ -34,15 +34,15 @@ try {
         Write-Host "커밋함 — $($staged -join ', ')"
     }
 
-    # 올릴 게 있는지 확인 (없으면 네트워크를 건드리지 않는다)
+    # ★항상 최신 규칙/개선분을 받아온다 — 작업(기록)이 없어도 새 규칙이 자동 전파된다.
+    git pull --rebase --autostash
+    # 올릴 게 있으면 올린다
     $ahead = git rev-list --count "@{upstream}..HEAD" 2>$null
-    if (-not $staged -and $ahead -eq "0") {
-        Write-Host "$(Get-Date -Format 'HH:mm')  올릴 기록 없음 — 건너뜀"
-    } else {
-        # 관리자 개선분 받아오고(충돌 없으면 자동), 내 기록 올림
-        git pull --rebase --autostash
+    if ($ahead -ne "0") {
         git push
-        Write-Host "$(Get-Date -Format 'HH:mm')  동기화 완료 — 작업자: $who"
+        Write-Host "$(Get-Date -Format 'HH:mm')  동기화 완료(받기+올리기) — 작업자: $who"
+    } else {
+        Write-Host "$(Get-Date -Format 'HH:mm')  최신 받기 완료(올릴 기록 없음)"
     }
 } finally {
     if ($tr) { try { Stop-Transcript | Out-Null } catch {} }
