@@ -39,8 +39,12 @@ try {
     # 올릴 게 있으면 올린다
     $ahead = git rev-list --count "@{upstream}..HEAD" 2>$null
     if ($ahead -ne "0") {
-        git push
-        Write-Host "$(Get-Date -Format 'HH:mm')  동기화 완료(받기+올리기) — 작업자: $who"
+        $pushOut = (git push 2>&1) -join " "
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "$(Get-Date -Format 'HH:mm')  올리기 성공 — 작업자: $who"
+        } else {
+            Write-Host "$(Get-Date -Format 'HH:mm')  [올리기 실패] $pushOut"
+        }
     } else {
         Write-Host "$(Get-Date -Format 'HH:mm')  최신 받기 완료(올릴 기록 없음)"
     }
