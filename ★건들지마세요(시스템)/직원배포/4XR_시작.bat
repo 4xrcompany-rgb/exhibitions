@@ -58,6 +58,11 @@ if not exist "%DEST%\.git" (
 )
 
 echo.
+echo.
+echo   [2-5] git 신원 설정 (기록 커밋에 꼭 필요)...
+"%GIT%" -C "%DEST%" config user.email "4xrcompany@gmail.com"
+"%GIT%" -C "%DEST%" config user.name "4XR-%COMPUTERNAME%"
+
 echo   [3/5] 캡처 도구(Playwright) 설치 - 배너/섹션 이미지 만들 때 필요합니다.
 echo         (처음 한 번만 크롬 엔진을 내려받아요. 몇 분 걸릴 수 있어요.)
 where npm >nul 2>&1
