@@ -484,7 +484,7 @@ KV        로드 직후 타이포 → 오브젝트 → 뱃지 → 하단 카피 
 
 비즈호스트 기획전 게시판이 여러 개고(콘텐츠·post-1·post-2·post-3·post-4·리포트·스페셜이슈·프레젠테이션), **게시판마다 네이티브 구조·클래스가 완전히 다르다.**
 
-★★**기획전 작업 시작(①단계) 때 제일 먼저 "어느 게시판에 올릴 건지" 물어본다** — 콘텐츠 / post-1 / post-3 중 어디냐. 게시판에 따라 **HTML 구조·상품 처리·네이티브 클래스가 전부 달라서**, 나중에 알면 처음부터 다시 만들어야 한다. ([[gihoekjeon-product-display-method]] 의 진열방식 질문보다 **먼저**.) 참고본이 있으면 그게 어느 게시판 건지도 확인(admin 편집화면 상단 "게시판명" 예 `4XR - post-1`, 또는 라이브 URL `boardid=post` vs `boardid=issue`).
+★★**기획전 작업 시작(①단계) 때 제일 먼저 "어느 게시판에 올릴 건지" 물어본다** — 콘텐츠 / post-1 / post-3 중 어디냐. 게시판에 따라 **HTML 구조·상품 처리·네이티브 클래스가 전부 달라서**, 나중에 알면 처음부터 다시 만들어야 한다. ([[gihoekjeon-product-display-method]] 의 진열방식 질문보다 **먼저**.) 참고본이 있으면 그게 어느 게시판 건지도 확인(admin 편집화면 상단 "게시판명" 예 `4XR - post-1`, 또는 **라이브 URL의 `boardid` 로 확실히 판별**: 콘텐츠=`boardid=issue` · post-1=`boardid=post` · post-3=`boardid=post3`). 예: 21891·20461=post-1(`&boardid=post`), 21873=post-3(`&boardid=post3`).
 
 **콘텐츠(contents)** — 지금까지 한 것. 무겁다(24~190KB). 커스텀 섹션 많음.
 - 네이티브: `.magazine_view` · `.img_memo_wrap`(탭) · `.discount_view .goods_list #goodsList1~4` · `.base_slider_list`. 진열 3패턴(§5-A-2 ③-e).
