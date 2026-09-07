@@ -490,11 +490,13 @@ KV        로드 직후 타이포 → 오브젝트 → 뱃지 → 하단 카피 
 **post-1 / post-3 — "매거진 포스트" 게시판. 아주 가볍다(대부분 1~11KB).**
 - ★**HTML(에디터 내용)엔 "스타일 스킨 + 선택적 히어로"만** 넣는다. **상품·브랜드·쿠폰·이미지·PC/모바일 문구는 전부 게시판 admin 폼에서 등록** → 게시판이 네이티브로 렌더. (admin 확인: 상품데이터 연결·브랜드 연결·쿠폰연결·이벤트명·목록이미지·**내용 / 내용[모바일] 분리 필드**)
 - **HTML은 그 네이티브 클래스에 CSS 스킨 + 군더더기 숨김**: `.navigation` · `.page_info` · `.hashtag_box` · `.txt_03` · `p.mb10` · `.btn_board_like` 등 숨김.
+- ★**최소형은 히어로 "텍스트"조차 게시판 필드(제목/요약)에서** 온다 — HTML은 그걸 담는 `.magazine_main_visual .txt_wrap`·`.title`·`.txt_02` 를 **스타일만** 한다(21891 확인: "Early Autumn with…" 문구가 HTML에 없고 게시판 제목/요약에서 렌더). 즉 최소형 = 순수 `<style>` 스킨. 커스텀 `main#intro` 히어로를 직접 넣는 건 **예외 옵션**(0824).
 - **상품 배열/fetch 없음** — 콘텐츠 board 처럼 커스텀 상품 그리드 만들지 말 것. 상품은 게시판이 그림.
 - **네이티브 클래스가 콘텐츠와 다름**: post-1 = `.magazine_main_visual`·`.txt_wrap`·`.navigation`(swiper pagination)·`.goods_list_wrap`·`.page_view_top` / post-3 = `.magazine_view .cont .title/.txt_03/.txt_info`·`.link_wrap .brand`·`.goods_list_wrap .goods_list .sub_cont`.
 - **선택적 추가**: (post-1) 커스텀 인트로 히어로 `main#intro`(애니메이션·구글폰트 Anton 등, 예 0824 균일가전) / (post-3) 네이티브 텍스트를 **JS로 교체·강화**(예 0827: 네이티브 `.txt_02` 를 `.collab_content_section` 로 `replaceWith`, 날짜 "재고 소진 시" 치환). **복사 아닌 replaceWith/노드조작**으로 게시판 스크립트 유지.
 - 풀블리드: `box-shadow:0 0 0 100vmax #000` + `clip-path:inset(0 -100vmax)` 로 좌우 꽉 채우는 기법 씀(post-3 0827). `</head><body>` 경계가 조각에 들어가는 경우 있음(게시판 템플릿이 콘텐츠와 다름) — 참고본 그대로. @768 하나.
 - 정답 예시: `references/bizhost-samples/post/` (post-1 0722 최소·0824 히어로 / post-3 0820 최소·0827 collab-JS).
+- **라이브 확인(21891 post-1)**: HTML엔 히어로/인트로 문구만(예 "Early Autumn with GRAYBLVD & URBANPLAYERS"), 그 아래 **카테고리/브랜드 필터 탭 + 상품 그리드**는 게시판이 렌더. post 상품카드 네이티브 포맷 = **[브랜드] · [상품명] · [사이즈범위 `M~L - 2XL~3XL`] · `>` · [세일가][정상가][할인%]**. 이 카드를 HTML로 흉내내지 말 것 — admin에 상품만 등록하면 게시판이 이 형식으로 그린다. 라이브 뷰: `www.4xr.co.kr/bbs/read.php?index_no=<번호>&boardid=post`.
 
 ---
 
