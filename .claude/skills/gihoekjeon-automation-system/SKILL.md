@@ -480,6 +480,24 @@ KV        로드 직후 타이포 → 오브젝트 → 뱃지 → 하단 카피 
 
 ---
 
+## 5-A-3. 어느 게시판인가 — 콘텐츠 / post-1 / post-3 ★ (게시판마다 구조 다름, 2026-09-07 학습)
+
+비즈호스트 기획전 게시판이 여러 개고(콘텐츠·post-1·post-2·post-3·post-4·리포트·스페셜이슈·프레젠테이션), **게시판마다 네이티브 구조·클래스가 다르다.** 참고본/납품 대상이 **어느 게시판인지 먼저 확인**한다. (admin 편집화면 상단 "게시판명"으로 구분: 예 `4XR - post-1`)
+
+**콘텐츠(contents)** — 지금까지 한 것. 무겁다(24~190KB). 커스텀 섹션 많음.
+- 네이티브: `.magazine_view` · `.img_memo_wrap`(탭) · `.discount_view .goods_list #goodsList1~4` · `.base_slider_list`. 진열 3패턴(§5-A-2 ③-e).
+
+**post-1 / post-3 — "매거진 포스트" 게시판. 아주 가볍다(대부분 1~11KB).**
+- ★**HTML(에디터 내용)엔 "스타일 스킨 + 선택적 히어로"만** 넣는다. **상품·브랜드·쿠폰·이미지·PC/모바일 문구는 전부 게시판 admin 폼에서 등록** → 게시판이 네이티브로 렌더. (admin 확인: 상품데이터 연결·브랜드 연결·쿠폰연결·이벤트명·목록이미지·**내용 / 내용[모바일] 분리 필드**)
+- **HTML은 그 네이티브 클래스에 CSS 스킨 + 군더더기 숨김**: `.navigation` · `.page_info` · `.hashtag_box` · `.txt_03` · `p.mb10` · `.btn_board_like` 등 숨김.
+- **상품 배열/fetch 없음** — 콘텐츠 board 처럼 커스텀 상품 그리드 만들지 말 것. 상품은 게시판이 그림.
+- **네이티브 클래스가 콘텐츠와 다름**: post-1 = `.magazine_main_visual`·`.txt_wrap`·`.navigation`(swiper pagination)·`.goods_list_wrap`·`.page_view_top` / post-3 = `.magazine_view .cont .title/.txt_03/.txt_info`·`.link_wrap .brand`·`.goods_list_wrap .goods_list .sub_cont`.
+- **선택적 추가**: (post-1) 커스텀 인트로 히어로 `main#intro`(애니메이션·구글폰트 Anton 등, 예 0824 균일가전) / (post-3) 네이티브 텍스트를 **JS로 교체·강화**(예 0827: 네이티브 `.txt_02` 를 `.collab_content_section` 로 `replaceWith`, 날짜 "재고 소진 시" 치환). **복사 아닌 replaceWith/노드조작**으로 게시판 스크립트 유지.
+- 풀블리드: `box-shadow:0 0 0 100vmax #000` + `clip-path:inset(0 -100vmax)` 로 좌우 꽉 채우는 기법 씀(post-3 0827). `</head><body>` 경계가 조각에 들어가는 경우 있음(게시판 템플릿이 콘텐츠와 다름) — 참고본 그대로. @768 하나.
+- 정답 예시: `references/bizhost-samples/post/` (post-1 0722 최소·0824 히어로 / post-3 0820 최소·0827 collab-JS).
+
+---
+
 ## 5-B. 기획전 HTML/CSS/JS 코딩 컨벤션 ★★ (사용자 확정 2026-09-03)
 
 기획전 페이지 코드는 아래 규칙을 **전부** 지킨다. (실제 완성본이 이 방식)
