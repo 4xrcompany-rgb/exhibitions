@@ -499,6 +499,7 @@ KV        로드 직후 타이포 → 오브젝트 → 뱃지 → 하단 카피 
 - 풀블리드: `box-shadow:0 0 0 100vmax #000` + `clip-path:inset(0 -100vmax)` 로 좌우 꽉 채우는 기법 씀(post-3 0827). `</head><body>` 경계가 조각에 들어가는 경우 있음(게시판 템플릿이 콘텐츠와 다름) — 참고본 그대로. @768 하나.
 - 정답 예시: `references/bizhost-samples/post/` (post-1 0722 최소·0824 히어로 / post-3 0820 최소·0827 collab-JS).
 - **라이브 확인(21891 post-1)**: HTML엔 히어로/인트로 문구만(예 "Early Autumn with GRAYBLVD & URBANPLAYERS"), 그 아래 **카테고리/브랜드 필터 탭 + 상품 그리드**는 게시판이 렌더. post 상품카드 네이티브 포맷 = **[브랜드] · [상품명] · [사이즈범위 `M~L - 2XL~3XL`] · `>` · [세일가][정상가][할인%]**. 이 카드를 HTML로 흉내내지 말 것 — admin에 상품만 등록하면 게시판이 이 형식으로 그린다. 라이브 뷰: `www.4xr.co.kr/bbs/read.php?index_no=<번호>&boardid=post`.
+- **라이브 확인 2(20461 post-1, "앨빈클로 단독 균일가전", 단일브랜드·쿠폰1)**: 21891과 동일한 최소 스킨 패턴 재확인. HTML=순수 `<style>`(제목 폭·글자색만), 제목/요약/브랜드/쿠폰/상품 전부 게시판 렌더. **히어로/요약 블록의 네이티브 클래스 = `.page_view_top`**(`.title` 대제목·`.txt_02`·`.txt_03` 부문구) + `.magazine_main_visual p`. 최소형 스킨이 손대는 전형 = `.page_view_top .title{max-width}` , `.magazine_main_visual p{color}` , `@768 .page_view_top .txt_02{line-height}/.txt_03{color}`. → post-1 최소형은 이 네이티브 클래스만 스타일하면 된다(커스텀 마크업 X).
 
 ---
 
