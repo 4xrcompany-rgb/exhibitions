@@ -4,8 +4,9 @@
 
 사용자 기기에서 실행한다 (device_bash). xlsx 는 zip 이므로 표준 라이브러리만으로
 sharedStrings.xml + sheetN.xml 을 직접 읽는다. openpyxl 불필요.
+구형 .xls(BIFF8) 는 zip 이 아니므로 xlrd 로 폴백한다(허숙현 2026-09-07 요청).
 
-  python3 read_workbook.py <xlsx경로> [출력json경로]
+  python3 read_workbook.py <엑셀경로> [출력json경로]
 
 출력 JSON:
   { "sheets": { "<시트명>": [ {"A":"값","B":"값",...}, ... ] } }
@@ -16,8 +17,54 @@ import sys, os, re, json, zipfile
 import html as H
 
 
-def parse(xlsx_path):
-    z = zipfile.ZipFile(xlsx_path)
+def col_letter(idx):
+    """0-based 열 인덱스 → A, B, ... AA 형식."""
+    s = ''
+    idx += 1
+    while idx > 0:
+        idx, r = divmod(idx - 1, 26)
+        s = chr(65 + r) + s
+    return s
+
+
+def parse_xls(path):
+    """구형 .xls(BIFF8). xlrd 필요(2.0+ 는 .xls 미지원 → 1.2.0)."""
+    try:
+        import xlrd
+    except ImportError:
+        raise SystemExit(
+            "[안내] 구형 .xls 파일입니다. 다음 중 하나로 해결하세요:\n"
+            "  1) 엑셀에서 '다른 이름으로 저장' → .xlsx 로 저장 후 다시 실행 (권장)\n"
+            "  2) pip install \"xlrd==1.2.0\"  설치 후 다시 실행"
+        )
+    book = xlrd.open_workbook(path)
+    out = {}
+    for sh in book.sheets():
+        rows = []
+        for r in range(sh.nrows):
+            cells = {}
+            for c in range(sh.ncols):
+                v = sh.cell_value(r, c)
+                if v is None or v == '':
+                    continue
+                if isinstance(v, float) and v == int(v):
+                    v = str(int(v))       # 엑셀 정수는 float 로 오므로 정수화
+                else:
+                    v = str(v)
+                cells[col_letter(c)] = v
+            if cells:
+                cells['_row'] = str(r + 1)
+                rows.append(cells)
+        out[sh.name] = rows
+    return out
+
+
+def parse(path):
+    # 구형 .xls 는 zip 이 아님 → xlrd 폴백
+    if not zipfile.is_zipfile(path):
+        return parse_xls(path)
+
+    z = zipfile.ZipFile(path)
 
     # 공유 문자열
     ss = []
