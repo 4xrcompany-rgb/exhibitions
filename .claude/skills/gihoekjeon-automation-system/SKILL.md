@@ -837,6 +837,13 @@ Playwright HTML→JPG 로 뽑은 배너는 납작한 그림이라 사용자가 �
    ```
    예약작업 Action = `wscript.exe "경로\실행기.vbs"`. (SYSTEM/S4U 세션0 실행도 창은 없지만 git 자격증명이 사용자 크레덴셜매니저라 SYSTEM은 pull 인증 실패 → wscript 방식이 안전.) 4XR 파일: `scripts/sync_hidden.vbs`, `관리자도구/_sync_all_hidden.vbs`. setup_auto_sync.ps1·fix_sync.ps1·관리자_전체보기.bat 이 vbs 있으면 wscript로 등록. 진단/정리 = `직원배포/도스창_정리.bat`. [[scheduled-task-no-window]]
 
+### 7-11. 힉스필드 이미지 생성 전 승인 ★★ (사용자 확정 2026-09-14)
+
+- **힉스필드로 이미지를 생성하기 전에는 반드시 "이렇게 생성하겠다"를 설명하고 생성할지 물어본 뒤, 승인받고 실행한다.** (배경 생성·인물/누끼 생성·KV·배너 소재 등 크레딧이 드는 생성 전부 해당.)
+- 생성 방법(어떤 모델·프롬프트·비율·장수)을 먼저 요약해 보여주고, **"진행할까요?" 확인 → 사용자 승인 후에만** 생성 호출.
+- 사용자가 이미 "생성해줘"라고 명시한 그 요청은 승인으로 본다(같은 걸 두 번 묻지 않는다). 단 프롬프트·비율·장수가 바뀌거나 재생성이면 다시 확인한다.
+- `remove_background`(누끼) 같은 크레딧 소모 작업도 동일하게 사전 확인. 이유: 크레딧이 실제 비용이라 무단 생성 금지. [[higgsfield-approve-before-generate]] [[higgsfield-credit-video-separate]]
+
 ---
 
 ## 8. 실행 스크립트
