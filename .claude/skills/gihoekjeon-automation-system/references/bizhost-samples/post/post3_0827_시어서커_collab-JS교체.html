@@ -1,0 +1,81 @@
+<style>
+.magazine_view { margin: 0 auto 0;}
+.magazine_view .cont .title,
+.navigation, .magazine_view .cont .txt_info,
+.magazine_view .hashtag_box,
+.page_info {display: none;}
+.magazine_view .cont .txt_03 { font-size: 18px; font-weight: 400; }
+.magazine_view .cont .txt_info {margin: 20px 0 60px !important}
+.link_wrap {padding-bottom: 0; border-bottom: 3px solid #fff;}
+.link_wrap .brand ul{ justify-content: flex-start;}
+.mb60 {margin-bottom: 0 !important}
+.goods_list_wrap .goods_list .sub_cont > div{ display: none;}
+.goods_list_wrap .goods_list { margin: 0 auto 150px;}
+.goods_list_wrap .goods_list .title { padding: 0; display: none;}
+
+/* sub_title */
+.collab_content_section{ width: 100%; margin: 0; padding: 80px 0; box-sizing: border-box; text-align: center; color: #fff; background-color: #000; box-shadow: 0 0 0 100vmax #000; clip-path: inset(0 -100vmax);}
+.collab_text_con{ max-width: 900px; margin: 0 auto;}
+.collab_text_con .collab_title{ margin: 0; font-size: 34px; line-height: 1.3em; font-weight: 800; letter-spacing: -1.2px;}
+.collab_text_con .collab_features{ margin: 30px 0 0; font-size: 17px; line-height: 1.8em; font-weight: 400; letter-spacing: -0.2px; color: #d8d8d8;}
+.collab_text_con .collab_notice{ margin: 30px 0; font-size: 20px; line-height: 1.6em; font-weight: 800; color: #fff;}
+.collab_text_con .collab_date{ position: static; display: block; width: 100%; margin: 12px 0 0 !important; padding: 0 !important; box-sizing: border-box; transform: none; text-align: center !important; font-size: 16px; line-height: 1.6em; font-weight: 400; color: #fff;}
+
+@media (max-width: 768px) {
+.page_view_top .title,
+.page_view_top .tags,
+.page_view_top .txt_03,
+.mb45 {display: none;}
+.link_wrap {margin: 150px 0 0px;}
+.navigation ul li{ width: 50%;}
+.mb40 {margin-bottom: 0 !important;}
+.mb60 {margin-bottom: 60px !important;}
+
+/* sub_title */
+.collab_content_section{ padding: 60px 22px;}
+.collab_text_con .collab_title{ font-size: 32px }
+.collab_text_con .collab_features{ font-size: 24px; }
+.collab_text_con .collab_notice{ font-size: 25px;}
+.page_view_top .collab_text_con .collab_date{ width: 100%; margin: 10px 0 0 !important; padding: 0 !important; text-align: center !important; font-size: 22px;}
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const dateElement = document.querySelector('p.txt_03.mb60, .page_view_top p.txt_02.mb30');
+    const contentElement = document.querySelector('p.txt_02.mb60, .page_view_top p.txt_02.mb40');
+
+    if (dateElement) {
+        dateElement.classList.add('collab_date');
+        dateElement.textContent = dateElement.textContent.replace(
+            /00\.00\.00\s*$/,
+            '재고 소진 시'
+        );
+    }
+
+    if (contentElement) {
+        const contentSection = document.createElement('div');
+
+        contentSection.className = 'collab_content_section';
+        contentSection.innerHTML = `
+            <div class="collab_text_con">
+                <h2 class="collab_title">
+                    트래드클럽 X 4XR [ 쿨 썸머 시어서커 셋업 ]
+                </h2>
+                <h5 class="collab_features">
+                    구김 적고 통기성 좋아 시원한 시어서커 원단<br>
+                    최대 5XL까지, 사이즈 스트레스 제로,<br>
+                    셋업 or 단품 활용 모두 OK! 4XR 한정판매 9900원!
+                </h5>
+                <h4 class="collab_notice">여름 셋업 고민은 이걸로 끝.</h4>
+            </div>
+        `;
+
+        contentElement.replaceWith(contentSection);
+
+        if (dateElement) {
+            contentSection.querySelector('.collab_notice').after(dateElement);
+        }
+    }
+});
+</script>

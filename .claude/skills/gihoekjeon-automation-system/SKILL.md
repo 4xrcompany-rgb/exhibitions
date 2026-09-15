@@ -480,6 +480,30 @@ KV        로드 직후 타이포 → 오브젝트 → 뱃지 → 하단 카피 
 
 ---
 
+## 5-A-3. 어느 게시판인가 — 콘텐츠 / post-1 / post-3 ★ (게시판마다 구조 다름, 2026-09-07 학습)
+
+비즈호스트 기획전 게시판이 여러 개고(콘텐츠·post-1·post-2·post-3·post-4·리포트·스페셜이슈·프레젠테이션), **게시판마다 네이티브 구조·클래스가 완전히 다르다.**
+
+★★**기획전 작업 시작(①단계) 때 제일 먼저 "어느 게시판에 올릴 건지" 물어본다** — 콘텐츠 / post-1 / post-3 중 어디냐. 게시판에 따라 **HTML 구조·상품 처리·네이티브 클래스가 전부 달라서**, 나중에 알면 처음부터 다시 만들어야 한다. ([[gihoekjeon-product-display-method]] 의 진열방식 질문보다 **먼저**.) 참고본이 있으면 그게 어느 게시판 건지도 확인(admin 편집화면 상단 "게시판명" 예 `4XR - post-1`, 또는 **라이브 URL의 `boardid` 로 확실히 판별**: 콘텐츠=`boardid=issue` · post-1=`boardid=post` · post-3=`boardid=post3`). 예: 21891·20461=post-1(`&boardid=post`), 21873=post-3(`&boardid=post3`).
+
+**콘텐츠(contents)** — 지금까지 한 것. 무겁다(24~190KB). 커스텀 섹션 많음.
+- 네이티브: `.magazine_view` · `.img_memo_wrap`(탭) · `.discount_view .goods_list #goodsList1~4` · `.base_slider_list`. 진열 3패턴(§5-A-2 ③-e).
+
+**post-1 / post-3 — "매거진 포스트" 게시판. 아주 가볍다(대부분 1~11KB).**
+- ★**HTML(에디터 내용)엔 "스타일 스킨 + 선택적 히어로"만** 넣는다. **상품·브랜드·쿠폰·이미지·PC/모바일 문구는 전부 게시판 admin 폼에서 등록** → 게시판이 네이티브로 렌더. (admin 확인: 상품데이터 연결·브랜드 연결·쿠폰연결·이벤트명·목록이미지·**내용 / 내용[모바일] 분리 필드**)
+- **HTML은 그 네이티브 클래스에 CSS 스킨 + 군더더기 숨김**: `.navigation` · `.page_info` · `.hashtag_box` · `.txt_03` · `p.mb10` · `.btn_board_like` 등 숨김.
+- ★**최소형은 히어로 "텍스트"조차 게시판 필드(제목/요약)에서** 온다 — HTML은 그걸 담는 `.magazine_main_visual .txt_wrap`·`.title`·`.txt_02` 를 **스타일만** 한다(21891 확인: "Early Autumn with…" 문구가 HTML에 없고 게시판 제목/요약에서 렌더). 즉 최소형 = 순수 `<style>` 스킨. 커스텀 `main#intro` 히어로를 직접 넣는 건 **예외 옵션**(0824).
+- **상품 배열/fetch 없음** — 콘텐츠 board 처럼 커스텀 상품 그리드 만들지 말 것. 상품은 게시판이 그림.
+- **네이티브 클래스가 콘텐츠와 다름**: post-1 = `.magazine_main_visual`·`.txt_wrap`·`.navigation`(swiper pagination)·`.goods_list_wrap`·`.page_view_top` / post-3 = `.magazine_view .cont .title/.txt_03/.txt_info`·`.link_wrap .brand`·`.goods_list_wrap .goods_list .sub_cont`.
+- **선택적 추가**: (post-1) 커스텀 인트로 히어로 `main#intro`(애니메이션·구글폰트 Anton 등, 예 0824 균일가전) / (post-3) 네이티브 텍스트를 **JS로 교체·강화**(예 0827: 네이티브 `.txt_02` 를 `.collab_content_section` 로 `replaceWith`, 날짜 "재고 소진 시" 치환). **복사 아닌 replaceWith/노드조작**으로 게시판 스크립트 유지.
+- 풀블리드: `box-shadow:0 0 0 100vmax #000` + `clip-path:inset(0 -100vmax)` 로 좌우 꽉 채우는 기법 씀(post-3 0827). `</head><body>` 경계가 조각에 들어가는 경우 있음(게시판 템플릿이 콘텐츠와 다름) — 참고본 그대로. @768 하나.
+- **post-3 카테고리 2형태**: (단일) 브랜드/카테고리 하나면 `.navigation{display:none}` 로 탭 숨김(예 21873 카고브로스) / (멀티) 카테고리 여러 개면 **`.navigation` 탭바를 살려두고** `.navigation ul li{min-width:N%}` 로 탭 폭만 잡는다(예 21140 엘리메노, `#1 캐리오버…#5 맨투맨` 5개 + 각 "상품 더보기"). 어느 쪽이든 **카테고리·상품·라벨은 admin 등록**이고 HTML은 탭/여백 스킨만. 카테고리 라벨(`#N 라벨`)·해시태그(`.hashtag_box`)도 게시판 렌더 — 숨길지(21873)·보일지(21140)만 스킨에서 결정.
+- 정답 예시: `references/bizhost-samples/post/` (post-1 0722 최소·0824 히어로 / post-3 0820 최소단일·21140 멀티카테고리·0827 collab-JS).
+- **라이브 확인(21891 post-1)**: HTML엔 히어로/인트로 문구만(예 "Early Autumn with GRAYBLVD & URBANPLAYERS"), 그 아래 **카테고리/브랜드 필터 탭 + 상품 그리드**는 게시판이 렌더. post 상품카드 네이티브 포맷 = **[브랜드] · [상품명] · [사이즈범위 `M~L - 2XL~3XL`] · `>` · [세일가][정상가][할인%]**. 이 카드를 HTML로 흉내내지 말 것 — admin에 상품만 등록하면 게시판이 이 형식으로 그린다. 라이브 뷰: `www.4xr.co.kr/bbs/read.php?index_no=<번호>&boardid=post`.
+- **라이브 확인 2(20461 post-1, "앨빈클로 단독 균일가전", 단일브랜드·쿠폰1)**: 21891과 동일한 최소 스킨 패턴 재확인. HTML=순수 `<style>`(제목 폭·글자색만), 제목/요약/브랜드/쿠폰/상품 전부 게시판 렌더. **히어로/요약 블록의 네이티브 클래스 = `.page_view_top`**(`.title` 대제목·`.txt_02`·`.txt_03` 부문구) + `.magazine_main_visual p`. 최소형 스킨이 손대는 전형 = `.page_view_top .title{max-width}` , `.magazine_main_visual p{color}` , `@768 .page_view_top .txt_02{line-height}/.txt_03{color}`. → post-1 최소형은 이 네이티브 클래스만 스타일하면 된다(커스텀 마크업 X).
+
+---
+
 ## 5-B. 기획전 HTML/CSS/JS 코딩 컨벤션 ★★ (사용자 확정 2026-09-03)
 
 기획전 페이지 코드는 아래 규칙을 **전부** 지킨다. (실제 완성본이 이 방식)

@@ -1,0 +1,115 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Black+Han+Sans&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Black+Han+Sans&display=swap">
+<style>
+/* post-1 틀 초기화 */
+.magazine_main_visual .txt_wrap { display: none; }
+.navigation{ background-color: #63391a;}
+.navigation .slide_tit li{ background-color: transparent; font-size: 22px; font-weight: 400;}
+.navigation .slide_tit li.swiper-pagination-bullet-active{ background-color: transparent; color: #ffd600; font-weight: 700;}
+
+/* main */
+main#intro { --ink: #1c1d1c; --title-color: #ee7200; --paper: #63391a; --mx: 0; --my: 0; }
+main#intro, main#intro * { box-sizing: border-box; }
+main#intro { overflow: hidden; color: var(--paper); background: #f1ebd3; position: relative; display: grid; place-items: center; width: 100%; height: calc(100vh - 160px); min-height: 500px; margin: 52px 0 0; isolation: isolate; background: radial-gradient(circle at 48% 42%, rgba(255,255,255,.12), transparent 38%), linear-gradient(93deg, transparent 0 48%, rgba(255,255,255,.035) 49%, transparent 50%), repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px), #f1ebd3; }
+main#intro::after { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .42; mix-blend-mode: multiply; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E"); }
+main#intro > section.content { position: relative; display: flex; flex-direction: column; align-items: center; width: min(78vw, 1000px); transform: perspective(900px) rotateY(calc(var(--mx) * 1.8deg)) rotateX(calc(var(--my) * -1.4deg)); transition: transform .16s ease-out; }
+main#intro > section.content > .burst { position: absolute; left: 50%; top: 35%; z-index: -1; width: min(92vw, 1120px); aspect-ratio: 2.25 / 1; background: #fff; clip-path: polygon( 0 42%, 18% 38%, 8% 13%, 27% 30%, 23% 0, 39% 25%, 46% 0, 51% 25%, 57% 0, 62% 28%, 79% 7%, 70% 36%, 100% 36%, 76% 51%, 96% 68%, 69% 63%, 77% 93%, 59% 70%, 55% 100%, 49% 72%, 42% 100%, 38% 69%, 19% 92%, 28% 61%, 0 62%, 22% 51% ); filter: drop-shadow(7px 9px 0 #30312f); opacity: 0; transform: translate(-50%, -50%) scale(0); transform-origin: center; animation: burst-pop 1s 1s cubic-bezier(.16, .9, .24, 1.28) forwards; }
+main#intro > .stars { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+main#intro > .stars > .star { position: absolute; left: var(--x); top: var(--y); width: var(--size); aspect-ratio: 1; color: rgba(246,194,0,.95); opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(var(--rotate, 0deg)); transform-origin: center; animation: star-twinkle var(--duration, 2.4s) var(--delay, 1s) ease-in-out infinite; }
+main#intro > .stars > .star.star--four { background: currentColor; clip-path: polygon(50% 0, 58% 40%, 100% 50%, 58% 60%, 50% 100%, 42% 60%, 0 50%, 42% 40%); }
+main#intro > .stars > .star.star--spark::before, main#intro > .stars > .star.star--spark::after { content: ""; position: absolute; left: 50%; top: 50%; width: 100%; height: 2px; background: currentColor; transform: translate(-50%, -50%); box-shadow: 0 0 5px rgba(255,255,255,.75); }
+main#intro > .stars > .star.star--spark::after { transform: translate(-50%, -50%) rotate(90deg); }
+main#intro > .stars > .star.star--spark > i, main#intro > .stars > .star.star--spark > i::before { position: absolute; left: 50%; top: 50%; display: block; width: 72%; height: 1px; content: ""; background: currentColor; transform: translate(-50%, -50%) rotate(45deg); }
+main#intro > .stars > .star.star--spark > i::before { width: 100%; transform: translate(-50%, -50%) rotate(90deg); }
+main#intro > section.content > .logo { position: relative; z-index: 2; margin: 0; color: var(--title-color); font-family: "Anton", "Arial Black", sans-serif; font-size: clamp(86px, 14vw, 220px); font-weight: 900; line-height: .76; letter-spacing: -.035em; text-align: center; text-transform: uppercase; -webkit-text-stroke: 1px #63391a; filter: drop-shadow(clamp(8px, 1vw, 15px) clamp(11px, 1.35vw, 9px) 0 #63391a); }
+main#intro > section.content > .logo > span { display: block; transform: translateY(40px) scale(.88); opacity: 0; animation: title-in .8s .46s cubic-bezier(.2, .9, .25, 1.25) forwards; }
+main#intro > section.content > .logo > span:nth-child(2) { animation-delay: .58s; }
+main#intro > section.content > .tagline { position: relative; z-index: 2; margin: 85px 0 0; color: var(--paper); font-family: "Anton", Impact, sans-serif; font-size: 50px; font-style: italic; letter-spacing: .01em; line-height: 1; text-transform: uppercase; /*-webkit-text-stroke: 2px #343532;*/ opacity: 0; transform: translateY(24px); animation: fade-up .65s 1.6s ease-out forwards; }
+main#intro > .credit { position: absolute; left: 0; right: 0; bottom: clamp(55px, 8vh, 105px); display: grid; gap: 7px; width: 100%; padding: 0 clamp(24px, 5vw, 80px); text-align: center; font-size: clamp(11px, 1.1vw, 17px); font-weight: 700; /*text-shadow: 0 2px 3px #818181;*/ transform: translateY(24px); opacity: 0; animation: fade-up .6s 1.8s ease-out forwards; }
+
+    @keyframes title-in {
+      70% { opacity: 1; transform: translateY(-5px) scale(1.03); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes burst-pop {
+      0%, 12% { opacity: 0; transform: translate(-50%, -50%) scale(.12); }
+      48% { opacity: 1; transform: translate(-50%, -50%) scale(1.18); }
+      72% { opacity: 1; transform: translate(-50%, -50%) scale(.94); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+    @keyframes star-twinkle {
+      0%, 12%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(var(--rotate, 0deg)); }
+      30% { opacity: .55; transform: translate(-50%, -50%) scale(.58) rotate(var(--rotate, 0deg)); }
+      48% { opacity: 1; transform: translate(-50%, -50%) scale(1.38) rotate(calc(var(--rotate, 0deg) + 10deg)); }
+      66% { opacity: .78; transform: translate(-50%, -50%) scale(.78) rotate(calc(var(--rotate, 0deg) + 18deg)); }
+      82% { opacity: 0; transform: translate(-50%, -50%) scale(.18) rotate(calc(var(--rotate, 0deg) + 24deg)); }
+    }
+    @keyframes fade-up { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+      .page_view_top{ display: none;}
+      main#intro { margin: 0 0 0; height: 900px; /*background-image: radial-gradient(ellipse 90% 70% at 48% 38%, rgba(255,255,255,.15) 0%, rgba(255,255,255,.07) 38%, rgba(255,255,255,0) 72%), radial-gradient(ellipse 85% 75% at 12% 92%, rgba(213,52,29,.18) 0%, rgba(213,52,29,0) 70%), linear-gradient(145deg, #fc6239 0%, #fb572d 48%, #f44d29 100%); background-repeat: no-repeat; background-size: cover;*/ }
+      main#intro::before { inset: 18px; box-shadow: inset 0 0 0 13px var(--ink), inset 0 0 24px rgba(0,0,0,.7), 0 0 0 5px rgba(20,20,20,.95); }
+      main#intro > section.content { width: 100%; margin-bottom: 110px;}
+      main#intro > section.content > .burst { top: 38%; width: 124vw; aspect-ratio: 1.75 / 1; }
+      main#intro > section.content > .logo { font-size: clamp(66px, 30vw, 154px); line-height: .8; }
+      main#intro > section.content > .tagline { font-size: clamp(27px, 8vw, 48px); }
+      main#intro > .credit { bottom: clamp(25px, 8vh, 65px); font-size: clamp(32px, 1.1vw, 32px); line-height: 1.35;}
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        main#intro > section.content { transform: none; transition: none; }
+        main#intro > section.content > .logo > span, main#intro > section.content > .tagline, main#intro > .credit, main#intro > section.content > .burst, main#intro > .stars > .star { animation: none; opacity: 1; }
+        main#intro > section.content > .burst { transform: translate(-50%, -50%) scale(1); }
+        main#intro > .stars > .star { transform: translate(-50%, -50%) scale(1) rotate(var(--rotate, 0deg)); }
+    }
+  </style>
+</head>
+<body>
+  <main class="intro" id="intro">
+    <div class="stars" aria-hidden="true">
+      <span class="star star--spark" style="--x:7%;--y:66%;--size:70px;--delay:.85s;--duration:2.8s"><i></i></span>
+      <span class="star star--four" style="--x:17%;--y:89%;--size:25px;--delay:1.35s;--duration:2.3s;--rotate:7deg"></span>
+      <span class="star star--four" style="--x:87%;--y:77%;--size:45px;--delay:1.05s;--duration:2.65s;--rotate:13deg"></span>
+      <span class="star star--spark" style="--x:88%;--y:20%;--size:50px;--delay:1.55s;--duration:2.5s"><i></i></span>
+      <span class="star star--spark" style="--x:92%;--y:37%;--size:18px;--delay:2s;--duration:2.2s"><i></i></span>
+      <span class="star star--four" style="--x:10%;--y:83%;--size:12px;--delay:2.3s;--duration:2.1s;--rotate:20deg"></span>
+      <span class="star star--four" style="--x:9%;--y:15%;--size:8px;--delay:1.8s;--duration:2.4s"></span>
+    </div>
+    <section class="content" aria-label="DOOMO POLY 인트로">
+      <div class="burst" aria-hidden="true"></div>
+      <h1 class="logo"><span>SEASON</span><span>SWITCH SALE</span></h1>
+      <p class="tagline">26.8.24 - 8.30</p>
+    </section>
+
+    <div class="credit">
+      <span>9,900원부터 69,900원까지</span>
+      <span>여름은 가볍게 정리하고, 다가오는 가을은 부담 없이 시작해 보세요.</span>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const intro = document.querySelector('#intro');
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) return;
+
+      const move = (x, y) => {
+        const mx = ((x / innerWidth) - 0.5) * 2;
+        const my = ((y / innerHeight) - 0.5) * 2;
+        intro.style.setProperty('--mx', mx.toFixed(3));
+        intro.style.setProperty('--my', my.toFixed(3));
+      };
+
+      addEventListener('pointermove', e => move(e.clientX, e.clientY), { passive: true });
+      addEventListener('deviceorientation', e => {
+        if (e.gamma == null || e.beta == null) return;
+        const mx = Math.max(-1, Math.min(1, e.gamma / 30));
+        const my = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
+        intro.style.setProperty('--mx', mx.toFixed(3));
+        intro.style.setProperty('--my', my.toFixed(3));
+      }, { passive: true });
+    })();
+  </script>
