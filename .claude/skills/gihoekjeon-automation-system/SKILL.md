@@ -508,6 +508,27 @@ KV        로드 직후 타이포 → 오브젝트 → 뱃지 → 하단 카피 
 
 ---
 
+## 5-A-4. 상품 검색 위젯 붙이기 ★ (사용자 요청 2026-09-15, 허숙현 0914)
+
+작업자가 **"검색(추천검색어·추천문장·필터·내 사이즈·할인율 검색)을 기획전에 넣어줘"** 하면 이 방식으로 붙인다. 기능·모양은 이미 **CDN 공통 파일**로 올라가 있어(누구나 불러 씀) — **기획전 HTML을 새로 만들지 않고 아래 3줄만 삽입**한다.
+
+- 공통 파일: `https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/00/search/` — `js/bf_search.js`(엔진) · `css/bf_search.css`(관련상품형) · `css/bf_search_tabs.css`(가격 탭형). 원본은 허숙현 PC `E:\작업\콘텐츠\_상품검색_공통\`(사용법.md 포함).
+- 게시글(기획전 HTML)에 넣는 것은 **딱 이 3줄**(⑤단계에서 삽입):
+  ```html
+  <link rel="stylesheet" href="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/00/search/css/bf_search.css?v=260915">
+  <script>window.BF_SEARCH = {layout:'issue'};</script>
+  <script defer src="https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/2026/00/search/js/bf_search.js?v=260915b"></script>
+  ```
+  가격 탭 게시판(plantsale)은 css 를 `bf_search_tabs.css`, 설정을 `{layout:'tabs'}` 로.
+- **설정은 바꿀 것만**(기본값은 bf_search.js 맨 위 DEFAULTS): `placeholder:'…'` · `chips:{keywordCount:4, pin:['셔츠']}` · `sentences:{list:[{text:'…', words:['…']}]}` · `filters:{sizes:[…], prices:[…]}` · `lazy:true`(검색할 때만 상품 로드) · `use:false`(끄기).
+- ★**되는 게시판 / 안 되는 게시판**(2026-09-15 실제 글 조사):
+  - 관련상품형(`#link_sh_relation` + `ul.goods_list_box` — issue 계열) → `layout:'issue'` ✔
+  - 가격 탭형(plantsale `.discount_view .navigation` — 21905·21671) → `layout:'tabs'` ✔ (가격 칸은 탭 글자를 읽어 자동)
+  - **위탭(`ul.img_memo_wrap`) + 카테고리 섹션형(§5-A 기본형 · 21897·21881·21838) = 아직 안 됨** — 엔진에 새 모양 추가가 필요. 이 구조엔 지금 넣지 말고 요청 시 "엔진 확장 필요"로 안내.
+- **주의**: 공통 파일 고쳐 다시 올리면 `?v=` 숫자 변경(CDN 7일 캐시) · 한 게시글에 검색 코드는 **한 벌만** · 게시글 설정에도 **엔티티 리터럴 금지(§7-9)** · **공통 파일 먼저 올리고** 게시글 교체.
+
+---
+
 ## 5-B. 기획전 HTML/CSS/JS 코딩 컨벤션 ★★ (사용자 확정 2026-09-03)
 
 기획전 페이지 코드는 아래 규칙을 **전부** 지킨다. (실제 완성본이 이 방식)
@@ -843,6 +864,13 @@ Playwright HTML→JPG 로 뽑은 배너는 납작한 그림이라 사용자가 �
 - 생성 방법(어떤 모델·프롬프트·비율·장수)을 먼저 요약해 보여주고, **"진행할까요?" 확인 → 사용자 승인 후에만** 생성 호출.
 - 사용자가 이미 "생성해줘"라고 명시한 그 요청은 승인으로 본다(같은 걸 두 번 묻지 않는다). 단 프롬프트·비율·장수가 바뀌거나 재생성이면 다시 확인한다.
 - `remove_background`(누끼) 같은 크레딧 소모 작업도 동일하게 사전 확인. 이유: 크레딧이 실제 비용이라 무단 생성 금지. [[higgsfield-approve-before-generate]] [[higgsfield-credit-video-separate]]
+
+### 7-12. 기록 동기화 — rebase 멈춤 자동복구 ★★ (허숙현 09-07 사고, 2026-09-16 개선)
+
+- **사고**: `sync_log.ps1` 이 `pull --rebase` 로 받았는데, 이 저장소는 **rebase 가 재현성 있게 중간에 멈춘다**(원인 미확인). 한 번 멈추면 `.git/rebase-merge` 가 남아 detached HEAD 상태가 되고, 이후 30분마다 **'올리기 실패'만 조용히 반복** → 허숙현 기록이 **8일간 중앙에 한 번도 안 올라감**.
+- **규칙**: 자동 동기화는 **rebase 를 쓰지 않고 merge 로 받는다.** `sync_log.ps1` 은 매 실행 첫머리에 **멈춘 rebase/merge(`.git/rebase-merge`·`rebase-apply`·`MERGE_HEAD`)·detached HEAD 를 감지해 자동 복구**(`rebase --abort`/`merge --abort`/`checkout main`)한 뒤, `git pull --no-rebase --no-edit --autostash` 로 받는다. 받기 실패(충돌 등)면 멈춘 상태로 두지 말고 `merge --abort` 로 되돌려 **다음 주기가 계속 돌게** 한다(내 기록은 이미 커밋됨).
+- **복구 도구**: 이미 꼬인 PC 는 `직원배포/동기화_복구.bat`(백업 브랜치 → 최신 기록으로 main → 원격 merge → push). 진단은 `기록_점검.bat`.
+- **보안(허숙현 지적)**: "무적" 설정은 remote URL 에 GitHub 토큰(ghp_…)을 평문으로 심는다(`토큰설정.bat`). 편의상 그렇지만 **토큰이 유출되면 교체**해야 한다 — 재발급 후 `토큰설정.bat` 을 다시 돌리면 새 토큰으로 갱신된다. (토큰 재발급은 사용자가 GitHub 에서 직접.) [[scheduled-task-no-window]]
 
 ---
 
