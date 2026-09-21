@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>대형 기획전 자동화 사용 안내</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root { --blue:#1a9cf0; --navy:#0f1b33; --green:#1ab87a; --orange:#f29a1a; --red:#e03131; --bg:#f4f6f9; --line:#e3e7ee; --text:#1c2230; --sub:#5b6474; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { width:1100px; background:var(--bg); font-family:"Pretendard","Malgun Gothic",sans-serif; color:var(--text); font-size:17px; line-height:1.55; word-break:keep-all; }
+  .top { background:var(--blue); color:#fff; padding:44px 52px 36px; }
+  .top h1 { font-size:46px; font-weight:800; letter-spacing:-1px; }
+  .top p { font-size:18px; opacity:.92; margin-top:6px; }
+  .wrap { padding:34px 52px 50px; display:flex; flex-direction:column; gap:22px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:26px 30px; }
+  .card h2 { font-size:25px; font-weight:800; margin-bottom:14px; letter-spacing:-.5px; }
+  .card h2 small { font-size:15px; color:var(--blue); font-weight:700; margin-left:8px; }
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .row2 > .card { min-width:0; }
+  td { overflow-wrap:anywhere; }
+  .tree { font-family:"D2Coding","Consolas","Pretendard",monospace; font-size:15px; background:#f7f9fc; border:1px solid var(--line); border-radius:12px; padding:16px 18px; line-height:1.75; white-space:pre; }
+  .tree b { color:var(--blue); } .tree i { color:var(--sub); font-style:normal; }
+  .pill { display:inline-block; padding:3px 12px; border-radius:8px; color:#fff; font-weight:700; font-size:15px; }
+  .p-blue { background:var(--blue); } .p-green { background:var(--green); } .p-orange { background:var(--orange); } .p-navy { background:var(--navy); }
+  table { width:100%; border-collapse:collapse; font-size:16px; }
+  th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { background:#f2f6fb; font-weight:700; color:#2a3346; }
+  code { font-family:"D2Coding","Consolas",monospace; background:#eef3fa; border-radius:6px; padding:1px 7px; font-size:15px; color:#0d5fa8; }
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .step { border:1px solid var(--line); border-radius:14px; padding:16px 16px 14px; background:#fbfcfe; }
+  .step .n { width:40px; height:40px; border-radius:50%; background:var(--blue); color:#fff; font-weight:800; font-size:20px; display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
+  .step h3 { font-size:18px; font-weight:800; margin-bottom:4px; }
+  .step p { font-size:15px; color:var(--sub); }
+  .step .say { margin-top:8px; font-size:14.5px; color:#0d5fa8; font-weight:700; }
+  .code { background:var(--navy); color:#dfe8f7; border-radius:14px; padding:18px 22px; font-family:"D2Coding","Consolas",monospace; font-size:13px; line-height:1.8; white-space:pre; overflow:hidden; }
+  .code .c { color:#7fa3cf; } .code .k { color:#8fd3ff; }
+  .warn { background:#fff7f0; border:1px solid #ffd9b8; }
+  .warn h2 { color:var(--red); }
+  ul.dot { padding-left:20px; } ul.dot li { margin:5px 0; }
+  .say-tbl td:first-child { width:44%; font-weight:700; color:#0d5fa8; }
+  .summary { font-size:21px; font-weight:800; color:var(--blue); line-height:1.5; padding:6px 2px 0; }
+  .summary span { color:var(--text); }
+  .note { font-size:14.5px; color:var(--sub); margin-top:10px; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <h1>대형 기획전 자동화 사용 안내</h1>
+    <p>에디터 기획 엑셀만 넣으면 추석 기획전 구조의 설정 파일과 게시판 붙여넣기 파일이 만들어집니다</p>
+  </div>
+
+  <div class="wrap">
+
+    <div class="card">
+      <h2>1) 무엇이 들어가나 <small>기준 = 0914 추석 기획전</small></h2>
+      <ul class="dot">
+        <li>메인 비주얼 · 타이머 · 퀵 메뉴 · 스티키 탭 + <b>쿠폰 · 상품권(예치금) · 럭키백 · 데일리 특가 2개 · 후기 이벤트 · 로또 · 실시간 랭킹 · 회원 혜택</b> · 상품 검색</li>
+        <li><b>엑셀에 없는 섹션은 통째로 빠집니다</b> — 스티키 탭 · 퀵 메뉴 칸 · 로또 띠까지 같이. 빈 칸을 숨기지 않고 아예 안 만듭니다.</li>
+      </ul>
+    </div>
+
+    <div class="row2">
+      <div class="card">
+        <h2>2) 파일 구조</h2>
+<div class="tree"><b>기획전폴더/</b>
+├─ 기획 엑셀.xls(x)        <i>← 에디터 '기획파일' 시트</i>
+├─ 대형기획전.json         <i>← 오픈일 · 폴더코드</i>
+├─ 이미지_목록.md          <i>← 넣을 이미지 29개</i>
+├─ <b>img/</b> top · pd · pd/title · quick
+│        giftcard/id · luckybag/id
+├─ settings_bigevent.js    <i>← 자동 · CDN 에 올림</i>
+├─ index.html              <i>← 자동 · 게시판에 붙여넣기</i>
+└─ <b>_점검/</b> render_pc · render_mo.png</div>
+        <p class="note">이미 파일이 있으면 덮지 않고 <code>_자동생성/</code> 에 만듭니다.</p>
+      </div>
+
+      <div class="card">
+        <h2>3) 공통 파일 · 기획전 파일</h2>
+        <table>
+          <tr><th>무엇</th><th>CDN 자리</th><th>바뀜</th></tr>
+          <tr><td>모양 <code>big_event.css</code><br>기능 <code>big_event.js</code></td><td>2026/00/<b>bigevent/css/</b><br>2026/00/<b>bigevent/js/</b></td><td>처음 한 번</td></tr>
+          <tr><td><code>settings_bigevent.js</code><br>이미지 <code>img/…</code></td><td>연/월/일/<b>폴더코드/</b><br>(make 가 주소 안내)</td><td>기획전마다</td></tr>
+          <tr><td><code>index.html</code></td><td>게시판 기획전 글에 통째로</td><td>기획전마다</td></tr>
+        </table>
+        <p class="note">앞부분 : <code>https://cdn-tgreen.bizhost.kr/phpskr/tgreen09/</code> · 게시판 코드 206KB → 약 11KB</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4) 기획 엑셀 읽는 법 <small>C열 항목 이름으로 찾음 — 칸 위치가 조금 달라도 이름만 맞으면 됨</small></h2>
+      <table>
+        <tr><th style="width:24%">C열 항목 이름</th><th>읽는 것</th></tr>
+        <tr><td>메인 타이틀</td><td>G칸 첫 줄 = 제목 · <code>(추석 기획전)</code> = 기획전 이름</td></tr>
+        <tr><td>서브 타이틀</td><td>T칸 <code>2026.09.14 - 2026.09.27</code> = 기간 · <code>up to 76%</code></td></tr>
+        <tr><td>…쿠폰</td><td>X칸 <code>10% 쿠폰</code> + Y칸 <code>…rcoupen.php?idx=868</code> · G칸 대사 = 문구 · T칸 <code>-</code> 줄 = 유의사항</td></tr>
+        <tr><td>…예치금 · 상품권</td><td>X칸 상품번호 + Y칸 <code>[… 상품권] 30만원권 (5%할인)</code> → 금액 · 할인율 · 이미지 이름</td></tr>
+        <tr><td>…럭키백</td><td>X칸 상품번호 · Y칸 이름 · T칸 <code>59,500원에 판매</code></td></tr>
+        <tr><td>H칸이 '날짜' 인 항목</td><td>순서대로 데일리 특가 1 · 2 — <code>날짜 · 상품번호 · 브랜드</code> 세 칸씩</td></tr>
+        <tr><td>…후기</td><td>G칸 <code>기존 1,000원 → 10,000원</code> · 작성 기간 = 기획전 기간 · 지급일 = 끝난 다음 날</td></tr>
+        <tr><td>…로또</td><td>G칸 <code>예치금 100만원</code> → 경품 · 퀵 띠 · T칸 유의사항</td></tr>
+        <tr><td>…가족 · 가입</td><td>회원 혜택 섹션 (내용은 4XR 공통 혜택)</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>5) 작업 순서</h2>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h3>시작</h3><p>기획전 폴더 · 기획 엑셀 · 오픈일 · 폴더코드(HSH) 확인</p><div class="say">"대형 기획전 타입 시작해줘"</div></div>
+        <div class="step"><div class="n">2</div><h3>폴더 만들기 (init)</h3><p>img/ 폴더들 · 이미지_목록.md · 대형기획전.json</p></div>
+        <div class="step"><div class="n">3</div><h3>엑셀 반영 (make)</h3><p>설정 + index 생성. '엑셀에서 읽음 · 빠진 섹션 · 확인 필요' 보고</p></div>
+        <div class="step"><div class="n">4</div><h3>이미지 넣기</h3><p>이미지_목록.md 의 경로 · 이름 그대로 img/ 에 (크기는 추석 기준)</p></div>
+        <div class="step"><div class="n">5</div><h3>점검 (check · render)</h3><p>상품 판매 중 · 데일리 날짜/12개 · 이미지 · PC·모바일 화면</p><div class="say">"점검해줘"</div></div>
+        <div class="step"><div class="n">6</div><h3>올리기 · 붙여넣기</h3><p>CDN 에 settings · img/ → 게시판에 index.html 통째</p><div class="say">"올렸어" → 확인</div></div>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="card">
+        <h2>6) Claude 에게 이렇게 말하세요</h2>
+        <table class="say-tbl">
+          <tr><td>"대형 기획전 타입 시작해줘"</td><td>폴더 만들기 → 엑셀 반영 → 보고</td></tr>
+          <tr><td>"엑셀 수정했어, 다시 반영해줘"</td><td>make 다시 (기존 파일은 _자동생성/)</td></tr>
+          <tr><td>"점검해줘"</td><td>check + render, 화면 캡처</td></tr>
+          <tr><td>"○○ 섹션 문구 바꿔줘"</td><td>그 기획전 settings · index 만 수정</td></tr>
+          <tr><td>"올렸어"</td><td>CDN 파일 · 게시글 실제 화면 확인</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>7) 직접 실행할 때 <small>_대형기획전_자동화</small></h2>
+<div class="code"><span class="c"># 폴더 만들기</span>
+<span class="k">python be.py init</span> &lt;폴더&gt; --open 2026-10-01 --code HSH
+<span class="c"># 엑셀 → 설정 + index</span>
+<span class="k">python be.py make</span> &lt;폴더&gt;
+<span class="c"># 상품 · 날짜 · 이미지 점검</span>
+<span class="k">python be.py check</span> &lt;폴더&gt;
+<span class="c"># PC · 모바일 화면 (주소 없으면 최근 글)</span>
+<span class="k">python be.py render</span> &lt;폴더&gt; [게시글주소]
+<span class="c"># check + render</span>
+<span class="k">python be.py all</span> &lt;폴더&gt;</div>
+      </div>
+    </div>
+
+    <div class="card warn">
+      <h2>꼭 확인하세요</h2>
+      <ul class="dot">
+        <li><b>'확인 필요' 항목</b>은 추석 값 그대로예요 — 비주얼 제목 이미지 위치 · 퀵 메뉴 짧은 이름 · 로또 소개 글 · 후기 작은 글 · 추석 페이지에만 있던 유의사항 줄(고객센터 번호 등).</li>
+        <li>공통 파일은 <b>첫 대형 기획전 때 한 번</b> CDN <code>2026/00/bigevent/</code> 에 올려요. 고치면 이 파일을 쓰는 <b>모든 대형 기획전이 같이 바뀌어요.</b></li>
+        <li>파일을 다시 올리면 index.html 의 <code>?v=</code> 숫자를 바꿔 다시 붙여넣기 (CDN 7일 캐시). make 를 다시 돌리면 그날 날짜로 바뀌어요.</li>
+        <li>게시글 번호는 어디에도 적지 않아요. '전 상품 보기' 버튼은 settings 의 <code>relatedButton.href</code> 에 그때 주소를 넣을 때만 나와요.</li>
+        <li>순서 : <b>CDN 에 먼저 올리고 → 게시판에 붙여넣기.</b> 반대로 하면 잠깐 빈 화면이 나와요.</li>
+      </ul>
+    </div>
+
+    <div class="summary">한 줄 요약 <span>—</span> 기획 엑셀을 폴더에 넣고 "대형 기획전 타입 시작해줘" → 이미지 넣기 → "점검해줘" → <span>CDN 올리고 index.html 붙여넣기.</span></div>
+
+  </div>
+</body>
+</html>
